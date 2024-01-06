@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Urls from "./urls"
-const data = new Urls
+const data = new Urls()
 
 function compareResponse(res: any) {
     // console.log(res.data)
@@ -9,80 +9,50 @@ function compareResponse(res: any) {
     return 1
 }
 
-// export default class VerifyAllUrls {
-//     public erro: number
-//     seconds: number
-//     timer: any
 
-//     constructor(erro = 0, seconds=0, timer='') {
-//         this.erro = erro
-//         this.seconds = seconds
-//         this.timer = timer
-//     }
-
-//     async verify() {
-//         this.timer = setInterval(() => this.seconds+=2, 2000)
-    
-    
-//         data.urls.forEach((url, i) => {
-//             axios(url+'/teste')
-//                 .then(res => compareResponse(res))
-//                 .then(returned => this.erro = 1)
-//                 .catch(res=> {
-//                     console.log('cATCH')
-//                     this.erro += 1
-//                 })
-            
-//             if(this.erro)  throw 'Erro em: '+ data.getApi(i)
-            
-//         })
-    
-//         console.log(this.erro, this.seconds)
-//         clearInterval(this.timer)
-    
-//         if(this.erro) return
-    
-//         return 'Success'
-//     }
-
-// }
-export default function verifyAllUrls() {
-    var erro = 0
-    var seconds = 0
-
-    let timer = setInterval(()=> {
-        console.log('+1')
-        seconds+=.5
-    }, 2000)
-
-
+async function verify() {
+  try {
     const array = data.urls.map(async (url, i) => {
-        var currentStatus = 1
-        await axios(url+'/teste')
-            .then(res => compareResponse(res))
-            .then(returned => {
-                currentStatus = returned
-                console.log(returned)
-            })
-            .catch(res=> {
-                console.log('cATCH')
-                erro += 1
-            })
-        
-        return currentStatus
-        // if(erro)  throw 'Erro em: '+ data.getApi(i)
+      try {
+        const res = await axios(url + '/teste');
+        const returned = await compareResponse(res);
+      //   console.log(returned);
+        return returned;
+      } catch (err) {
+        console.log('Erro: Na busca');
+        return 1
+      //   return null;
+      }
+    })
+    
+
+    const statusArray = await Promise.all(array)
+  //   console.log('Todos os status:', statusArray);
+
+    return statusArray;
+  } catch (err) {
+    console.log('Erro ao aguardar todas as promises')
+  }
+}
+
+
+async function wrongUrls() {
+    const allStatus = await verify()
+    // console.log(allStatus)
+    
+    var allWrong: any = {}
+
+    allStatus?.forEach((status, i) => {
+        if(status) {
+            allWrong[`${data.getApi(i)}`] = data.getUrl(i)
+        } 
     })
 
-    setTimeout(()=> {
-        clearInterval(timer)
-    }, 3000)
-    
-    console.log(erro, seconds, array)
-    if(erro) return
+    // console.log('Não funcionaram: '+allWrong)
 
-    return 'Success'
+    return allWrong
 }
-// const verifyAllUrls = new VerifyAllUrls()
 
-// console.log(verifyAllUrls.verify())
-console.log(verifyAllUrls())
+// wrongUrls()
+
+export default wrongUrls
