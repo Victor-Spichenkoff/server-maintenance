@@ -10,6 +10,8 @@ import formatMensageAndSend from "./functions/sendToPhone"
 
 app.use(cors())
 
+
+app.get('/', (req, res) => res.send('Olá'))
 app.get('/teste', (req, res) => res.send('olá'))
 
 async function sendInfosPage(req: any, res: any) {
