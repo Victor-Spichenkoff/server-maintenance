@@ -10,10 +10,11 @@ async function verifyAndSend(sendMensage: boolean=false) {
 
     times++
 
-    if(sendMensage) axios.get('https://server-maintenance.onrender.com/load')
     if(sendMensage) formatMensageAndSend(objectWithWrong, times)
+    setTimeout(()=> {
+        axios.get('https://server-maintenance.onrender.com/load')
+    }, 1000 * 60 * 15)//15 minutos
 }
-
 
 
 // Agendando a primeira execução
