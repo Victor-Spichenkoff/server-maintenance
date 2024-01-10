@@ -13,6 +13,12 @@ const thisUrl = 'https://server-maintenance-ssu7.onrender.com'
 // const thisUrl = 'https://server-maintenance.onrender.com'//old
 
 
+function keepThisOn() {
+    axios.get(thisUrl)
+}
+
+keepThisOn()//já carrega esse
+
 
 async function verifyAndSendAll(sendMensage: boolean=false) {
     const objectWithWrong = await wrongUrls()
@@ -52,7 +58,6 @@ async function setAll(res: Response) {
 
     sendTelegramMensage('Setado para TODOS')
     res.send('Setado para todos')
-
 }
 
 
@@ -83,6 +88,8 @@ async function selectTimer(send: boolean = false) {
     if(send && typeof res.data == 'string') sendTelegramMensage('Funcionando ' + name)
     if(send && typeof res.data != 'string') sendTelegramMensage('Erro em: ' + name)
 
+
+    keepThisOn()
     setTimeout(() => axios.get(thisUrl+'/'), 1000 * 60 * 15)
 }
 
