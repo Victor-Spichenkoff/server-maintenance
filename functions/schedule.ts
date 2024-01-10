@@ -9,7 +9,8 @@ const data = new Urls()
 
 var times = 0
 
-const thisUrl = 'https://server-maintenance.onrender.com'
+const thisUrl = 'https://server-maintenance-ssu7.onrender.com'
+// const thisUrl = 'https://server-maintenance.onrender.com'//old
 
 
 
@@ -78,9 +79,9 @@ async function selectTimer(send: boolean = false) {
     if(obj.currentMantenedName == 'all') return verifyAndSendAll(send) 
 
     //para não consumir, desligar em testes
-    // const res = await axios.get(obj.currentMantenedUrl+ '/teste')
-    // if(send && typeof res.data == 'string') sendTelegramMensage('Funcionando ' + name)
-    // if(send && typeof res.data != 'string') sendTelegramMensage('Erro em: ' + name)
+    const res = await axios.get(obj.currentMantenedUrl+ '/teste')
+    if(send && typeof res.data == 'string') sendTelegramMensage('Funcionando ' + name)
+    if(send && typeof res.data != 'string') sendTelegramMensage('Erro em: ' + name)
 
     setTimeout(() => axios.get(thisUrl+'/'), 1000 * 60 * 15)
 }
