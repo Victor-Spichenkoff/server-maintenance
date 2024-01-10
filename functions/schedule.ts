@@ -47,8 +47,8 @@ async function setOne(index: number, res: any) {
 
     sendTelegramMensage('Setado para: '+ (data.getApi(index)).toUpperCase())
   
-    if(typeof resApi.data == 'string') res.send('Tudo certo em: ' + data.getApi(index))
-    else res.status(500).send('Erro em ' + data.getApi(index))
+    // if(typeof resApi.data == 'string') res.send('Tudo certo em: ' + data.getApi(index))
+    // else res.status(500).send('Erro em ' + data.getApi(index))
 }
 
 
@@ -99,7 +99,7 @@ async function selectTimer(send: boolean = false) {
 
 const rule1 = {
     // hour: 20,
-    minute: 50,
+    minute: 0,
     second: 0    
 }
 
@@ -108,7 +108,7 @@ const job1 = schedule.scheduleJob(rule1, selectTimer)
 // Segunda execução (metodo 2)
 const rule2 = new schedule.RecurrenceRule()
 // rule2.hour = 8
-rule2.minute = 0
+rule2.minute = 14
 rule2.second = 0
 
 
@@ -116,11 +116,19 @@ const job2 = schedule.scheduleJob(rule2, selectTimer)
 
 
 const rule3 = {
-    minute: 23,
+    minute: 29,
     second: 0
 }
 
 const job3 = schedule.scheduleJob(rule3, selectTimer)
+
+
+const rule4 = {
+    minute: 44,
+    second: 0
+}
+
+const job4 = schedule.scheduleJob(rule4, selectTimer)
 
 
 const ruleRelatory = {
