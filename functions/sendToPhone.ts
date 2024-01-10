@@ -57,5 +57,5 @@ function formatMensageAndSend(obj: object,times?: number, onlyReturn = false) {
     sendTelegramMensage(finalMensage)
 }
 
-
+export { sendTelegramMensage }
 export default formatMensageAndSend

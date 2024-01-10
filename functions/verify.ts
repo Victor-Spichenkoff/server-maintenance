@@ -53,6 +53,10 @@ async function wrongUrls() {
     return allWrong
 }
 
+
+
+
 // wrongUrls()
 
-export default wrongUrls
+// export {  }
+export default  wrongUrls
