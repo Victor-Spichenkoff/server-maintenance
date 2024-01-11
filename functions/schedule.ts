@@ -90,7 +90,7 @@ async function selectTimer(send: boolean = false) {
 
 
     keepThisOn()
-    setTimeout(() => axios.get(thisUrl+'/'), 1000 * 60 * 15)
+    // setTimeout(() => axios.get(thisUrl+'/'), 1000 * 60 * 15)
 }
 
 
@@ -103,12 +103,12 @@ const rule1 = {
     second: 0    
 }
 
-const job1 = schedule.scheduleJob(rule1, selectTimer)
+const job1 = schedule.scheduleJob(rule1, ()=> selectTimer(true))
 
 // Segunda execução (metodo 2)
 const rule2 = new schedule.RecurrenceRule()
 // rule2.hour = 8
-rule2.minute = 14
+rule2.minute = 12
 rule2.second = 0
 
 
@@ -116,7 +116,7 @@ const job2 = schedule.scheduleJob(rule2, selectTimer)
 
 
 const rule3 = {
-    minute: 29,
+    minute: 24,
     second: 0
 }
 
@@ -124,16 +124,25 @@ const job3 = schedule.scheduleJob(rule3, selectTimer)
 
 
 const rule4 = {
-    minute: 44,
+    minute: 36,
     second: 0
 }
 
 const job4 = schedule.scheduleJob(rule4, selectTimer)
 
 
+
+const rule5 = {
+    minute: 48,
+    second: 0
+}
+
+const job5 = schedule.scheduleJob(rule5, selectTimer)
+
+
 const ruleRelatory = {
-    hour: 8,
-    minute: 0,
+    hour: 14,
+    minute: 30,
     second: 0
 }
 
