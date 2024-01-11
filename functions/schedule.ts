@@ -149,45 +149,59 @@ const ruleRelatory = {
 const jobRelatory = schedule.scheduleJob(ruleRelatory , ()=> selectTimer(true))
 
 
-const minute = 1000 * 60 
+// const minute = 1000 * 60 
 
-setTimeout(()=>{
-    setInterval(()=> {
+setInterval(()=>{
+    const now = new Date()
+    const hour = now.getHours()
+    const minute:number = now.getMinutes()
+    
+    if(hour == 21 || minute == 0) {
         selectTimer(true)
-    }, minute * 15)
-}, 0)
+        sendTelegramMensage('21 horas')
+        return
+    }
+    
+    selectTimer()
+}, 1000 * 60 * 12)
+
+// setTimeout(()=>{
+//     setInterval(()=> {
+//         selectTimer(true)
+//     }, minute * 15)
+// }, 0)
 
 
-setTimeout(()=>{
-    setInterval(()=> {
-        selectTimer()
-    }, minute * 12)
-}, minute * 12)
+// setTimeout(()=>{
+//     setInterval(()=> {
+//         selectTimer()
+//     }, minute * 12)
+// }, minute * 12)
 
 
-setTimeout(()=>{
-    setInterval(()=> {
-        selectTimer()
-    }, minute * 12)
+// setTimeout(()=>{
+//     setInterval(()=> {
+//         selectTimer()
+//     }, minute * 12)
 
-}, minute * 24)
-
-
-setTimeout(()=>{
-    setInterval(()=> {
-        selectTimer()
-    }, minute * 12)
-
-}, 36)
+// }, minute * 24)
 
 
-setTimeout(()=>{
-    setInterval(()=> {
-        selectTimer(true)
-        sendTelegramMensage('48 Minutos')
-    }, minute * 12)
+// setTimeout(()=>{
+//     setInterval(()=> {
+//         selectTimer()
+//     }, minute * 12)
 
-}, minute * 48)
+// }, 36)
+
+
+// setTimeout(()=>{
+//     setInterval(()=> {
+//         selectTimer(true)
+//         sendTelegramMensage('48 Minutos')
+//     }, minute * 12)
+
+// }, minute * 48)
 
 
 
