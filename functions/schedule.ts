@@ -97,47 +97,47 @@ async function selectTimer(send: boolean = false) {
 
 
 
-const rule1 = {
-    // hour: 20,
-    minute: 0,
-    second: 0    
-}
+// const rule1 = {
+//     // hour: 20,
+//     minute: 0,
+//     second: 0    
+// }
 
-const job1 = schedule.scheduleJob(rule1, ()=> selectTimer(true))
+// const job1 = schedule.scheduleJob(rule1, ()=> selectTimer(true))
 
-// Segunda execução (metodo 2)
-const rule2 = new schedule.RecurrenceRule()
-// rule2.hour = 8
-rule2.minute = 12
-rule2.second = 0
-
-
-const job2 = schedule.scheduleJob(rule2, selectTimer)
+// // Segunda execução (metodo 2)
+// const rule2 = new schedule.RecurrenceRule()
+// // rule2.hour = 8
+// rule2.minute = 12
+// rule2.second = 0
 
 
-const rule3 = {
-    minute: 24,
-    second: 0
-}
-
-const job3 = schedule.scheduleJob(rule3, selectTimer)
+// const job2 = schedule.scheduleJob(rule2, selectTimer)
 
 
-const rule4 = {
-    minute: 36,
-    second: 0
-}
+// const rule3 = {
+//     minute: 24,
+//     second: 0
+// }
 
-const job4 = schedule.scheduleJob(rule4, selectTimer)
+// const job3 = schedule.scheduleJob(rule3, selectTimer)
+
+
+// const rule4 = {
+//     minute: 36,
+//     second: 0
+// }
+
+// const job4 = schedule.scheduleJob(rule4, selectTimer)
 
 
 
-const rule5 = {
-    minute: 48,
-    second: 0
-}
+// const rule5 = {
+//     minute: 48,
+//     second: 0
+// }
 
-const job5 = schedule.scheduleJob(rule5, selectTimer)
+// const job5 = schedule.scheduleJob(rule5, selectTimer)
 
 
 const ruleRelatory = {
@@ -147,5 +147,51 @@ const ruleRelatory = {
 }
 
 const jobRelatory = schedule.scheduleJob(ruleRelatory , ()=> selectTimer(true))
+
+
+const minute = 1000 * 60 
+
+setTimeout(()=>{
+    setInterval(()=> {
+        selectTimer(true)
+    }, minute * 15)
+}, 0)
+
+
+setTimeout(()=>{
+    setInterval(()=> {
+        selectTimer()
+    }, minute * 12)
+}, minute * 12)
+
+
+setTimeout(()=>{
+    setInterval(()=> {
+        selectTimer()
+    }, minute * 12)
+
+}, minute * 24)
+
+
+setTimeout(()=>{
+    setInterval(()=> {
+        selectTimer()
+    }, minute * 12)
+
+}, 36)
+
+
+setTimeout(()=>{
+    setInterval(()=> {
+        selectTimer(true)
+        sendTelegramMensage('48 Minutos')
+    }, minute * 12)
+
+}, minute * 48)
+
+
+
+
+
 
 export { setOne, turnOf,setAll }
