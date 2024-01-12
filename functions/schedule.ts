@@ -150,13 +150,13 @@ const jobRelatory = schedule.scheduleJob(ruleRelatory , ()=> selectTimer(true))
 
 
 // const minute = 1000 * 60 
-
+let vezes = 0
 setInterval(()=>{
+    vezes++
     const now = new Date()
     const hour = now.getHours()
-    const minute:number = now.getMinutes()
     
-    if(hour == 21 || minute == 0) {
+    if(hour == 8 || vezes == 12*5*12) {
         selectTimer(true)
         sendTelegramMensage('21 horas')
         return
