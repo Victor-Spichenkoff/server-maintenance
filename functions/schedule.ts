@@ -88,12 +88,24 @@ async function selectTimer(send: boolean = false) {
     if(send && typeof res.data == 'string') sendTelegramMensage('Funcionando ' + name)
     if(send && typeof res.data != 'string') sendTelegramMensage('Erro em: ' + name)
 
-
     keepThisOn()
+
+    setTimeout(()=> {
+        const now = new Date()
+        const min = now.getMinutes()
+        const hour = now.getMinutes()
+
+        if(hour == 17 && min > 0 && min < 14) {
+            selectTimer(true)
+            sendTelegramMensage('Ainda está funcionando')
+        } else selectTimer()
+
+    }, 1000 * 60 * 12)
+
     // setTimeout(() => axios.get(thisUrl+'/'), 1000 * 60 * 15)
 }
 
-
+selectTimer()
 
 
 
@@ -151,19 +163,7 @@ const jobRelatory = schedule.scheduleJob(ruleRelatory , ()=> selectTimer(true))
 
 // const minute = 1000 * 60 
 let vezes = 0
-setInterval(()=>{
-    vezes++
-    const now = new Date()
-    const hour = now.getHours()
-    
-    if(hour == 8 || vezes == 12*5*12) {
-        selectTimer(true)
-        sendTelegramMensage('21 horas')
-        return
-    }
-    
-    selectTimer()
-}, 1000 * 60 * 12)
+
 
 // setTimeout(()=>{
 //     setInterval(()=> {
