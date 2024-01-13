@@ -80,7 +80,7 @@ async function selectTimer(send: boolean = false) {
 
     const now = new Date()
     const min = now.getMinutes()
-    const hour = now.getMinutes()
+    const hour = now.getHours()
 
     sendTelegramMensage('SelectTimer '+ hour + ' : ' +min)
 
