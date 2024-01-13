@@ -76,6 +76,28 @@ async function selectTimer(send: boolean = false) {
     const obj = await getData()
     const name = obj.currentMantenedName.toUpperCase()
 
+
+
+    const now = new Date()
+    const min = now.getMinutes()
+    const hour = now.getMinutes()
+
+    sendTelegramMensage('SelectTimer '+ hour + ' : ' +min)
+
+    keepThisOn()
+
+    setTimeout(()=> {
+
+
+        if(hour == 21 && min > 0 && min < 14) {
+            selectTimer(true)
+           
+        } else selectTimer()
+
+    }, 1000 * 60 * 12)
+
+
+
     if(obj.off) {
         if(send) sendTelegramMensage('Desativado')
         return
@@ -88,19 +110,7 @@ async function selectTimer(send: boolean = false) {
     if(send && typeof res.data == 'string') sendTelegramMensage('Funcionando ' + name)
     if(send && typeof res.data != 'string') sendTelegramMensage('Erro em: ' + name)
 
-    keepThisOn()
 
-    setTimeout(()=> {
-        const now = new Date()
-        const min = now.getMinutes()
-        const hour = now.getMinutes()
-
-        if(hour == 17 && min > 0 && min < 14) {
-            selectTimer(true)
-            sendTelegramMensage('Ainda está funcionando')
-        } else selectTimer()
-
-    }, 1000 * 60 * 12)
 
     // setTimeout(() => axios.get(thisUrl+'/'), 1000 * 60 * 15)
 }
