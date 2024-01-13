@@ -82,15 +82,16 @@ async function selectTimer(send: boolean = false) {
     const min = now.getMinutes()
     const hour = now.getHours()
 
-    sendTelegramMensage('SelectTimer '+ hour + ' : ' +min)
+    
 
     keepThisOn()
 
     setTimeout(()=> {
 
 
-        if(hour == 21 && min > 0 && min < 14) {
+        if(hour == 8 && min > 0 && min < 14) {
             selectTimer(true)
+            sendTelegramMensage('SelectTimer '+ hour + ' : ' +min)
            
         } else selectTimer()
 
