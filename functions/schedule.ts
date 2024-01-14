@@ -82,14 +82,19 @@ async function selectTimer(send: boolean = false) {
     const min = now.getMinutes()
     const hour = now.getHours()
 
+
+    if(obj.off) {
+        sendTelegramMensage('Desligando servidor')
+        if(send) sendTelegramMensage('Desativado')
+        return
+    }
     
 
     keepThisOn()
 
     setTimeout(()=> {
 
-
-        if(hour == 8 && min > 0 && min < 14) {
+        if(hour == 11 && min > 0 && min < 14) {// 11 = 8horas no Brasil
             selectTimer(true)
             sendTelegramMensage('SelectTimer '+ hour + ' : ' +min)
            
@@ -98,12 +103,6 @@ async function selectTimer(send: boolean = false) {
     }, 1000 * 60 * 12)
 
 
-
-    if(obj.off) {
-        if(send) sendTelegramMensage('Desativado')
-        return
-    }
-    
     if(obj.currentMantenedName == 'all') return verifyAndSendAll(send) 
 
     //para não consumir, desligar em testes
