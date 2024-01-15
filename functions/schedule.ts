@@ -78,8 +78,6 @@ async function selectTimer(send: boolean = false) {
     const obj = await getData()
     const name = obj.currentMantenedName.toUpperCase()
 
-    sendTelegramMensage('Mais um selectTimer')
-
     const now = new Date()
     const min = now.getMinutes()
     const hour = now.getHours()
@@ -95,8 +93,9 @@ async function selectTimer(send: boolean = false) {
     keepThisOn()
 
     setTimeout(()=> {
+        const rightHours = hour == 11 || hour == 15 || hour == 22
 
-        if(hour == 20 && min > 0 && min < 14) {// 11 = 8horas no Brasil
+        if(rightHours && min > 0 && min < 14) {// 11 = 8horas no Brasil
             selectTimer(true)
             sendTelegramMensage('SelectTimer '+ hour + ' : ' +min)
            
@@ -111,10 +110,6 @@ async function selectTimer(send: boolean = false) {
     const res = await axios.get(obj.currentMantenedUrl+ '/teste')
     if(send && typeof res.data == 'string') sendTelegramMensage('Funcionando ' + name)
     if(send && typeof res.data != 'string') sendTelegramMensage('Erro em: ' + name)
-
-
-
-    // setTimeout(() => axios.get(thisUrl+'/'), 1000 * 60 * 15)
 }
 
 selectTimer()
