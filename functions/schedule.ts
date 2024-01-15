@@ -46,6 +46,8 @@ async function setOne(index: number, res: any) {
     await write('off', false)
 
     sendTelegramMensage('Setado para: '+ (data.getApi(index)).toUpperCase())
+
+    selectTimer()
   
     // if(typeof resApi.data == 'string') res.send('Tudo certo em: ' + data.getApi(index))
     // else res.status(500).send('Erro em ' + data.getApi(index))
@@ -76,7 +78,7 @@ async function selectTimer(send: boolean = false) {
     const obj = await getData()
     const name = obj.currentMantenedName.toUpperCase()
 
-
+    sendTelegramMensage('Mais um selectTimer')
 
     const now = new Date()
     const min = now.getMinutes()
@@ -94,7 +96,7 @@ async function selectTimer(send: boolean = false) {
 
     setTimeout(()=> {
 
-        if(hour == 11 && min > 0 && min < 14) {// 11 = 8horas no Brasil
+        if(hour == 20 && min > 0 && min < 14) {// 11 = 8horas no Brasil
             selectTimer(true)
             sendTelegramMensage('SelectTimer '+ hour + ' : ' +min)
            
@@ -218,4 +220,4 @@ let vezes = 0
 
 
 
-export { setOne, turnOf,setAll }
+export { setOne, turnOf,setAll, selectTimer }
