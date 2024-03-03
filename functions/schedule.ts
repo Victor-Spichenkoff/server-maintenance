@@ -7,10 +7,12 @@ import { getData, write } from './manegeData'
 import { Response } from 'express'
 const data = new Urls()
 
-var times = 0
 
 const thisUrl = 'https://server-maintenance-ssu7.onrender.com'
 // const thisUrl = 'https://server-maintenance.onrender.com'//old
+
+var times = 0
+var first = true
 
 
 function keepThisOn() {
@@ -28,7 +30,7 @@ async function verifyAndSendAll(sendMensage: boolean=false) {
     if(sendMensage) formatMensageAndSend(objectWithWrong, times)
     setTimeout(()=> {
         axios.get(thisUrl+'/load')
-    }, 1000 * 60 * 15)//15 minutos
+    }, 1000 * 60 * 12)//12 minutos
 }
 
 
@@ -73,6 +75,57 @@ async function turnOf() {
 }
 
 
+async function makeInitialRequests() {
+    const obj = await getData()
+    try{
+        return await axios.get(obj.currentMantenedUrl+ '/teste')
+    } catch(e) {
+        return false
+    }
+}
+
+
+
+
+
+//testar essas duas
+async function makeRecursiveRequest(UseStoraged = false, url = '', count:number=0) {
+    const res = await axios.get(url +'/teste')
+    if(res) return count++
+    const timeOut = setTimeout(() => {
+        makeRecursiveRequest(false, url)
+    }, 3000)
+}
+
+
+async function forceLoadAllOnce(req:any, res:any) {
+    const urls = data.urls
+    var successUrlsCount = 0
+    var times = 0
+
+    urls.forEach(url => {
+        makeRecursiveRequest(false, url, successUrlsCount)
+    })
+    const interval = setInterval(() => {
+        if(successUrlsCount >= urls.length) {
+            res.send('Todas as reqs foram feitas')
+            sendTelegramMensage('Todas as reqs foram feitas')
+            clearInterval(interval)
+        }
+        times++
+        if(times > 20) {
+            res.send("Erro no req de todos")
+            sendTelegramMensage('Erro no req de todos')
+            clearInterval(interval)
+        }
+    }, 1000)
+}
+
+
+
+
+
+
 
 async function selectTimer(send: boolean = false) {
     const obj = await getData()
@@ -84,15 +137,38 @@ async function selectTimer(send: boolean = false) {
 
 
     if(obj.off) {
-        sendTelegramMensage('Desligando servidor')
+        sendTelegramMensage('Desligando servidor (obj.off == true)')
         if(send) sendTelegramMensage('Desativado')
         return
     }
     
 
+    //varias requests(iniciais)
+    var vezes = 0
+    if(first) {
+        var firstRequests = setInterval(async () => {
+            vezes++
+            if(vezes > 10) {
+                sendTelegramMensage('Nã foi possível fazer o Initial Request')
+                clearInterval(firstRequests)
+            }
+            //requests e tratemento
+            const res = await makeInitialRequests()
+            if(res) {
+                first = false
+                sendTelegramMensage('Fisrt feito em: '+  name)
+                clearInterval(firstRequests)
+            }
+        }, 3000)
+    }
+
     keepThisOn()
 
     setTimeout(()=> {
+        //pediu para sempre enviar
+        if(obj.hightMenssages) {
+            selectTimer(true)
+        }
         const rightHours = hour == 11 || hour == 15 || hour == 22
 
         if(rightHours && min > 0 && min < 14) {// 11 = 8horas no Brasil
@@ -112,7 +188,7 @@ async function selectTimer(send: boolean = false) {
     if(send && typeof res.data != 'string') sendTelegramMensage('Erro em: ' + name)
 }
 
-selectTimer()
+selectTimer(true)
 
 
 
@@ -215,4 +291,4 @@ let vezes = 0
 
 
 
-export { setOne, turnOf,setAll, selectTimer }
+export { setOne, turnOf,setAll, selectTimer, forceLoadAllOnce }

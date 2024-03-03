@@ -1,6 +1,13 @@
 import fs from 'fs'
 const path = 'functions/data.json'
 
+type jsonData = {
+  currentMantenedUrl: string,
+  currentMantenedName: string,
+  off: boolean,
+  hightMenssages: boolean
+}
+
 async function getData() {
     const data = await fs.readFileSync(path, 'utf8')
 
@@ -8,7 +15,7 @@ async function getData() {
 
 }
 
-type keys = 'currentMantenedUrl' | 'currentMantenedName' | 'off'
+type keys = 'currentMantenedUrl' | 'currentMantenedName' | 'off' | 'hightMenssages'
 
 async function write(key: keys, value: string | boolean) {
     
@@ -16,6 +23,7 @@ async function write(key: keys, value: string | boolean) {
         const dados = await getData()
 
         dados[key] = value
+        
       
         const novoConteudo = JSON.stringify(dados, null, 2)
         fs.writeFileSync(path, novoConteudo, 'utf8')
@@ -34,3 +42,11 @@ async function sendInfos(req:any, res:any) {
 }
 
 export { sendInfos, getData, write }
+
+// base: 
+// {
+//   "currentMantenedUrl": "https://google.com",
+//   "currentMantenedName": "Nenhum Selecionado",
+//   "off": true,
+//   "hightMenssages": false
+// }
