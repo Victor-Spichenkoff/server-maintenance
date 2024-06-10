@@ -7,6 +7,7 @@ import wrongUrls from "./functions/verify"
 import formatMensageAndSend, { sendTelegramMensage } from "./functions/sendToPhone"
 import { getData, sendInfos, write } from "./functions/manegeData"
 import { forceLoadAllOnce, setAll, setOne, turnOf } from "./functions/schedule"
+import { informateNewIpAccess } from "./utils/ip"
 
 //Minha conta para  esse: edge(conta secundária)(spichekoffvictor)
 //nome: VictorSpich
@@ -77,5 +78,9 @@ app.get('/currenton', sendInfos)
 
 app.get('/toggleHightMenssages', toggleHightMenssages)
 app.get('/hightMenssagesStatus', getHightmenssagesStatus)
+
+
+app.get('/sendIp/:ip',informateNewIpAccess)
+
 
 app.listen(process.env.PORT || 2009, () => console.log('Rodando na porta 2009'))
