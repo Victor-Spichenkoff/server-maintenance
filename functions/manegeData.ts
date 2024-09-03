@@ -1,5 +1,8 @@
 import fs from 'fs'
-const path = 'functions/data.json'
+import path from 'path'
+// const path = 'functions/data.json'
+
+const dataPath = path.join(__dirname, 'functions', 'data.json');
 
 type jsonData = {
   currentMantenedUrl: string,
@@ -9,7 +12,7 @@ type jsonData = {
 }
 
 async function getData() {
-    const data = await fs.readFileSync(path, 'utf8')
+    const data = await fs.readFileSync(dataPath, 'utf8')
 
     return JSON.parse(data)
 
@@ -26,7 +29,7 @@ async function write(key: keys, value: string | boolean) {
         
       
         const novoConteudo = JSON.stringify(dados, null, 2)
-        fs.writeFileSync(path, novoConteudo, 'utf8')
+        fs.writeFileSync(dataPath, novoConteudo, 'utf8')
       
         // console.log('Arquivo modificado')
       } catch (err) {
