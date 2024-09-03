@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "start-render": "ts-node index.ts",
-    "start": "node dist/index.js",
-    "fdvercedfl-build": "tsc",
+    "start": "ts-node index.ts",
+    "vercel-start": "node dist/index.js",
+    "vercel-build": "tsc",
     "dev": "nodemon index.ts --ignore 'functions/*.json' --ignore README",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
