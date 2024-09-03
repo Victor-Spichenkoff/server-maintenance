@@ -6,7 +6,7 @@
   "scripts": {
     "start-render": "ts-node index.ts",
     "start": "node dist/app.js",
-    "build": "tsc",
+    "build": "npm i && tsc",
     "dev": "nodemon index.ts --ignore 'functions/*.json' --ignore README",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
