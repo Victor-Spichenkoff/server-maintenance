@@ -4,7 +4,7 @@ import wrongUrls from './verify'
 import formatMensageAndSend, { sendTelegramMensage } from './sendToPhone'
 import Urls from "./urls"
 import { getData, write } from './manegeData'
-import { Response } from 'express'
+import { Request, Response } from 'express'
 const data = new Urls()
 
 
@@ -66,12 +66,13 @@ async function setAll(res: Response) {
 
 
 
-async function turnOf() {
+async function turnOf(req?:Request, res?: Response) {
     await write('off', true)
     await write('currentMantenedUrl', 'https://google.com')
     await write('currentMantenedName', 'Nenhum Selecionado')
 
     sendTelegramMensage('Tudo OFF')
+    res?.status(203)
 }
 
 

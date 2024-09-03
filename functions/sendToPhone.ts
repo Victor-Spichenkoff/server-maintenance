@@ -4,6 +4,9 @@ import wrongUrls from './verify'
 const telegramBotToken = '6746265132:AAHesfWPU4GGxYyWqnbDZSriNnkFcbRFi0E'
 
 async function sendTelegramMensage(mensagem: string): Promise<void> {
+  if(process.env.NOT_SEND) 
+    return
+
   const chatId = '1139085287'
 
   const apiUrl = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`
