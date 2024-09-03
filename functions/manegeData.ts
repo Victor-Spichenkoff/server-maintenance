@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 // const path = 'functions/data.json'
 
-const dataPath = path.join(__dirname, 'functions', 'data.json');
+const dataPath = path.join(__dirname, 'data.json');
 
 type jsonData = {
   currentMantenedUrl: string,
