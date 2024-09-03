@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-render": "ts-node index.ts",
-    "start": "node dist/app.js",
-    "build": "npm i && tsc",
+    "start": "ts-node index.ts",
+    "start-vercel-only": "node dist/app.js",
     "dev": "nodemon index.ts --ignore 'functions/*.json' --ignore README",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
