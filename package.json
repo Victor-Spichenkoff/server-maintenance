@@ -2,9 +2,9 @@
   "name": "server-maintenance",
   "version": "1.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "start-rener": "ts-node index.ts",
+    "start-render": "ts-node index.ts",
     "start": "node dist/index.js",
     "vercel-build": "tsc",
     "dev": "nodemon index.ts --ignore 'functions/*.json' --ignore README",
