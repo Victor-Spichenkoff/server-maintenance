@@ -1,6 +1,8 @@
+import { ApiName } from "../types/data"
+
 export default class Urls{
     readonly urls: string[]
-    readonly apis: string[]
+    readonly apis: ApiName[]
 
     constructor() {
         this.urls = [
@@ -24,5 +26,9 @@ export default class Urls{
 
     getApi(id: number) {
         return this.apis[id]
+    }
+
+    getApiIdByName(name: ApiName) {
+        return this.apis.findIndex((apiName) => apiName == name)
     }
 }

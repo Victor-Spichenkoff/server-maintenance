@@ -1,6 +1,6 @@
 import { Router } from "express"
 import { forceLoadAllOnce, setAll, setOne, turnOf } from "../functions/schedule"
-import { sendInfos } from "../functions/manegeData"
+import { sendInfos, sendInfosById } from "../functions/manegeData"
 import { informateNewIpAccess } from "../utils/ip"
 import { getHightmenssagesStatus, sendInfosPage, toggleHightMenssages } from "../utils/menssages"
 
@@ -34,6 +34,7 @@ routes.get('/turnoff', turnOf)
 
 routes.get('/initialLoad', initialLoad)
 routes.get('/currenton', sendInfos)
+routes.get('/currenton/id', sendInfosById)
 
 
 routes.get('/toggleHightMenssages', toggleHightMenssages)

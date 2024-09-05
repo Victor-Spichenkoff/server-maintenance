@@ -41,7 +41,7 @@ async function setOne(index: number, res: any) {
 
     let url = data.getUrl(index)
 
-    const resApi = await axios.get(url+'/teste')
+    // const resApi = await axios.get(url+'/teste')
 
     await write('currentMantenedUrl', url)
     await write('currentMantenedName', data.getApi(index))
@@ -50,6 +50,8 @@ async function setOne(index: number, res: any) {
     sendTelegramMensage('Setado para: '+ (data.getApi(index)).toUpperCase())
 
     selectTimer()
+
+    res.sendStatus(200)
   
     // if(typeof resApi.data == 'string') res.send('Tudo certo em: ' + data.getApi(index))
     // else res.status(500).send('Erro em ' + data.getApi(index))
@@ -72,7 +74,7 @@ async function turnOf(req?:Request, res?: Response) {
     await write('currentMantenedName', 'Nenhum Selecionado')
 
     sendTelegramMensage('Tudo OFF')
-    res?.status(203)
+    res?.send("Tudo OFF")
 }
 
 
@@ -144,6 +146,13 @@ async function selectTimer(send: boolean = false) {
     }
     
 
+    //desativar no dev
+    if(process.env.NOT_REQ)
+        return
+
+
+
+
     //varias requests(iniciais)
     var vezes = 0
     if(first) {
@@ -184,12 +193,16 @@ async function selectTimer(send: boolean = false) {
     if(obj.currentMantenedName == 'all') return verifyAndSendAll(send) 
 
     //para não consumir, desligar em testes
+    if(process.env.NOT_REQ)
+        return
     const res = await axios.get(obj.currentMantenedUrl+ '/teste')
     if(send && typeof res.data == 'string') sendTelegramMensage('Funcionando ' + name)
     if(send && typeof res.data != 'string') sendTelegramMensage('Erro em: ' + name)
 }
 
-selectTimer(true)
+
+if(!process.env.NOT_REQ)
+    selectTimer(true)
 
 
 
