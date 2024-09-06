@@ -5,4 +5,5 @@ export interface IData {
     currentMantenedName: ApiName | "Nenhum Selecionado",
     off: boolean,
     hightMenssages: boolean
+    keepThisApiOn: boolean
 }
