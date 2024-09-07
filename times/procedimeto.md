@@ -13,9 +13,8 @@
 
 
 # to-do
-- implementar endpoints para devolver o remaing de cada um
 - usar o alreadyStartedThis para garantir melhor economia de recuros
-    - Se usar o startApiOn, ele coida de tudo, os offs, devem setar para false
+    - Se usar o alreadyStartedThis, ele cuida de tudo, os offs, devem setar para false
 
 
 # TEste a fazer 

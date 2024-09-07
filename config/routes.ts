@@ -2,7 +2,7 @@ import { Router } from "express"
 import { informateNewIpAccess } from "../utils/ip"
 import { getHightmenssagesStatus, sendInfosPage, toggleHightMenssages } from "../utils/menssages"
 import { sendInfos, sendInfosById } from "../controllers/infos.controller"
-import { forceLoadAllOnce, setAll, setOne, turnOff } from "../controllers/actions.controller"
+import { callAllOnce, forceLoadAllOnce, setAll, setOne, turnOff } from "../controllers/actions.controller"
 import { getBothRemaningTime, getLastDiscount, getLastStart, getRemanigTimeForMain, getRemanigTimeForThis, getThisStatus, turnKeepApiOn, turnOffThisApiController, updateUsageMiddleware } from "../controllers/times.controller"
 import { discountFromApis } from "../times/operations"
 import { requestWithLongTimeout, resetTime } from "../controllers/tests.controller"
@@ -17,6 +17,7 @@ export async function initialLoad(req:any, res: any) {
 
 routes.get('/', (req, res) => res.send('Olá'))
 routes.get('/teste', (req, res) => res.send('olá'))
+//teste geral, não é o modo
 routes.get('/isOn', (req, res) => res.send("Está funcionando"))
 
 routes.get('/testar', (req, res) => {
@@ -39,6 +40,7 @@ routes.get('/turnoff', turnOff)
 routes.get('/initialLoad', initialLoad)
 routes.get('/load', sendInfosPage)
 routes.get('/forceAllOnce', forceLoadAllOnce)
+routes.get('/callAllOnce', callAllOnce)
 
 
 //infos

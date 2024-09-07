@@ -1,6 +1,6 @@
-import { Request, Response } from "express"
+import { Request, RequestHandler, Response } from "express"
 import { write } from "../functions/manegeData"
-import { makeRecursiveRequest, selectTimer } from "../functions/schedule"
+import { makeOneRequest, makeRecursiveRequest, selectTimer } from "../functions/schedule"
 import { sendTelegramMensage } from "../functions/sendToPhone"
 import Urls from "../functions/urls"
 import { setKeepApiOn } from "../utils/time"
@@ -14,8 +14,9 @@ export async function forceLoadAllOnce(req:any, res:any) {
     var successUrlsCount = 0
     var times = 0
 
-    urls.forEach(url => {
-        makeRecursiveRequest(false, url, successUrlsCount)
+    urls.forEach(async (url) => {
+        const responseFromRecursive = await  makeRecursiveRequest(false, url, successUrlsCount)
+        successUrlsCount = Number(responseFromRecursive)
     })
     const interval = setInterval(() => {
         if(successUrlsCount >= urls.length) {
@@ -79,3 +80,32 @@ export async function turnOff(req?:Request, res?: Response) {
     sendTelegramMensage('Tudo OFF')
     res?.send("Tudo OFF")
 }
+
+
+export const callAllOnce:RequestHandler = async (req, res) => {
+    const urls = data.urls
+    const errorsNames: string[] = []
+    // const urls = ['https://portfolio-api-i3t0.onrender.com']
+    var successUrlsCount = 0
+
+
+
+    const results = await Promise.all(urls.map(async (url, i) => {
+        return await makeOneRequest(url, data.getApi(i), errorsNames)
+    }))
+
+    
+    results.forEach(result => successUrlsCount += result)
+
+    res.send({
+        allworking: successUrlsCount == urls.length,
+        working: successUrlsCount,
+        total: urls.length,
+        errors: errorsNames
+    })
+}
+
+
+//ele deve ter uma resposta mais simlples (usar no de forçar)
+//no forçar, o front cuida de fazer várias reqs, aqui, só retornar true ou false
+export const callAllOnceSimple

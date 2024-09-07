@@ -1,9 +1,9 @@
 {
   "currentMonth": 8,
-  "keepThisApiOn": false,
-  "usageMainAccount": 501212,
-  "usageThisAccount": 579356,
-  "lastStart": null,
-  "lastDiscount": null,
+  "keepThisApiOn": true,
+  "usageMainAccount": 0,
+  "usageThisAccount": 5174020,
+  "lastStart": 1725728153406,
+  "lastDiscount": 1725728153449,
   "alreadyStartedThis": true
 }

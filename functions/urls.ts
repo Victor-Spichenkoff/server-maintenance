@@ -24,8 +24,8 @@ export default class Urls{
         return this.urls[id]    
     }
 
-    getApi(id: number) {
-        return this.apis[id]
+    getApi(index: number) {
+        return this.apis[index]
     }
 
     getApiIdByName(name: ApiName) {

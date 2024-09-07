@@ -1,10 +1,9 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 const schedule = require('node-schedule')
 import wrongUrls from './verify'
 import formatMensageAndSend, { sendTelegramMensage } from './sendToPhone'
 import Urls from "./urls"
-import { getData, write } from './manegeData'
-import { Request, Response } from 'express'
+import { getData } from './manegeData'
 const data = new Urls()
 
 
@@ -57,10 +56,41 @@ async function makeInitialRequests() {
 //testar essas duas
 export async function makeRecursiveRequest(UseStoraged = false, url = '', count:number=0) {
     const res = await axios.get(url +'/teste')
-    if(res) return count++
+    if(res) return ++count
     const timeOut = setTimeout(() => {
         makeRecursiveRequest(false, url)
     }, 3000)
+}
+
+
+/**
+ * 
+ * 
+ * @returns 1 (sucesso) ou 0 (erro de timeout 5s ou outro)
+ */
+export const makeOneRequest = async (url: string, name: string="", erros?: string[]) => {
+    try {
+        const res = await axios(url + "/teste", {
+            timeout: 1
+        })
+    
+        if(res.status < 300) {
+            return 1
+        }
+
+        erros?.push(name)
+        return 0
+    } catch(e) {
+        const error = e as AxiosError//erro aqui
+        console.log(error.message)
+        console.log("⬆️ Erro ao fazer 1 requeset para "+ url)
+        erros?.push(name)
+        return 0
+    }
+
+
+
+    
 }
 
 
