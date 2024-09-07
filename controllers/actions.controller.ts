@@ -3,6 +3,7 @@ import { write } from "../functions/manegeData"
 import { makeRecursiveRequest, selectTimer } from "../functions/schedule"
 import { sendTelegramMensage } from "../functions/sendToPhone"
 import Urls from "../functions/urls"
+import { setKeepApiOn } from "../utils/time"
 
 const data = new Urls()
 
@@ -56,8 +57,11 @@ export async function setOne(index: number, res: any) {
 
 
 export async function setAll(res: Response) {
+    setKeepApiOn()
     await write('currentMantenedName', 'all')
     await write('off', false)
+
+    selectTimer()
 
     sendTelegramMensage('Setado para TODOS')
     res.send('Setado para todos')
@@ -67,11 +71,11 @@ export async function setAll(res: Response) {
 
 
 
-export async function turnOff(req:Request, res: Response) {
+export async function turnOff(req?:Request, res?: Response) {
     await write('off', true)
     await write('currentMantenedUrl', 'https://google.com')
     await write('currentMantenedName', 'Nenhum Selecionado')
 
     sendTelegramMensage('Tudo OFF')
-    res.send("Tudo OFF")
+    res?.send("Tudo OFF")
 }

@@ -1,16 +1,9 @@
 import { maxTimeAvaliable } from "../global"
 import { getTimeData, writeTimeInfo } from "../times/manegeTimeJson"
 
-export const resetAccountsTime = () => {
-    writeTimeInfo("lastStart", null)
-    writeTimeInfo("usageMainAccount", 0)
-    writeTimeInfo("usageThisAccount", 0)
-}
-
 
 /**
  * 
- * @param type
  * @returns ms de quanto ainda sobra
  */
 export const getRemanigTimeFor = (type: "main" | "this") => {
@@ -45,3 +38,11 @@ export const getHoursAndMinutesRemanig = () => {
 
     return timeStampToHourAndMinute(remaing)
 }
+
+
+
+export const milisecondsToMinutes = (ms: number) => {
+    return ms / 1000 / 60
+}
+
+export const setKeepApiOn = () => writeTimeInfo("keepThisApiOn", true)

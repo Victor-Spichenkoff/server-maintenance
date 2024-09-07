@@ -5,8 +5,10 @@ export interface ITime {
     usageThisAccount: number
     usageMainAccount: number
     lastStart: number | null
+    lastDiscount: number | null
     keepThisApiOn: boolean
     currentMonth: number
+    alreadyStartedThis: boolean
 }
 
-export type timeKeys = "thisAccount" | "mainAccount" | "usageThisAccount" | "usageMainAccount" | "lastStart" | "keepThisApiOn" | "currentMonth"
+export type timeKeys = "thisAccount" | "mainAccount" | "usageThisAccount" | "usageMainAccount" | "lastStart" | "keepThisApiOn" | "currentMonth" | "lastDiscount" | "alreadyStartedThis"

@@ -14,9 +14,23 @@
 
 # to-do
 - implementar endpoints para devolver o remaing de cada um
-- 
+- usar o alreadyStartedThis para garantir melhor economia de recuros
+    - Se usar o startApiOn, ele coida de tudo, os offs, devem setar para false
 
 
 # TEste a fazer 
 - ver se usando o all, ele consome mais do main
 - ver se 
+
+
+# Estrutura:
+  "keepThisApiOn": false,
+  "usageMainAccount": minutos,
+  "usageThisAccount": minutos,
+  "lastStart": null timestamp
+
+
+# Workflow 
+- Quero inciar -> salvar o inicio e iniciar modo recursivo
+- A cada chamda, descontar
+- Se mudar para deixar algum ativo (além da api), descontar e usar os 2 juntos

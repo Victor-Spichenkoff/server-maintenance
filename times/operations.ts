@@ -1,29 +1,60 @@
 import e from "express"
-import { getData } from "../functions/manegeData"
+import { getData, write } from "../functions/manegeData"
 import { callThis } from "../functions/schedule"
 import { sendTelegramMensage } from "../functions/sendToPhone"
 import { maxTimeAvaliable, thirteenMinutes } from "../global"
 import { getTimeData, writeTimeInfo } from "./manegeTimeJson"
-import { getHoursAndMinutesRemanig, getRemanigTimeFor, resetAccountsTime, timeStampToHourAndMinute } from "../utils/time"
+import { getHoursAndMinutesRemanig, getRemanigTimeFor, timeStampToHourAndMinute } from "../utils/time"
 import Urls from "../functions/urls"
+import { turnOff } from "../controllers/actions.controller"
+
+
+
+export const resetAccountsTime = () => {
+    writeTimeInfo("lastStart", null)
+    writeTimeInfo("lastDiscount", null)
+    writeTimeInfo("usageMainAccount", 0)
+    writeTimeInfo("usageThisAccount", 0)
+}
+
+
 
 /**
- * Já cuida de deixar essa ligada,
- * Só para se acabar o tempo ou setar keepThisOn == false
+ * * Já cuida de deixar essa ligada,     
+ * * Só para se acabar o tempo ou setar keepThisOn == false     
+ * * Se tiver ligado outro, ele desativa as chamadas desse, não precisa se já é chamdo no schedule
  */
 export const keepThisOn = async () => {
     const timeInfo = getTimeData()
 
-    if(timeInfo.thisAccount < timeInfo.usageThisAccount)
+    if (maxTimeAvaliable < timeInfo.usageThisAccount / 1000 / 60 / 60)
         return sendTelegramMensage("FIM DO TEMPO PARA A API")
 
-    if(!timeInfo.keepThisApiOn)
+    if (!timeInfo.keepThisApiOn)
         return
 
 
+    const now = Date.now()
+
+    if (!timeInfo.lastStart) {
+        writeTimeInfo("lastStart", now)
+    }
+
+    if (timeInfo.lastDiscount) {
+        discountFromThisAccountTime()
+    }
+
+    writeTimeInfo("lastDiscount", now)
+
+
     const configs = await getData()
-    callThis()
-    if(configs.hightMenssages)
+
+    if (configs.currentMantenedName == "Nenhum Selecionado")
+        callThis()
+
+    discountFromApis()
+
+    if (configs.hightMenssages)
         sendTelegramMensage("API principal chamada")
 
     setTimeout(() => keepThisOn(), thirteenMinutes)
@@ -34,7 +65,7 @@ export const getMonthAndUpdate = () => {
     var storageMonth = getTimeData().currentMonth
     const now = new Date()
 
-    if(now.getMonth() == storageMonth)
+    if (now.getMonth() == storageMonth)
         return storageMonth
 
 
@@ -51,52 +82,56 @@ export const StartKeepApiOnMode = () => {
     const now = Date.now()
 
     writeTimeInfo("keepThisApiOn", true)
-    
+    writeTimeInfo("lastDiscount", Date.now())
 
-    callThis()
+
+    keepThisOn()
 }
 
+/**
+ * ele não mexe no start, apenas o this pode mudar ele
+ */
+export const discountFromMainAccountTime = async () => {
+    const config = await getData()
+    if (config.currentMantenedName == "Nenhum Selecionado")
+        return
 
-export const discountFromMainAccountTime = async  () => {
+
     const now = Date.now()
 
     const timeInfo = getTimeData()
-    const config = await getData()
 
-    writeTimeInfo("lastStart", now)
-
-    if(!timeInfo.lastStart)
-       return 
+    if (!timeInfo.lastDiscount)
+        return
 
 
-    var difference = now - Number(timeInfo.lastStart)
+    var difference = now - Number(timeInfo.lastDiscount)
 
-
-    if(config.currentMantenedName == 'all')
-        difference *= new Urls().urls.length
+    if (config.currentMantenedName == 'all')
+        difference *= (new Urls()).urls.length
 
     console.log("Diferença: " + difference)
 
     writeTimeInfo("usageMainAccount", timeInfo.usageMainAccount + difference)
-
 }
+
 
 export const discountFromThisAccountTime = () => {
     const now = Date.now()
 
     const timeInfo = getTimeData()
 
-    writeTimeInfo("lastStart", now)
+    writeTimeInfo("lastDiscount", now)
 
-    if(!timeInfo.lastStart)
-       return 
+    if (!timeInfo.lastDiscount)
+        return
 
 
-    const difference = now - Number(timeInfo.lastStart)
+    const difference = now - Number(timeInfo.lastDiscount)
 
-    console.log("Diferença: " + difference)
+    console.log("Diferença no THIS: " + difference)
 
-    writeTimeInfo("usageMainAccount", timeInfo.usageMainAccount + difference)
+    writeTimeInfo("usageThisAccount", timeInfo.usageThisAccount + difference)
 }
 
 
@@ -107,17 +142,42 @@ export const discountFromThisAccountTime = () => {
 /**
  * Essa que realmente diminui os dados
  */
-export const discountFromApis = () => {
-    discountFromMainAccountTime()
-    discountFromThisAccountTime
+export const discountFromApis = async () => {
+    const timeInfo = getTimeData()
+    const config = await getData()
 
-    const infoData = getTimeData()
+
+    const now = Date.now()
+
+    writeTimeInfo("lastDiscount", now)
+
+    if (!timeInfo.lastDiscount)
+        return
+
+
+    const differenceForThis = now - Number(timeInfo.lastDiscount)
+
+    console.log("Diferença no THIS: " + differenceForThis)
+
+    writeTimeInfo("usageThisAccount", timeInfo.usageThisAccount + differenceForThis)
+
+    if(config.currentMantenedName == "Nenhum Selecionado")
+        return
+
+
+    let differenceForMain = now - Number(timeInfo.lastDiscount)
     
-    const { hours, minutes } = getHoursAndMinutesRemanig()
-
-    return `${hours}:${minutes}`
-    // return ""
+    if(config.currentMantenedName == "all")
+        differenceForMain *= (new Urls()).urls.length
+    
+    
+    console.log("Diferença no MAIN: " + differenceForMain)
+    writeTimeInfo("usageMainAccount", timeInfo.usageMainAccount + differenceForMain)
 }
+// export const discountFromApis = () => {
+//     discountFromMainAccountTime()
+//     discountFromThisAccountTime()
+// }
 
 
 
@@ -130,6 +190,19 @@ export const turnThisOff = () => {
     discountFromThisAccountTime()
 
     writeTimeInfo("keepThisApiOn", false)
-    writeTimeInfo("lastStart", null)    
+    writeTimeInfo("lastStart", null)
+    writeTimeInfo("lastDiscount", null)
 
+    //se é para desligar essa, desligar as outras também (não vai chamar)
+    turnOff()
+
+    sendTelegramMensage("Desativando API")
+}
+
+
+export const baseConfigForTimeOnStart = () => {
+    if (process.env.DEV) return
+
+    writeTimeInfo("lastDiscount", null)
+    writeTimeInfo("lastStart", null)
 }
