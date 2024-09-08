@@ -81,12 +81,14 @@ export async function turnOff(req?:Request, res?: Response) {
     res?.send("Tudo OFF")
 }
 
-
+/**
+ * * Demora 10 segundos cada (vai ter 5, OLX == ultima atualização)
+ */
 export const callAllOnce:RequestHandler = async (req, res) => {
     const urls = data.urls
     const errorsNames: string[] = []
     // const urls = ['https://portfolio-api-i3t0.onrender.com']
-    var successUrlsCount = 0
+    let successUrlsCount = 10_000
 
 
 
@@ -98,7 +100,7 @@ export const callAllOnce:RequestHandler = async (req, res) => {
     results.forEach(result => successUrlsCount += result)
 
     res.send({
-        allworking: successUrlsCount == urls.length,
+        isAllWorking: successUrlsCount >= urls.length,
         working: successUrlsCount,
         total: urls.length,
         errors: errorsNames
@@ -108,4 +110,23 @@ export const callAllOnce:RequestHandler = async (req, res) => {
 
 //ele deve ter uma resposta mais simlples (usar no de forçar)
 //no forçar, o front cuida de fazer várias reqs, aqui, só retornar true ou false
-export const callAllOnceSimple
+export const callAllOnceSimple:RequestHandler = async (req, res) => {
+    const urls = data.urls
+    const errorsNames: string[] = []
+    // const urls = ['https://portfolio-api-i3t0.onrender.com']
+    let successUrlsCount = 0
+
+
+
+    const results = await Promise.all(urls.map(async (url, i) => {
+        return await makeOneRequest(url, data.getApi(i), errorsNames, 4_000)
+    }))
+
+    
+    results.forEach(result => successUrlsCount += result)
+
+    res.send({
+        isAllWorking: successUrlsCount == urls.length,
+        working: successUrlsCount,
+    })
+}

@@ -2,7 +2,7 @@ import { Router } from "express"
 import { informateNewIpAccess } from "../utils/ip"
 import { getHightmenssagesStatus, sendInfosPage, toggleHightMenssages } from "../utils/menssages"
 import { sendInfos, sendInfosById } from "../controllers/infos.controller"
-import { callAllOnce, forceLoadAllOnce, setAll, setOne, turnOff } from "../controllers/actions.controller"
+import { callAllOnce, callAllOnceSimple, forceLoadAllOnce, setAll, setOne, turnOff } from "../controllers/actions.controller"
 import { getBothRemaningTime, getLastDiscount, getLastStart, getRemanigTimeForMain, getRemanigTimeForThis, getThisStatus, turnKeepApiOn, turnOffThisApiController, updateUsageMiddleware } from "../controllers/times.controller"
 import { discountFromApis } from "../times/operations"
 import { requestWithLongTimeout, resetTime } from "../controllers/tests.controller"
@@ -41,6 +41,8 @@ routes.get('/initialLoad', initialLoad)
 routes.get('/load', sendInfosPage)
 routes.get('/forceAllOnce', forceLoadAllOnce)
 routes.get('/callAllOnce', callAllOnce)
+//usar essa para fazer várias, menor
+routes.get('/callAllOnce/force', callAllOnceSimple)
 
 
 //infos
