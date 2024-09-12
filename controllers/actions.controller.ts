@@ -116,11 +116,12 @@ export const callAllOnceSimple:RequestHandler = async (req, res) => {
     // const urls = ['https://portfolio-api-i3t0.onrender.com']
     let successUrlsCount = 0
 
-
-
-    const results = await Promise.all(urls.map(async (url, i) => {
-        return await makeOneRequest(url, data.getApi(i), errorsNames, 4_000)
-    }))
+    let results = [1, 0, 0]
+    if(!process.env.NOT_REQ) {
+        results = await Promise.all(urls.map(async (url, i) => {
+            return await makeOneRequest(url, data.getApi(i), errorsNames, 4_000)
+        }))
+    }
 
     
     results.forEach(result => successUrlsCount += result)

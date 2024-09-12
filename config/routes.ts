@@ -52,8 +52,6 @@ routes.get('/hightMenssagesStatus', getHightmenssagesStatus)
 routes.get('/apiStatus', getThisStatus)
 
 //tempo
-
-
 routes.use('/usage', updateUsageMiddleware)
 routes.get('/usage/both', getBothRemaningTime)
 routes.get('/usage/this',getRemanigTimeForThis)

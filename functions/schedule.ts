@@ -18,7 +18,7 @@ export function callThis() {
     axios.get(thisUrl)
 }
 
-callThis()//já carrega esse
+
 
 
 async function verifyAndSendAll(sendMensage: boolean=false) {

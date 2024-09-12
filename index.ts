@@ -5,7 +5,7 @@ import './functions/sendToPhone'
 import './functions/schedule'
 import { routes } from "./config/routes"
 import { configDotenv } from 'dotenv'
-import { baseConfigForTimeOnStart } from "./times/operations"
+import { baseConfigForTimeOnStart, keepThisOn } from "./times/operations"
 
 //Minha conta para  esse: edge(conta secundária)(spichekoffvictor)
 //nome: VictorSpich
@@ -16,6 +16,7 @@ app.use(cors())
 //evitar que ele conte coisas erradas ao iniciar (produção apenas)
 baseConfigForTimeOnStart()
 
+keepThisOn()
 
 app.use(routes)
 

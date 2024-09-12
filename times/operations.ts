@@ -18,7 +18,7 @@ export const resetAccountsTime = () => {
 }
 
 
-
+var times = 0
 /**
  * * Já cuida de deixar essa ligada,     
  * * Só para se acabar o tempo ou setar keepThisOn == false     
@@ -26,15 +26,21 @@ export const resetAccountsTime = () => {
  */
 export const keepThisOn = async () => {
     const timeInfo = getTimeData()
-
+    
     if (maxTimeAvaliable < timeInfo.usageThisAccount / 1000 / 60 / 60)
         return sendTelegramMensage("FIM DO TEMPO PARA A API")
-
+    
     if (!timeInfo.keepThisApiOn)
         return
-
-
+    
+    
     const now = Date.now()
+    
+    //debugg
+    times ++
+    const formated =  (new Date(now)).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
+    console.log("Execução " + times + " - " + formated)
+    //
 
     if (!timeInfo.lastStart) {
         writeTimeInfo("lastStart", now)
@@ -80,6 +86,7 @@ export const getMonthAndUpdate = () => {
 
 export const StartKeepApiOnMode = () => {
     const now = Date.now()
+    times = 0
 
     writeTimeInfo("keepThisApiOn", true)
     writeTimeInfo("lastDiscount", Date.now())
@@ -129,7 +136,6 @@ export const discountFromThisAccountTime = () => {
 
     const difference = now - Number(timeInfo.lastDiscount)
 
-    console.log("Diferença no THIS: " + difference)
 
     writeTimeInfo("usageThisAccount", timeInfo.usageThisAccount + difference)
 }
@@ -160,8 +166,6 @@ export const discountFromApis = async () => {
 
 
     const differenceForThis = now - Number(timeInfo.lastDiscount)
-
-    console.log("Diferença no THIS: " + differenceForThis)
 
     writeTimeInfo("usageThisAccount", timeInfo.usageThisAccount + differenceForThis)
 
@@ -205,6 +209,7 @@ export const turnThisOff = () => {
 
 
 export const baseConfigForTimeOnStart = () => {
+    writeTimeInfo("alreadyStartedThis", false)
     if (process.env.DEV) return
 
     // writeTimeInfo("lastDiscount", null)
