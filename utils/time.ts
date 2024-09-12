@@ -41,6 +41,31 @@ export const getHoursAndMinutesRemanig = () => {
 
 
 
+export const getLastStartFormatted = () => {
+    const stoarged = getTimeData().lastStart
+    if(!stoarged) 
+        return null
+
+    const storageLast = new Date(Number(stoarged))
+    const brTime = storageLast.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
+    
+    return brTime
+}
+
+export const getlastDiscountFormatted = () => {
+    const stoarged = getTimeData().lastDiscount
+    if(!stoarged) 
+        return null
+
+    const storageLast = new Date(Number(stoarged))
+    const brTime = storageLast.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
+    
+    return brTime
+}
+
+
+
+
 export const milisecondsToMinutes = (ms: number) => {
     return ms / 1000 / 60
 }

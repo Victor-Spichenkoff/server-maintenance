@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
-import { discountFromApis, resetAccountsTime, StartKeepApiOnMode, turnThisOff } from "../times/operations";
-import { getRemanigTimeFor, timeStampToHourAndMinute } from "../utils/time";
+import { discountFromApis, StartKeepApiOnMode, turnThisOff } from "../times/operations";
+import { getlastDiscountFormatted, getLastStartFormatted, getRemanigTimeFor, timeStampToHourAndMinute } from "../utils/time";
 import { getTimeData } from "../times/manegeTimeJson";
 
 export const turnKeepApiOn: RequestHandler = (req, res) => {
@@ -19,8 +19,7 @@ export const turnOffThisApiController: RequestHandler = (req, res) => {
 }
 
 export const getLastStart: RequestHandler = (req, res) => {
-    const storageLast = new Date(Number(getTimeData().lastStart))
-    const brTime = storageLast.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
+    const brTime = getLastStartFormatted()
 
     res.send(brTime)
 }
@@ -76,7 +75,9 @@ export const getBothRemaningTime: RequestHandler = (req, res) => {
         this: {
             hours: remaingForThis.hours,
             minutes: remaingForThis.minutes
-        }
+        },
+        lastStart: getLastStartFormatted(),
+        lastDiscount: getlastDiscountFormatted()
      })
 }
 

@@ -147,6 +147,10 @@ export const discountFromApis = async () => {
     const config = await getData()
 
 
+    //nada ocorreu para ter que descontar
+    if(!timeInfo.keepThisApiOn && config.off)
+        return
+
     const now = Date.now()
 
     writeTimeInfo("lastDiscount", now)
@@ -191,7 +195,7 @@ export const turnThisOff = () => {
 
     writeTimeInfo("keepThisApiOn", false)
     writeTimeInfo("lastStart", null)
-    writeTimeInfo("lastDiscount", null)
+    // writeTimeInfo("lastDiscount", null)
 
     //se é para desligar essa, desligar as outras também (não vai chamar)
     turnOff()
@@ -203,6 +207,6 @@ export const turnThisOff = () => {
 export const baseConfigForTimeOnStart = () => {
     if (process.env.DEV) return
 
-    writeTimeInfo("lastDiscount", null)
+    // writeTimeInfo("lastDiscount", null)
     writeTimeInfo("lastStart", null)
 }

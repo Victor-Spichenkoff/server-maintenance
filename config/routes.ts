@@ -66,7 +66,8 @@ routes.get("/lastDiscount", getLastDiscount)
 
 
 //mudar prioridades
-routes.get('/toggleHightMenssages', toggleHightMenssages)
+routes.get('/hightMenssages/toggle', toggleHightMenssages)
+routes.get('/hightMenssages/status', getHightmenssagesStatus)
 
 
 routes.get('/sendIp/:ip',informateNewIpAccess)
