@@ -2,3 +2,4 @@ node_modules
 server-page
 fixes
 .vercel
+.env
