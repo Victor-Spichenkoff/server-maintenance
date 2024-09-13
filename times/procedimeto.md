@@ -18,8 +18,7 @@
 
 
 # TEste a fazer 
-- ver se usando o all, ele consome mais do main
-- ver se 
+
 
 
 # Estrutura:

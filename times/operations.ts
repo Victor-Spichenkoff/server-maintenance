@@ -67,7 +67,7 @@ export const keepThisOn = async () => {
         sendTelegramMensage("API principal chamada")
 
     // setTimeout(() => keepThisOn(), thirteenMinutes)
-    setTimeout(() => keepThisOn(), 10_000 * 60 * 1)
+    setTimeout(() => keepThisOn(), 13_000 * 60 * 1)
 }
 
 

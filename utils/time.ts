@@ -22,6 +22,24 @@ export const getRemanigTimeFor = (type: "main" | "this") => {
     return remaing * 1000 * 60
 }
 
+/**
+ * * Deve retornar o tempo de uso em horas em minutos
+ */
+export const getUSageFor = (type: "main" | "this") => {
+    const timeInfo = getTimeData()
+
+    let usage
+
+    if(type == "main") {
+        usage = timeInfo[`usageMainAccount`]
+    } else {
+        usage = timeInfo["usageThisAccount"]
+    }
+
+    return timeStampToHourAndMinute(usage)
+}
+
+
 
 export const timeStampToHourAndMinute = (timeStamp: number) => {
     const remanigInMinutes = timeStamp / 1000 / 60
@@ -71,23 +89,23 @@ export const milisecondsToMinutes = (ms: number) => {
     return ms / 1000 / 60
 }
 
+
 export const setKeepApiOn = () => writeTimeInfo("keepThisApiOn", true)
 
 
-export const backupUsages = () => {
-    // if(process.env.DEV == "true")
-    //     return
 
-    const remaingForThisTimeStamp = getRemanigTimeFor('this')
+
+export const sendBackupUsages = () => {
+    if(process.env.DEV == "true")
+        return
+
     
-    const remaingForThis = timeStampToHourAndMinute(remaingForThisTimeStamp)
+    const usageForThis = getUSageFor("this")
 
-    const remaingForMainTimeStamp = getRemanigTimeFor('main')
     
-    const remaingForMain = timeStampToHourAndMinute(remaingForMainTimeStamp)
+    const usageForMain = getUSageFor("main")
 
-    console.log(`
-    Tempo para o THIS: ${remaingForThis.hours}h  ${remaingForThis.minutes}
-        
-    \n\nTempo para o MAIN: ${remaingForMain.hours}h  ${remaingForMain.minutes}`)
-}
+    console.log(`Backup:
+Tempo para o THIS: ${usageForThis.hours}h  ${usageForThis.minutes}m
+Tempo para o MAIN: ${usageForMain.hours}h  ${usageForMain.minutes}m`)
+}   

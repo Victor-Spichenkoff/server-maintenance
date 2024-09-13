@@ -6,7 +6,7 @@ import './functions/schedule'
 import { routes } from "./config/routes"
 import { configDotenv } from 'dotenv'
 import { baseConfigForTimeOnStart, keepThisOn } from "./times/operations"
-import { backupUsages } from "./utils/time"
+import { sendBackupUsages } from "./utils/time"
 
 //Minha conta para  esse: edge(conta secundária)(spichekoffvictor)
 //nome: VictorSpich
@@ -18,7 +18,7 @@ app.use(express.json())
 
 //evitar que ele conte coisas erradas ao iniciar (produção apenas)
 baseConfigForTimeOnStart()
-backupUsages()
+sendBackupUsages()
 keepThisOn()
 
 app.use(routes)
