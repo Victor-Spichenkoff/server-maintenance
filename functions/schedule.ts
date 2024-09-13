@@ -4,10 +4,11 @@ import wrongUrls from './verify'
 import formatMensageAndSend, { sendTelegramMensage } from './sendToPhone'
 import Urls from "./urls"
 import { getData } from './manegeData'
+import { StartKeepApiOnMode } from '../times/operations'
 const data = new Urls()
 
 
-const thisUrl = 'https://server-maintenance-ssu7.onrender.com'
+const thisUrl = process.env.DEV == "true" ? "http://localhost:2009" : 'https://server-maintenance-ssu7.onrender.com'
 // const thisUrl = 'https://server-maintenance.onrender.com'//old
 
 var times = 0
@@ -35,15 +36,12 @@ async function verifyAndSendAll(sendMensage: boolean=false) {
 
 
 
-
-
-
-
-
-
-
-
 async function makeInitialRequests() {
+    //evitar consumir em testes
+    if(process.env.NOT_REQ=="true")
+        return
+
+
     const obj = await getData()
     try{
         return await axios.get(obj.currentMantenedUrl+ '/teste')
@@ -106,13 +104,7 @@ async function selectTimer(send: boolean = false) {
         return
     }
     
-
-    //desativar no dev
-    if(process.env.NOT_REQ)
-        return
-
-
-
+    
 
     //varias requests(iniciais)
     var vezes = 0
@@ -133,13 +125,13 @@ async function selectTimer(send: boolean = false) {
         }, 3000)
     }
 
-    callThis()
+    // callThis()
+    StartKeepApiOnMode()
 
     setTimeout(()=> {
-        //pediu para sempre enviar
-        if(obj.hightMenssages) {
+        if(obj.hightMenssages) 
             selectTimer(true)
-        }
+
         const rightHours = hour == 11 || hour == 15 || hour == 22
 
         if(rightHours && min > 0 && min < 14) {// 11 = 8horas no Brasil
@@ -151,18 +143,25 @@ async function selectTimer(send: boolean = false) {
     }, 1000 * 60 * 12)
 
 
+    //para não consumir, desligar em testes
+    if(process.env.NOT_REQ=="true")
+        return
+    
+
     if(obj.currentMantenedName == 'all') return verifyAndSendAll(send) 
 
-    //para não consumir, desligar em testes
-    if(process.env.NOT_REQ)
-        return
+
     const res = await axios.get(obj.currentMantenedUrl+ '/teste')
-    if(send && typeof res.data == 'string') sendTelegramMensage('Funcionando ' + name)
-    if(send && typeof res.data != 'string') sendTelegramMensage('Erro em: ' + name)
+
+    if(send && typeof res.data == 'string') 
+        sendTelegramMensage('Funcionando ' + name)
+
+    if(send && typeof res.data != 'string') 
+        sendTelegramMensage('Erro em: ' + name)
 }
 
 
-if(!process.env.NOT_REQ)
+if(process.env.NOT_REQ!="true")
     selectTimer(true)
 
 

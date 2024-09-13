@@ -26,19 +26,19 @@ var times = 0
  */
 export const keepThisOn = async () => {
     const timeInfo = getTimeData()
-    
+
     if (maxTimeAvaliable < timeInfo.usageThisAccount / 1000 / 60 / 60)
         return sendTelegramMensage("FIM DO TEMPO PARA A API")
-    
+
     if (!timeInfo.keepThisApiOn)
         return
-    
-    
+
+
     const now = Date.now()
-    
+
     //debugg
-    times ++
-    const formated =  (new Date(now)).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
+    times++
+    const formated = (new Date(now)).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
     console.log("Execução " + times + " - " + formated)
     //
 
@@ -52,10 +52,13 @@ export const keepThisOn = async () => {
 
     writeTimeInfo("lastDiscount", now)
 
+    !timeInfo.alreadyStartedThis ?  writeTimeInfo("alreadyStartedThis", true) : ""
+
 
     const configs = await getData()
 
-    if (configs.currentMantenedName == "Nenhum Selecionado")
+    //n]ao entendi pq isso
+    // if (configs.currentMantenedName == "Nenhum Selecionado")
         callThis()
 
     discountFromApis()
@@ -63,7 +66,8 @@ export const keepThisOn = async () => {
     if (configs.hightMenssages)
         sendTelegramMensage("API principal chamada")
 
-    setTimeout(() => keepThisOn(), thirteenMinutes)
+    // setTimeout(() => keepThisOn(), thirteenMinutes)
+    setTimeout(() => keepThisOn(), 10_000 * 60 * 1)
 }
 
 
@@ -85,6 +89,13 @@ export const getMonthAndUpdate = () => {
 
 
 export const StartKeepApiOnMode = () => {
+    const isAlreadyStarted = getTimeData().alreadyStartedThis
+
+    //não precisa ficar inicindo
+    if (isAlreadyStarted)
+        return
+
+
     const now = Date.now()
     times = 0
 
@@ -143,8 +154,6 @@ export const discountFromThisAccountTime = () => {
 
 
 
-
-
 /**
  * Essa que realmente diminui os dados
  */
@@ -154,7 +163,7 @@ export const discountFromApis = async () => {
 
 
     //nada ocorreu para ter que descontar
-    if(!timeInfo.keepThisApiOn && config.off)
+    if (!timeInfo.keepThisApiOn && config.off)
         return
 
     const now = Date.now()
@@ -169,17 +178,15 @@ export const discountFromApis = async () => {
 
     writeTimeInfo("usageThisAccount", timeInfo.usageThisAccount + differenceForThis)
 
-    if(config.currentMantenedName == "Nenhum Selecionado")
+    if (config.currentMantenedName == "Nenhum Selecionado")
         return
 
 
     let differenceForMain = now - Number(timeInfo.lastDiscount)
-    
-    if(config.currentMantenedName == "all")
+
+    if (config.currentMantenedName == "all")
         differenceForMain *= (new Urls()).urls.length
-    
-    
-    console.log("Diferença no MAIN: " + differenceForMain)
+
     writeTimeInfo("usageMainAccount", timeInfo.usageMainAccount + differenceForMain)
 }
 // export const discountFromApis = () => {
@@ -199,18 +206,20 @@ export const turnThisOff = () => {
 
     writeTimeInfo("keepThisApiOn", false)
     writeTimeInfo("lastStart", null)
-    // writeTimeInfo("lastDiscount", null)
+    writeTimeInfo("alreadyStartedThis", false)
+    writeTimeInfo("lastDiscount", null)
 
     //se é para desligar essa, desligar as outras também (não vai chamar)
     turnOff()
+
+
 
     sendTelegramMensage("Desativando API")
 }
 
 
 export const baseConfigForTimeOnStart = () => {
-    writeTimeInfo("alreadyStartedThis", false)
-    if (process.env.DEV) return
+    if (process.env.DEV == "true") return
 
     // writeTimeInfo("lastDiscount", null)
     writeTimeInfo("lastStart", null)

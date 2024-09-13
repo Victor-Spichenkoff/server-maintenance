@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import { discountFromApis, StartKeepApiOnMode, turnThisOff } from "../times/operations";
 import { getlastDiscountFormatted, getLastStartFormatted, getRemanigTimeFor, timeStampToHourAndMinute } from "../utils/time";
-import { getTimeData } from "../times/manegeTimeJson";
+import { getTimeData, writeTimeInfo } from "../times/manegeTimeJson";
 
 export const turnKeepApiOn: RequestHandler = (req, res) => {
     StartKeepApiOnMode()
@@ -93,4 +93,21 @@ export const getThisStatus:RequestHandler = (req, res) => {
     const status = getTimeData().keepThisApiOn
 
     res.send(status)
+}
+
+
+//para arrumar os tempos, caso erre no deploy
+export const setValueTime: RequestHandler = (req, res) => {
+    const { hours, minutes, type } = req.body
+
+    const timeStamp = Number(hours) * 60 * 60 * 1000 + 
+        Number(minutes) * 60 * 1000
+
+
+    if(type == "this")
+        writeTimeInfo("usageThisAccount", timeStamp)
+    if(type == "main")
+        writeTimeInfo("usageMainAccount", timeStamp)
+
+    res.send(`Novo tempo de uso para ${type} - ${hours}h ${minutes}m `)
 }

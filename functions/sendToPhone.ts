@@ -4,7 +4,7 @@ import wrongUrls from './verify'
 const telegramBotToken = '6746265132:AAHesfWPU4GGxYyWqnbDZSriNnkFcbRFi0E'
 
 async function sendTelegramMensage(mensagem: string): Promise<void> {
-  if(process.env.NOT_SEND) 
+  if(process.env.NOT_SEND=="true") 
     return
 
   const chatId = '1139085287'

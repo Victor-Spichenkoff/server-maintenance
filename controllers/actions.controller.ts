@@ -117,7 +117,7 @@ export const callAllOnceSimple:RequestHandler = async (req, res) => {
     let successUrlsCount = 0
 
     let results = [1, 0, 0]
-    if(!process.env.NOT_REQ) {
+    if(process.env.NOT_REQ!="true") {
         results = await Promise.all(urls.map(async (url, i) => {
             return await makeOneRequest(url, data.getApi(i), errorsNames, 4_000)
         }))

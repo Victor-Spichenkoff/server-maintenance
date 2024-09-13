@@ -1,3 +1,4 @@
+import { sendTelegramMensage } from "../functions/sendToPhone"
 import { maxTimeAvaliable } from "../global"
 import { getTimeData, writeTimeInfo } from "../times/manegeTimeJson"
 
@@ -71,3 +72,22 @@ export const milisecondsToMinutes = (ms: number) => {
 }
 
 export const setKeepApiOn = () => writeTimeInfo("keepThisApiOn", true)
+
+
+export const backupUsages = () => {
+    // if(process.env.DEV == "true")
+    //     return
+
+    const remaingForThisTimeStamp = getRemanigTimeFor('this')
+    
+    const remaingForThis = timeStampToHourAndMinute(remaingForThisTimeStamp)
+
+    const remaingForMainTimeStamp = getRemanigTimeFor('main')
+    
+    const remaingForMain = timeStampToHourAndMinute(remaingForMainTimeStamp)
+
+    console.log(`
+    Tempo para o THIS: ${remaingForThis.hours}h  ${remaingForThis.minutes}
+        
+    \n\nTempo para o MAIN: ${remaingForMain.hours}h  ${remaingForMain.minutes}`)
+}

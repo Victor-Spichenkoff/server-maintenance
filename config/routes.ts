@@ -3,9 +3,9 @@ import { informateNewIpAccess } from "../utils/ip"
 import { getHightmenssagesStatus, sendInfosPage, toggleHightMenssages } from "../utils/menssages"
 import { sendInfos, sendInfosById } from "../controllers/infos.controller"
 import { callAllOnce, callAllOnceSimple, forceLoadAllOnce, setAll, setOne, turnOff } from "../controllers/actions.controller"
-import { getBothRemaningTime, getLastDiscount, getLastStart, getRemanigTimeForMain, getRemanigTimeForThis, getThisStatus, turnKeepApiOn, turnOffThisApiController, updateUsageMiddleware } from "../controllers/times.controller"
+import { getBothRemaningTime, getLastDiscount, getLastStart, getRemanigTimeForMain, getRemanigTimeForThis, getThisStatus, setValueTime, turnKeepApiOn, turnOffThisApiController, updateUsageMiddleware } from "../controllers/times.controller"
 import { discountFromApis } from "../times/operations"
-import { requestWithLongTimeout, resetTime } from "../controllers/tests.controller"
+import { requestWithLongTimeout, resetTime, testTelegramSendMessage } from "../controllers/tests.controller"
 
 const routes = Router()
 
@@ -24,7 +24,9 @@ routes.get('/testar', (req, res) => {
     console.log('testado')
     res.send('Foi')
 })
+routes.get('/sendMessage', testTelegramSendMessage)
 
+routes.post('/setTime', setValueTime)
 
 
 //seleção de 1 para manter

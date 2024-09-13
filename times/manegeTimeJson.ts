@@ -24,3 +24,4 @@ export function writeTimeInfo(key: timeKeys, value: number | null | boolean) {
         console.error('Erro ao modificar o arquivo:', err)
       }
 }
+
