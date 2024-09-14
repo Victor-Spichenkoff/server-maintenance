@@ -9,6 +9,7 @@
     "vercel-build": "tsc",
     "dev": "nodemon index.ts --ext js,ts --ignore '*.json'",
     "build": "npx prisma generate",
+    "postinstall": "prisma generate",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
