@@ -7,9 +7,13 @@ import { routes } from "./config/routes"
 import { configDotenv } from 'dotenv'
 import { baseConfigForTimeOnStart, keepThisOn } from "./times/operations"
 import { sendBackupUsages } from "./utils/time"
+import { createBaseApisData } from "./services/apis.service"
+import { createBaseTimesData } from "./services/times.service"
 
 //Minha conta para  esse: edge(conta secundária)(spichekoffvictor)
 //nome: VictorSpich
+
+
 
 configDotenv()
 app.use(cors())

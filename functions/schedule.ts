@@ -3,8 +3,9 @@ const schedule = require('node-schedule')
 import wrongUrls from './verify'
 import formatMensageAndSend, { sendTelegramMensage } from './sendToPhone'
 import Urls from "./urls"
-import { getData } from './manegeData'
+
 import { StartKeepApiOnMode } from '../times/operations'
+import { getData } from '../services/apis.service'
 const data = new Urls()
 
 
@@ -99,7 +100,7 @@ async function selectTimer(send: boolean = false) {
 
 
     if(obj.off) {
-        sendTelegramMensage('Desligando servidor (obj.off == true)')
+        sendTelegramMensage('Sem requisição para APIs (obj.off == true)')
         if(send) sendTelegramMensage('Desativado')
         return
     }

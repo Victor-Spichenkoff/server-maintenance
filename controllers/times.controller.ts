@@ -1,7 +1,8 @@
 import { RequestHandler } from "express";
 import { discountFromApis, StartKeepApiOnMode, turnThisOff } from "../times/operations";
 import { getlastDiscountFormatted, getLastStartFormatted, getRemanigTimeFor, timeStampToHourAndMinute } from "../utils/time";
-import { getTimeData, writeTimeInfo } from "../times/manegeTimeJson";
+import { getTimeData, writeTimeInfo } from "../services/times.service";
+
 
 export const turnKeepApiOn: RequestHandler = (req, res) => {
     StartKeepApiOnMode()
@@ -18,15 +19,17 @@ export const turnOffThisApiController: RequestHandler = (req, res) => {
     res.send("API OFF")
 }
 
-export const getLastStart: RequestHandler = (req, res) => {
-    const brTime = getLastStartFormatted()
+export const getLastStart: RequestHandler = async (req, res) => {
+    const brTime = await getLastStartFormatted()
 
     res.send(brTime)
 }
 
 
-export const getLastDiscount: RequestHandler = (req, res) => {
-    const storageLast = new Date(Number(getTimeData().lastDiscount))
+export const getLastDiscount: RequestHandler = async (req, res) => {
+    const storageLast = new Date(Number(
+        (await getTimeData()).lastDiscount
+    ))
     const brTime = storageLast.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
 
     res.send(brTime)
@@ -36,10 +39,10 @@ export const getLastDiscount: RequestHandler = (req, res) => {
 /**
  * Serve para apenas pegar o restante, só não pasasr os parametros
  */
-export const getRemanigTimeForThis: RequestHandler = (req, res) => {
+export const getRemanigTimeForThis: RequestHandler = async (req, res) => {
     discountFromApis()
 
-    const remaingForThis = getRemanigTimeFor('this')
+    const remaingForThis = await getRemanigTimeFor('this')
     
     const { hours, minutes } = timeStampToHourAndMinute(remaingForThis)
 
@@ -47,10 +50,10 @@ export const getRemanigTimeForThis: RequestHandler = (req, res) => {
 }
 
 
-export const getRemanigTimeForMain: RequestHandler = (req, res) => {
+export const getRemanigTimeForMain: RequestHandler = async (req, res) => {
     discountFromApis()
 
-    const remaingForThis = getRemanigTimeFor('main')
+    const remaingForThis =  await getRemanigTimeFor('main')
     
     const { hours, minutes } = timeStampToHourAndMinute(remaingForThis)
 
@@ -58,12 +61,12 @@ export const getRemanigTimeForMain: RequestHandler = (req, res) => {
 }
 
 
-export const getBothRemaningTime: RequestHandler = (req, res) => {
-    const remaingForThisTimeStamp = getRemanigTimeFor('this')
+export const getBothRemaningTime: RequestHandler = async (req, res) => {
+    const remaingForThisTimeStamp = await getRemanigTimeFor('this')
     
     const remaingForThis = timeStampToHourAndMinute(remaingForThisTimeStamp)
 
-    const remaingForMainTimeStamp = getRemanigTimeFor('main')
+    const remaingForMainTimeStamp = await getRemanigTimeFor('main')
     
     const remaingForMain = timeStampToHourAndMinute(remaingForMainTimeStamp)
 
@@ -76,8 +79,8 @@ export const getBothRemaningTime: RequestHandler = (req, res) => {
             hours: remaingForThis.hours,
             minutes: remaingForThis.minutes
         },
-        lastStart: getLastStartFormatted(),
-        lastDiscount: getlastDiscountFormatted()
+        lastStart: await getLastStartFormatted(),
+        lastDiscount: await getlastDiscountFormatted()
      })
 }
 
@@ -89,8 +92,9 @@ export const updateUsageMiddleware: RequestHandler = (req, res, next) => {
 }
 
 
-export const getThisStatus:RequestHandler = (req, res) => {
-    const status = getTimeData().keepThisApiOn
+export const getThisStatus:RequestHandler = async (req, res) => {
+    const response = await getTimeData()
+    const status = response.keepThisApiOn
 
     res.send(status)
 }

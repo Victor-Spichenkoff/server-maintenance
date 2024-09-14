@@ -5,16 +5,16 @@ import fs from 'fs'
 const timeDataPath = path.join(__dirname, 'time.json');
 
 
-export function getTimeData(): ITime {
+export function getTimeDataOld(): ITime {
     const data = fs.readFileSync(timeDataPath, 'utf8')
 
     return JSON.parse(data)
 }
 
 
-export function writeTimeInfo(key: timeKeys, value: number | null | boolean) {
+export function writeTimeInfoOld(key: timeKeys, value: number | null | boolean) {
     try {
-        const dados:any = getTimeData()
+        const dados:any = getTimeDataOld()
 
         dados[key] = value
       

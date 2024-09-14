@@ -1,6 +1,8 @@
 import { RequestHandler } from "express"
-import { getData } from "../functions/manegeData"
+
 import Urls from "../functions/urls"
+import { getData } from "../services/apis.service"
+import { ApiName } from "../types/data"
 
 const urls = new Urls()
 
@@ -21,6 +23,6 @@ export const sendInfosById: RequestHandler = async (req, res) => {
       return res.json(17)//id do all. coloquei alto mesmo
   
   
-    const id = urls.getApiIdByName(data.currentMantenedName)
+    const id = urls.getApiIdByName(data.currentMantenedName as ApiName)//erro aqui
     res.json(id)
   }

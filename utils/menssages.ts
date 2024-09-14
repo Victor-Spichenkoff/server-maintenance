@@ -1,13 +1,14 @@
 import { Request, Response } from "express"
-import { getData, write } from "../functions/manegeData"
+
 import formatMensageAndSend, { sendTelegramMensage } from "../functions/sendToPhone"
 import wrongUrls from "../functions/verify"
+import { getData, write } from "../services/apis.service"
 
 
 export async function toggleHightMenssages(req: Request, res: Response) {
     try {
         const obj = await getData()
-        const current = obj.hightMenssages
+        const current = obj?.hightMenssages
         await write('hightMenssages', !current)
 
         res.send(!current)
@@ -21,7 +22,7 @@ export async function toggleHightMenssages(req: Request, res: Response) {
 export async function getHightmenssagesStatus(req: Request, res: Response) {
     const data = await getData()
 
-    res.send(data.hightMenssages)
+    res.send(data?.hightMenssages)
 }
 
 

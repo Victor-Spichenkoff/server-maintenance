@@ -1,9 +1,10 @@
 import { Request, RequestHandler, Response } from "express"
-import { write } from "../functions/manegeData"
+
 import { makeOneRequest, makeRecursiveRequest, selectTimer } from "../functions/schedule"
 import { sendTelegramMensage } from "../functions/sendToPhone"
 import Urls from "../functions/urls"
 import { setKeepApiOn } from "../utils/time"
+import { write } from "../services/apis.service"
 
 const data = new Urls()
 

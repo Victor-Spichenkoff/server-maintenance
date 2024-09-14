@@ -1,14 +1,15 @@
 import { sendTelegramMensage } from "../functions/sendToPhone"
 import { maxTimeAvaliable } from "../global"
-import { getTimeData, writeTimeInfo } from "../times/manegeTimeJson"
+import { getTimeData, writeTimeInfo } from "../services/times.service"
+
 
 
 /**
  * 
  * @returns ms de quanto ainda sobra
  */
-export const getRemanigTimeFor = (type: "main" | "this") => {
-    const timeInfo = getTimeData()
+export const getRemanigTimeFor = async (type: "main" | "this") => {
+    const timeInfo = await getTimeData()
 
     var remaing
 
@@ -25,8 +26,8 @@ export const getRemanigTimeFor = (type: "main" | "this") => {
 /**
  * * Deve retornar o tempo de uso em horas em minutos
  */
-export const getUSageFor = (type: "main" | "this") => {
-    const timeInfo = getTimeData()
+export const getUSageFor =async (type: "main" | "this") => {
+    const timeInfo = await getTimeData()
 
     let usage
 
@@ -52,16 +53,16 @@ export const timeStampToHourAndMinute = (timeStamp: number) => {
 }
 
 
-export const getHoursAndMinutesRemanig = () => {
-    const remaing = getRemanigTimeFor('main')
+export const getHoursAndMinutesRemanig = async () => {
+    const remaing = await getRemanigTimeFor('main')
 
     return timeStampToHourAndMinute(remaing)
 }
 
 
 
-export const getLastStartFormatted = () => {
-    const stoarged = getTimeData().lastStart
+export const getLastStartFormatted = async () => {
+    const stoarged = (await getTimeData()).lastStart
     if(!stoarged) 
         return null
 
@@ -71,8 +72,8 @@ export const getLastStartFormatted = () => {
     return brTime
 }
 
-export const getlastDiscountFormatted = () => {
-    const stoarged = getTimeData().lastDiscount
+export const getlastDiscountFormatted = async () => {
+    const stoarged = (await getTimeData()).lastDiscount
     if(!stoarged) 
         return null
 
@@ -95,15 +96,15 @@ export const setKeepApiOn = () => writeTimeInfo("keepThisApiOn", true)
 
 
 
-export const sendBackupUsages = () => {
+export const sendBackupUsages = async () => {
     if(process.env.DEV == "true")
         return
 
     
-    const usageForThis = getUSageFor("this")
+    const usageForThis = await getUSageFor("this")
 
     
-    const usageForMain = getUSageFor("main")
+    const usageForMain = await getUSageFor("main")
 
     console.log(`Backup:
 Tempo para o THIS: ${usageForThis.hours}h  ${usageForThis.minutes}m
