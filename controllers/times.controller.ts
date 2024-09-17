@@ -85,8 +85,8 @@ export const getBothRemaningTime: RequestHandler = async (req, res) => {
 }
 
 
-export const updateUsageMiddleware: RequestHandler = (req, res, next) => {
-    discountFromApis()
+export const updateUsageMiddleware: RequestHandler = async (req, res, next) => {
+    await discountFromApis()
     
     next()
 }

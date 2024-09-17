@@ -60,22 +60,19 @@ export const keepThisOn = async () => {
 
     await writeTimeInfo("lastDiscount", now)
 
-    !timeInfo.alreadyStartedThis ?  await writeTimeInfo("alreadyStartedThis", true) : ""
+    !timeInfo.alreadyStartedThis ? await writeTimeInfo("alreadyStartedThis", true) : ""
 
 
     const configs = await getData()
 
-    //n]ao entendi pq isso
-    // if (configs.currentMantenedName == "Nenhum Selecionado")
-        callThis()
+    callThis()
 
-    discountFromApis()
+    // discountFromApis()//para reduzir o uso de db
 
     if (configs?.hightMenssages)
         sendTelegramMensage("API principal chamada")
 
-    // setTimeout(() => keepThisOn(), thirteenMinutes)
-    setTimeout(() => keepThisOn(), 13_000 * 60 * 1)
+    setTimeout(() => keepThisOn(), thirteenMinutes)
 }
 
 
@@ -171,7 +168,7 @@ export const discountFromApis = async () => {
     const config = await getData()
 
 
-    //nada ocorreu para ter que descontar
+    //nada ocorrendo para ter que descontar
     if (!timeInfo.keepThisApiOn && config?.off)
         return
 
@@ -185,7 +182,7 @@ export const discountFromApis = async () => {
 
     const differenceForThis = now - Number(timeInfo.lastDiscount)
 
-    writeTimeInfo("usageThisAccount", timeInfo.usageThisAccount + differenceForThis)
+    await writeTimeInfo("usageThisAccount", timeInfo.usageThisAccount + differenceForThis)
 
     if (config?.currentMantenedName == "Nenhum Selecionado")
         return
@@ -196,7 +193,7 @@ export const discountFromApis = async () => {
     if (config?.currentMantenedName == "all")
         differenceForMain *= (new Urls()).urls.length
 
-    writeTimeInfo("usageMainAccount", timeInfo.usageMainAccount + differenceForMain)
+    await writeTimeInfo("usageMainAccount", timeInfo.usageMainAccount + differenceForMain)
 }
 // export const discountFromApis = () => {
 //     discountFromMainAccountTime()

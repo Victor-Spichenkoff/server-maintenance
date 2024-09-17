@@ -5,6 +5,7 @@ import { sendTelegramMensage } from "../functions/sendToPhone"
 import Urls from "../functions/urls"
 import { setKeepApiOn } from "../utils/time"
 import { write } from "../services/apis.service"
+import axios from "axios"
 
 const data = new Urls()
 
@@ -131,4 +132,26 @@ export const callAllOnceSimple: RequestHandler = async (req, res) => {
         isAllWorking: successUrlsCount == urls.length,
         working: successUrlsCount,
     })
+}
+
+
+/**
+ * 
+ * * Vai retornar o Nome dele ou um Status 500
+ */
+export const testOne: RequestHandler = async (req, res) => {
+    const { id } = req.params
+
+    const url = data.getApiUrlById(Number(id))
+
+    try {
+        // await axios(url, { timeout: 7_000 })
+        setTimeout(()=> {
+
+            res.send(data.getApi(Number(id)))
+        }, 3000)
+
+    } catch {
+        res.status(500).send("Tempo excedido")
+    }
 }
