@@ -9,6 +9,7 @@
 - Ver se qunado manda "Desligando servidor", se refere apenas as outra, ou tmabém ao this (off: true)
 - Adicionar se aguenta até o fim do mês
 -DB production não tá pegando os dados
+- Ao mudar a API mantida , pelo menos em prod, ele não atualiza o status (na o resto atualiza)
 
 # DB:
 ## Prod:

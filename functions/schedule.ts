@@ -126,7 +126,7 @@ async function selectTimer(send: boolean = false) {
         }, 3000)
     }
 
-    // StartKeepApiOnMode()
+    StartKeepApiOnMode()
 
     setTimeout(()=> {
         if(obj.hightMenssages) 
