@@ -65,7 +65,7 @@ export const keepThisOn = async () => {
 
     const configs = await getData()
 
-    callThis()
+    // callThis()
 
     // discountFromApis()//para reduzir o uso de db
 
@@ -109,7 +109,7 @@ export const StartKeepApiOnMode = async () => {
     writeTimeInfo("lastDiscount", Date.now())
 
 
-    keepThisOn()
+    // keepThisOn()
 }
 
 /**

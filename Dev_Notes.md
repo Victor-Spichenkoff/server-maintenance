@@ -14,3 +14,9 @@
 ## Prod:
 - neon: 
 - dev: postgresql://postgres:pituca@localhost:5432/dev-maintenance?schema=public
+
+
+# Mudanças para vercel
+## Tirar o request para o this
+- schedule: remover o StartKeepApiOnMode
+- Tirei os callThis de operations e não usa mais o StartKeepApiOnMode
