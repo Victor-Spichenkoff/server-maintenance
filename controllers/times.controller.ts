@@ -2,6 +2,8 @@ import { RequestHandler } from "express";
 import { discountFromApis, StartKeepApiOnMode, turnThisOff } from "../times/operations";
 import { getlastDiscountFormatted, getLastStartFormatted, getRemanigTimeFor, timeStampToHourAndMinute } from "../utils/time";
 import { getTimeData, writeTimeInfo } from "../services/times.service";
+import { sendTelegramMensage } from "../functions/sendToPhone";
+import { maxTimeAvaliableInMiliseconds } from "../global";
 
 
 export const turnKeepApiOn: RequestHandler = (req, res) => {
@@ -101,17 +103,37 @@ export const getThisStatus:RequestHandler = async (req, res) => {
 
 
 //para arrumar os tempos, caso erre no deploy
-export const setValueTime: RequestHandler = (req, res) => {
+export const setValueTime: RequestHandler = async (req, res) => {
     const { hours, minutes, type } = req.body
 
     const timeStamp = Number(hours) * 60 * 60 * 1000 + 
         Number(minutes) * 60 * 1000
 
 
-    if(type == "this")
-        writeTimeInfo("usageThisAccount", timeStamp)
-    if(type == "main")
-        writeTimeInfo("usageMainAccount", timeStamp)
+    var oldTimes: { hours: number, minutes: number } | null = null
+    if(type == "this") {
+        const remaingForThis =  await getRemanigTimeFor('this')
+        const usage = maxTimeAvaliableInMiliseconds - remaingForThis
+    
+        oldTimes = timeStampToHourAndMinute(usage)
 
-    res.send(`Novo tempo de uso para ${type} - ${hours}h ${minutes}m `)
+        
+        await writeTimeInfo("usageThisAccount", timeStamp)
+
+    }
+    if(type == "main") {
+        const remaingForThis =  await getRemanigTimeFor('main')
+        const usage = maxTimeAvaliableInMiliseconds - remaingForThis
+    
+        oldTimes = timeStampToHourAndMinute(usage)
+
+        await writeTimeInfo("usageMainAccount", timeStamp)
+    }
+
+    if(!oldTimes)
+        return res.sendStatus(400)
+
+    sendTelegramMensage(`O usage antigo para ${type} era: ${oldTimes.hours}h  ${oldTimes.minutes + 1}m`)
+
+    res.send(`Novo tempo de uso para ${type} - ${hours}h ${minutes}m`)
 }
