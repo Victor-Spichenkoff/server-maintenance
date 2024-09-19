@@ -62,32 +62,6 @@ export async function makeRecursiveRequest(UseStoraged = false, url = '', count:
 }
 
 
-/**
- * 
- * 
- * @returns 1 (sucesso) ou 0 (erro de timeout 5s ou outro)
- */
-export const makeOneRequest = async (url: string, name: string="", erros: string[], timeOut=10_000) => {
-    try {
-        const res = await axios(url + "/teste", {
-            timeout: timeOut
-        })
-    
-        if(res.status < 300) {
-            return 1
-        }
-
-        erros?.push(name)
-        return 0
-    } catch(e) {
-        const error = e as AxiosError//erro aqui
-        console.log(error.message)
-        console.log("⬆️ Erro ao fazer 1 requeset para "+ url)
-        erros?.push(name)
-        return 0
-    }
-}
-
 
 
 async function selectTimer(send: boolean = false) {

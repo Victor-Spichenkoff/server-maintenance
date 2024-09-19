@@ -65,6 +65,7 @@ routes.use(updateUsageMiddleware)
 //Ações únicas
 routes.get('/initialLoad', initialLoad)
 routes.get('/load', sendInfosPage)
+//força realmente pelo backend
 routes.get('/forceAllOnce', forceLoadAllOnce)
 routes.get('/callAllOnce', callAllOnce)
 //usar essa para fazer várias, menor
