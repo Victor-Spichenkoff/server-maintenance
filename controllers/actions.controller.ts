@@ -37,12 +37,7 @@ export async function forceLoadAllOnce(req: any, res: any) {
 }
 
 export async function setOne(index: number, res: any) {
-    console.log('Index: ' + index)
-    console.log('Nome: ' + data.getApi(index))
-
     let url = data.getUrl(index)
-
-    // const resApi = await axios.get(url+'/teste')
 
     await write('currentMantenedUrl', url)
     await write('currentMantenedName', data.getApi(index))

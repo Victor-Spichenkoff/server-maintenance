@@ -4,7 +4,7 @@ import wrongUrls from './verify'
 import formatMensageAndSend, { sendTelegramMensage } from './sendToPhone'
 import Urls from "./urls"
 
-import { StartKeepApiOnMode } from '../times/operations'
+import { discountFromMainAccountTime, StartKeepApiOnMode } from '../times/operations'
 import { getData } from '../services/apis.service'
 const data = new Urls()
 
@@ -101,6 +101,7 @@ async function selectTimer(send: boolean = false) {
     }
 
     StartKeepApiOnMode()
+    
 
     setTimeout(()=> {
         if(obj.hightMenssages) 

@@ -54,20 +54,19 @@ export const keepThisOn = async () => {
         await writeTimeInfo("lastStart", now)
     }
 
-    if (timeInfo.lastDiscount) {
-        discountFromThisAccountTime()
-    }
+    // if (timeInfo.lastDiscount) {
+    //     discountFromThisAccountTime()
+    // }
 
-    await writeTimeInfo("lastDiscount", now)
 
-    !timeInfo.alreadyStartedThis ? await writeTimeInfo("alreadyStartedThis", true) : ""
+    // (!timeInfo.alreadyStartedThis) ? await writeTimeInfo("alreadyStartedThis", true) : ""
 
 
     const configs = await getData()
 
-    callThis()
+    // callThis()
 
-    // discountFromApis()//para reduzir o uso de db
+    discountFromApis()//para reduzir o uso de db
 
     if (configs?.hightMenssages)
         sendTelegramMensage("API principal chamada")
@@ -105,11 +104,16 @@ export const StartKeepApiOnMode = async () => {
     times = 0
 
 
-    writeTimeInfo("keepThisApiOn", true)
-    writeTimeInfo("lastDiscount", Date.now())
+    multipleWriteTimeIfo({
+        "keepThisApiOn": true,
+        "lastDiscount": Date.now(),
+        //novos, tirados do keep this on
+        "lastStart": Date.now(),
+        "alreadyStartedThis": true
+    })
+    
 
-
-    // keepThisOn()
+    keepThisOn()
 }
 
 /**
@@ -128,6 +132,7 @@ export const discountFromMainAccountTime = async () => {
     if (!timeInfo.lastDiscount)
         return
 
+    await writeTimeInfo("lastDiscount", now)
 
     var difference = now - Number(timeInfo.lastDiscount)
 
@@ -145,7 +150,7 @@ export const discountFromThisAccountTime = async () => {
 
     const timeInfo = await getTimeData()
 
-    writeTimeInfo("lastDiscount", now)
+    await writeTimeInfo("lastDiscount", now)
 
     if (!timeInfo.lastDiscount)
         return
@@ -174,7 +179,7 @@ export const discountFromApis = async () => {
 
     const now = Date.now()
 
-    writeTimeInfo("lastDiscount", now)
+    await writeTimeInfo("lastDiscount", now)
 
     if (!timeInfo.lastDiscount)
         return

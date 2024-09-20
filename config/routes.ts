@@ -58,8 +58,6 @@ routes.get('/apiStatus', getThisStatus)
 routes.get("/test/one/:id", testOne)
 
 
-//Coisas que devem fazer o a contagem do tempo
-routes.use(updateUsageMiddleware)
 
 
 //Ações únicas
@@ -75,6 +73,7 @@ routes.get('/callAllOnce/force', callAllOnceSimple)
 
 //tempo
 // routes.use('/usage', updateUsageMiddleware)
+routes.use("/usage", updateUsageMiddleware)
 routes.get('/usage/both', getBothRemaningTime)
 routes.get('/usage/this',getRemanigTimeForThis)
 routes.get('/usage/main',getRemanigTimeForMain)
