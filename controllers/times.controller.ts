@@ -64,9 +64,9 @@ export const getRemanigTimeForMain: RequestHandler = async (req, res) => {
 
 
 export const getBothRemaningTime: RequestHandler = async (req, res) => {
-    const remaingForThisTimeStamp = await getRemanigTimeFor('this')
+    // const remaingForThisTimeStamp = await getRemanigTimeFor('this')
     
-    const remaingForThis = timeStampToHourAndMinute(remaingForThisTimeStamp)
+    // const remaingForThis = timeStampToHourAndMinute(remaingForThisTimeStamp)
 
     const remaingForMainTimeStamp = await getRemanigTimeFor('main')
     
@@ -78,8 +78,10 @@ export const getBothRemaningTime: RequestHandler = async (req, res) => {
             minutes: remaingForMain.minutes
         },
         this: {
-            hours: remaingForThis.hours,
-            minutes: remaingForThis.minutes
+            hours: remaingForMain.hours,
+            minutes: remaingForMain.minutes
+            // hours: remaingForThis.hours,
+            // minutes: remaingForThis.minutes
         },
         lastStart: await getLastStartFormatted(),
         lastDiscount: await getlastDiscountFormatted()

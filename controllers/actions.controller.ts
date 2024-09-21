@@ -5,6 +5,7 @@ import { setKeepApiOn } from "../utils/time"
 import { write } from "../services/apis.service"
 import { isAllWorking, makeOneRequest } from "../utils/requestsToApi"
 import { selectTimer } from "../functions/schedule"
+import axios from "axios"
 
 const data = new Urls()
 
@@ -19,17 +20,17 @@ export async function forceLoadAllOnce(req: any, res: any) {
 
 
     await Promise.all(ten.map(async () => {
-        if(finsih)
+        if (finsih)
             return
 
         const isAllCorrect = await isAllWorking(errorsNames)
 
-        if(isAllCorrect)
+        if (isAllCorrect)
             finsih = true
     }))
 
 
-    if(finsih)
+    if (finsih)
         sendTelegramMensage("Todas funcionando!")
 
 
@@ -140,11 +141,16 @@ export const testOne: RequestHandler = async (req, res) => {
     const url = data.getApiUrlById(Number(id))
 
     try {
-        // await axios(url, { timeout: 7_000 })
-        setTimeout(() => {
+        if (process.env.NOT_REQ != "true") {
+            await axios(url, { timeout: 7_000 })
 
             res.send(data.getApi(Number(id)))
-        }, 3000)
+        }
+        else {
+            setTimeout(() => {
+                res.send(data.getApi(Number(id)) + "[FAKE]")
+            }, 5000)
+        }
 
     } catch {
         res.status(500).send("Tempo excedido")

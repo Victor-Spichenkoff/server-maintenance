@@ -79,26 +79,9 @@ async function selectTimer(send: boolean = false) {
         return
     }
     
-    
+    // const res = await makeInitialRequests()
 
-    //varias requests(iniciais)
-    var vezes = 0
-    if(first) {
-        var firstRequests = setInterval(async () => {
-            vezes++
-            if(vezes > 10) {
-                sendTelegramMensage('Nã foi possível fazer o Initial Request')
-                clearInterval(firstRequests)
-            }
-            //requests e tratemento
-            const res = await makeInitialRequests()
-            if(res) {
-                first = false
-                sendTelegramMensage('Fisrt feito em: '+  name)
-                clearInterval(firstRequests)
-            }
-        }, 3000)
-    }
+
 
     StartKeepApiOnMode()
     
@@ -111,11 +94,11 @@ async function selectTimer(send: boolean = false) {
 
         if(rightHours && min > 0 && min < 14) {// 11 = 8horas no Brasil
             selectTimer(true)
-            sendTelegramMensage('SelectTimer '+ hour + ' : ' +min)
+            sendTelegramMensage('Mensagem programada: '+ hour + ' : ' + min)
            
         } else selectTimer()
 
-    }, 1000 * 60 * 12)
+    }, 1000 * 60 * 13)
 
 
     //para não consumir, desligar em testes

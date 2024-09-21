@@ -66,7 +66,7 @@ export const keepThisOn = async () => {
 
     // callThis()
 
-    discountFromApis()//para reduzir o uso de db
+    discountFromApis()
 
     if (configs?.hightMenssages)
         sendTelegramMensage("API principal chamada")
