@@ -142,9 +142,9 @@ export const testOne: RequestHandler = async (req, res) => {
 
     try {
         if (process.env.NOT_REQ != "true") {
-            await axios(url, { timeout: 7_000 })
+            const respose = await axios(url + "/teste", { timeout: 7_000 })
 
-            res.send(data.getApi(Number(id)))
+            res.send(`${data.getApi(Number(id))}`)
         }
         else {
             setTimeout(() => {
