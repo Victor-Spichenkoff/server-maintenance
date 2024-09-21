@@ -64,7 +64,7 @@ export const keepThisOn = async () => {
 
     const configs = await getData()
 
-    // callThis()
+    callThis()
 
     discountFromApis()
 
