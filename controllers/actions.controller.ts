@@ -31,7 +31,7 @@ export async function forceLoadAllOnce(req: any, res: any) {
 
 
     if (finsih)
-        sendTelegramMensage("Todas funcionando!")
+        return sendTelegramMensage("Todas funcionando!")
 
 
     sendTelegramMensage("[Forçar] Erro no req de todos - 10 vezes")
