@@ -71,7 +71,7 @@ export const keepThisOn = async () => {
     if (configs?.hightMenssages)
         sendTelegramMensage("API principal chamada")
 
-    setTimeout(() => keepThisOn(), thirteenMinutes * 2)
+    setTimeout(() => keepThisOn(), thirteenMinutes)
 }
 
 
