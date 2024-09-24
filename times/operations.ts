@@ -4,7 +4,7 @@ import { callThis } from "../functions/schedule"
 import { sendTelegramMensage } from "../functions/sendToPhone"
 import { maxTimeAvaliable, thirteenMinutes } from "../global"
 
-import { getHoursAndMinutesRemanig, getRemanigTimeFor, timeStampToHourAndMinute } from "../utils/time"
+import { getHoursAndMinutesRemanig, getRemanigTimeFor, getUSageFor, sendUsagesToPhoneOnStart, timeStampToHourAndMinute } from "../utils/time"
 import Urls from "../functions/urls"
 import { turnOff } from "../controllers/actions.controller"
 import { getData } from "../services/apis.service"
@@ -71,7 +71,7 @@ export const keepThisOn = async () => {
     if (configs?.hightMenssages)
         sendTelegramMensage("API principal chamada")
 
-    setTimeout(() => keepThisOn(), thirteenMinutes)
+    setTimeout(() => keepThisOn(), thirteenMinutes * 2)
 }
 
 
@@ -112,7 +112,7 @@ export const StartKeepApiOnMode = async () => {
         "alreadyStartedThis": true
     })
     
-
+    sendUsagesToPhoneOnStart()
     keepThisOn()
 }
 

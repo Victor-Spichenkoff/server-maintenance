@@ -110,3 +110,14 @@ export const sendBackupUsages = async () => {
 Tempo para o THIS: ${usageForThis.hours}h  ${usageForThis.minutes}m
 Tempo para o MAIN: ${usageForMain.hours}h  ${usageForMain.minutes}m`)
 }   
+
+
+
+export const sendUsagesToPhoneOnStart = async () => {
+    const usageFotThis = await getUSageFor("this")
+    const usageFotMain = await getUSageFor("main")
+
+    sendTelegramMensage(`Uso na inicialização:
+- THIS: ${usageFotThis.hours}h ${usageFotThis.minutes}m
+- Main: ${usageFotMain.hours}h ${usageFotMain.minutes}m`)
+}

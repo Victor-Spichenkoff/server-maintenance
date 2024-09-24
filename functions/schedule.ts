@@ -6,10 +6,11 @@ import Urls from "./urls"
 
 import { discountFromMainAccountTime, StartKeepApiOnMode } from '../times/operations'
 import { getData } from '../services/apis.service'
+import { thisUrl } from '../global'
 const data = new Urls()
 
 
-const thisUrl = process.env.DEV == "true" ? "http://localhost:2009" : 'https://server-maintenance-ssu7.onrender.com'
+
 // const thisUrl = 'https://server-maintenance.onrender.com'//old
 
 var times = 0
