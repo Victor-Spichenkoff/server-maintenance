@@ -9,14 +9,14 @@ export default class Urls{
             'https://portfolio-api-i3t0.onrender.com',
             'https://vss-artigos-backend.onrender.com',
             'https://lista-mercado-api.onrender.com',
-            // 'https://pagination-api-ugwo.onrender.com'
+            'https://pagination-api-ugwo.onrender.com'
         ]
 
         this.apis = [
             'Portfolio Api',
             'VSS Artigos',
             'Lista Mercado',
-            // 'Paginação'
+            'Paginação'
         ]
     }
 

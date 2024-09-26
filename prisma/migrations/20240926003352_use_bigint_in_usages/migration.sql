@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Time" ALTER COLUMN "usageMainAccount" SET DATA TYPE BIGINT,
+ALTER COLUMN "usageThisAccount" SET DATA TYPE BIGINT;

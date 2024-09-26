@@ -25,8 +25,8 @@ model Time {
   id Int @id @default(autoincrement())
   currentMonth Int 
   keepThisApiOn Boolean
-  usageMainAccount Int
-  usageThisAccount Int
+  usageMainAccount BigInt
+  usageThisAccount BigInt
   lastStart BigInt?
   lastDiscount BigInt?
   alreadyStartedThis Boolean

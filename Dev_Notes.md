@@ -10,6 +10,9 @@
 - Adicionar se aguenta até o fim do mês
 -DB production não tá pegando os dados
 - Ao mudar a API mantida , pelo menos em prod, ele não atualiza o status (na o resto atualiza)
+- valores maiores que 597 horas, não são salvos
+
+
 
 # DB:
 ## Prod:
@@ -23,3 +26,7 @@
 - Tirei os callThis de operations e não usa mais o StartKeepApiOnMode
 - discountFromMainAccountTime adicionado diretamente no selectTimer()
     - Salvo, também, o lastDiscount dentro de discountFromMainAccountTime
+
+
+## Bug:
+- Para lidar com usage maior que 597, precisa usar Bigint no usage. Converti para Number, pode perder precisão

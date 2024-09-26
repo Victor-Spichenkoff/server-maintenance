@@ -38,7 +38,7 @@ export const isAllWorking = async (errorsList: string[]) => {
     const urls = data.urls
     let successUrlsCount = 0
 
-    let results: any[] = [1, 1, 1, 1]
+    let results: any[] = [1]//lidar com erro de inexistente
 
     results = await Promise.all(urls.map(async (url, i) => {
         return await makeOneRequest(url, data.getApi(i), errorsList)

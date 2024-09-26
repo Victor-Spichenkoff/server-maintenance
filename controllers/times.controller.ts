@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { discountFromApis, StartKeepApiOnMode, turnThisOff } from "../times/operations";
-import { getlastDiscountFormatted, getLastStartFormatted, getRemanigTimeFor, timeStampToHourAndMinute } from "../utils/time";
+import { getlastDiscountFormatted, getLastStartFormatted, getRemanigTimeFor, getUSageFor, timeStampToHourAndMinute } from "../utils/time";
 import { getTimeData, writeTimeInfo } from "../services/times.service";
 import { sendTelegramMensage } from "../functions/sendToPhone";
 import { maxTimeAvaliableInMiliseconds } from "../global";
@@ -64,9 +64,9 @@ export const getRemanigTimeForMain: RequestHandler = async (req, res) => {
 
 
 export const getBothRemaningTime: RequestHandler = async (req, res) => {
-    // const remaingForThisTimeStamp = await getRemanigTimeFor('this')
+    const remaingForThisTimeStamp = await getRemanigTimeFor('this')
     
-    // const remaingForThis = timeStampToHourAndMinute(remaingForThisTimeStamp)
+    const remaingForThis = timeStampToHourAndMinute(remaingForThisTimeStamp)
 
     const remaingForMainTimeStamp = await getRemanigTimeFor('main')
     
@@ -78,10 +78,8 @@ export const getBothRemaningTime: RequestHandler = async (req, res) => {
             minutes: remaingForMain.minutes
         },
         this: {
-            hours: remaingForMain.hours,
-            minutes: remaingForMain.minutes
-            // hours: remaingForThis.hours,
-            // minutes: remaingForThis.minutes
+            hours: remaingForThis.hours,
+            minutes: remaingForThis.minutes
         },
         lastStart: await getLastStartFormatted(),
         lastDiscount: await getlastDiscountFormatted()
@@ -106,7 +104,21 @@ export const getThisStatus:RequestHandler = async (req, res) => {
 
 //para arrumar os tempos, caso erre no deploy
 export const setValueTime: RequestHandler = async (req, res) => {
-    const { hours, minutes, type } = req.body
+    let { hours, minutes, type } = req.body
+    
+    //se ausente, usa o atual
+    if(!hours || !minutes) {
+        const { hours: storageHours, minutes: storageMinutes } = await getUSageFor(type)
+    
+        hours = hours ? hours : storageHours
+        minutes = minutes ? minutes : storageMinutes
+    }
+
+    if(hours >= 750 && minutes > 0)
+        minutes=0
+
+    console.log(hours, minutes)
+
 
     const timeStamp = Number(hours) * 60 * 60 * 1000 + 
         Number(minutes) * 60 * 1000
@@ -120,6 +132,7 @@ export const setValueTime: RequestHandler = async (req, res) => {
         oldTimes = timeStampToHourAndMinute(usage)
 
         
+        console.log(timeStamp)
         await writeTimeInfo("usageThisAccount", timeStamp)
 
     }
@@ -129,6 +142,7 @@ export const setValueTime: RequestHandler = async (req, res) => {
     
         oldTimes = timeStampToHourAndMinute(usage)
 
+        
         await writeTimeInfo("usageMainAccount", timeStamp)
     }
 

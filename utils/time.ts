@@ -13,11 +13,11 @@ export const getRemanigTimeFor = async (type: "main" | "this") => {
 
     var remaing
 
-    if(type == "main") {
+    if (type == "main") {
         //horas disponiveis (min) - (ms -->min)
-        remaing = maxTimeAvaliable * 60 - (timeInfo[`usageMainAccount`]/1000/60)
+        remaing = maxTimeAvaliable * 60 - (Number(timeInfo[`usageMainAccount`]) / 1000 / 60)
     } else {
-        remaing = maxTimeAvaliable * 60 - (timeInfo["usageThisAccount"]/1000/60)
+        remaing = maxTimeAvaliable * 60 - (Number(timeInfo["usageThisAccount"]) / 1000 / 60)
     }
 
     return remaing * 1000 * 60
@@ -26,18 +26,18 @@ export const getRemanigTimeFor = async (type: "main" | "this") => {
 /**
  * * Deve retornar o tempo de uso em horas em minutos
  */
-export const getUSageFor =async (type: "main" | "this") => {
+export const getUSageFor = async (type: "main" | "this") => {
     const timeInfo = await getTimeData()
 
     let usage
 
-    if(type == "main") {
+    if (type == "main") {
         usage = timeInfo[`usageMainAccount`]
     } else {
         usage = timeInfo["usageThisAccount"]
     }
 
-    return timeStampToHourAndMinute(usage)
+    return timeStampToHourAndMinute(Number(usage))
 }
 
 
@@ -63,23 +63,23 @@ export const getHoursAndMinutesRemanig = async () => {
 
 export const getLastStartFormatted = async () => {
     const stoarged = (await getTimeData()).lastStart
-    if(!stoarged) 
+    if (!stoarged)
         return null
 
     const storageLast = new Date(Number(stoarged))
     const brTime = storageLast.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
-    
+
     return brTime
 }
 
 export const getlastDiscountFormatted = async () => {
     const stoarged = (await getTimeData()).lastDiscount
-    if(!stoarged) 
+    if (!stoarged)
         return null
 
     const storageLast = new Date(Number(stoarged))
     const brTime = storageLast.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
-    
+
     return brTime
 }
 
@@ -97,27 +97,38 @@ export const setKeepApiOn = () => writeTimeInfo("keepThisApiOn", true)
 
 
 export const sendBackupUsages = async () => {
-    if(process.env.DEV == "true")
+    if (process.env.DEV == "true")
         return
 
-    
+
     const usageForThis = await getUSageFor("this")
 
-    
+
     const usageForMain = await getUSageFor("main")
 
     console.log(`Backup:
 Tempo para o THIS: ${usageForThis.hours}h  ${usageForThis.minutes}m
 Tempo para o MAIN: ${usageForMain.hours}h  ${usageForMain.minutes}m`)
-}   
+}
 
 
 
-export const sendUsagesToPhoneOnStart = async () => {
+/**
+ * 
+ * @param isApiStart Dizer se é inicio geral da api; true só no inicio do app
+ */
+export const sendUsagesToPhoneOnStart = async (isApiStart?: boolean) => {
+    if(process.env.DEV == "true")
+        return
+
     const usageFotThis = await getUSageFor("this")
     const usageFotMain = await getUSageFor("main")
 
     sendTelegramMensage(`Uso na inicialização:
-- THIS: ${usageFotThis.hours}h ${usageFotThis.minutes}m
-- Main: ${usageFotMain.hours}h ${usageFotMain.minutes}m`)
+        - Main: ${usageFotMain.hours}h ${usageFotMain.minutes}m
+        - THIS: ${usageFotThis.hours}h ${usageFotThis.minutes}m
+
+${isApiStart && "THIS ligado agora"}
+`)
+
 }

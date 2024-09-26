@@ -35,7 +35,8 @@ var times = 0
 export const keepThisOn = async () => {
     const timeInfo = await getTimeData()
 
-    if (maxTimeAvaliable < timeInfo.usageThisAccount / 1000 / 60 / 60)
+    // if (maxTimeAvaliable < timeInfo.usageThisAccount / BigInt(1000 / 60 / 60))
+    if (maxTimeAvaliable < timeInfo.usageThisAccount / BigInt(1000 * 60 * 60))
         return sendTelegramMensage("FIM DO TEMPO PARA A API")
 
     if (!timeInfo.keepThisApiOn)
@@ -71,7 +72,7 @@ export const keepThisOn = async () => {
     if (configs?.hightMenssages)
         sendTelegramMensage("API principal chamada")
 
-    setTimeout(() => keepThisOn(), thirteenMinutes * 2)
+    setTimeout(() => keepThisOn(), thirteenMinutes)
 }
 
 
@@ -113,6 +114,7 @@ export const StartKeepApiOnMode = async () => {
     })
     
     sendUsagesToPhoneOnStart()
+    
     keepThisOn()
 }
 
@@ -141,7 +143,7 @@ export const discountFromMainAccountTime = async () => {
 
     console.log("Diferença: " + difference)
 
-    writeTimeInfo("usageMainAccount", timeInfo.usageMainAccount + difference)
+    writeTimeInfo("usageMainAccount", Number(timeInfo.usageMainAccount) + difference)
 }
 
 
@@ -159,7 +161,7 @@ export const discountFromThisAccountTime = async () => {
     const difference = now - Number(timeInfo.lastDiscount)
 
 
-    writeTimeInfo("usageThisAccount", timeInfo.usageThisAccount + difference)
+    writeTimeInfo("usageThisAccount", Number(timeInfo.usageThisAccount) + difference)
 }
 
 
@@ -187,7 +189,7 @@ export const discountFromApis = async () => {
 
     const differenceForThis = now - Number(timeInfo.lastDiscount)
 
-    await writeTimeInfo("usageThisAccount", timeInfo.usageThisAccount + differenceForThis)
+    await writeTimeInfo("usageThisAccount", Number(timeInfo.usageThisAccount) + differenceForThis)
 
     if (config?.currentMantenedName == "Nenhum Selecionado")
         return
@@ -198,7 +200,7 @@ export const discountFromApis = async () => {
     if (config?.currentMantenedName == "all")
         differenceForMain *= (new Urls()).urls.length
 
-    await writeTimeInfo("usageMainAccount", timeInfo.usageMainAccount + differenceForMain)
+    await writeTimeInfo("usageMainAccount", Number(timeInfo.usageMainAccount) + differenceForMain)
 }
 // export const discountFromApis = () => {
 //     discountFromMainAccountTime()
