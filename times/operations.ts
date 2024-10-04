@@ -89,6 +89,8 @@ export const getMonthAndUpdate = async () => {
     var newMouth = now.getMonth()
     writeTimeInfo("currentMonth", newMouth)
 
+    sendTelegramMensage("Novo mês, novo tempo!")
+
     return newMouth
 }
 
@@ -115,6 +117,7 @@ export const StartKeepApiOnMode = async () => {
     
     sendUsagesToPhoneOnStart()
     
+    getMonthAndUpdate()
     keepThisOn()
 }
 
