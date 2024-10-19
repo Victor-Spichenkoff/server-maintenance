@@ -1,10 +1,8 @@
-import e from "express"
-
 import { callThis } from "../functions/schedule"
 import { sendTelegramMensage } from "../functions/sendToPhone"
 import { maxTimeAvaliable, thirteenMinutes } from "../global"
 
-import { getHoursAndMinutesRemanig, getRemanigTimeFor, getUSageFor, sendUsagesToPhoneOnStart, timeStampToHourAndMinute } from "../utils/time"
+import { sendUsagesToPhoneOnStart } from "../utils/time"
 import Urls from "../functions/urls"
 import { turnOff } from "../controllers/actions.controller"
 import { getData } from "../services/apis.service"
@@ -77,7 +75,7 @@ export const keepThisOn = async () => {
 
 
 export const getMonthAndUpdate = async () => {
-    var storageMonth = (await getTimeData()).currentMonth
+    let storageMonth = (await getTimeData()).currentMonth
     const now = new Date()
 
     if (now.getMonth() == storageMonth)
@@ -86,7 +84,7 @@ export const getMonthAndUpdate = async () => {
 
     resetAccountsTime()
 
-    var newMouth = now.getMonth()
+    let newMouth = now.getMonth()
     writeTimeInfo("currentMonth", newMouth)
 
     sendTelegramMensage("Novo mês, novo tempo!")
@@ -103,7 +101,6 @@ export const StartKeepApiOnMode = async () => {
         return
 
 
-    const now = Date.now()
     times = 0
 
 
@@ -116,7 +113,7 @@ export const StartKeepApiOnMode = async () => {
     })
     
     sendUsagesToPhoneOnStart()
-    
+
     getMonthAndUpdate()
     keepThisOn()
 }
@@ -209,10 +206,6 @@ export const discountFromApis = async () => {
 //     discountFromMainAccountTime()
 //     discountFromThisAccountTime()
 // }
-
-
-
-
 
 /**
  * Chamar para desligar e parar de contar

@@ -95,24 +95,6 @@ export const setKeepApiOn = () => writeTimeInfo("keepThisApiOn", true)
 
 
 
-
-export const sendBackupUsages = async () => {
-    if (process.env.DEV == "true")
-        return
-
-
-    const usageForThis = await getUSageFor("this")
-
-
-    const usageForMain = await getUSageFor("main")
-
-    console.log(`Backup:
-Tempo para o THIS: ${usageForThis.hours}h  ${usageForThis.minutes}m
-Tempo para o MAIN: ${usageForMain.hours}h  ${usageForMain.minutes}m`)
-}
-
-
-
 /**
  * 
  * @param isApiStart Dizer se é inicio geral da api; true só no inicio do app

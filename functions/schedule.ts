@@ -4,7 +4,7 @@ import wrongUrls from './verify'
 import formatMensageAndSend, { sendTelegramMensage } from './sendToPhone'
 import Urls from "./urls"
 
-import { discountFromMainAccountTime, StartKeepApiOnMode } from '../times/operations'
+import { StartKeepApiOnMode } from '../times/operations'
 import { getData } from '../services/apis.service'
 import { thisUrl } from '../global'
 const data = new Urls()
@@ -120,8 +120,8 @@ async function selectTimer(send: boolean = false) {
 }
 
 
-if(process.env.NOT_REQ!="true")
-    selectTimer(true)
+
+selectTimer(true)
 
 
 const ruleRelatory = {
