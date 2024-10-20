@@ -99,7 +99,7 @@ async function selectTimer(send: boolean = false) {
            
         } else selectTimer()
 
-    }, 1000 * 60 * 13)
+    }, 1000 * 60 * 10)
 
 
     //para não consumir, desligar em testes

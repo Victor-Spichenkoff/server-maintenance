@@ -1,4 +1,3 @@
-import { RequestHandler } from 'express';
 import fs from 'fs'
 import path from 'path'
 import Urls from './urls';
@@ -16,7 +15,7 @@ export type jsonData = {
 }
 
 export async function getDataOld(): Promise<IData> {
-    const data = await fs.readFileSync(dataPath, 'utf8')
+    const data = fs.readFileSync(dataPath, 'utf8')
 
     return JSON.parse(data)
 }
