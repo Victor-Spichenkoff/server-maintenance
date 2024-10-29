@@ -113,7 +113,7 @@ async function selectTimer(send: boolean = false) {
     const res = await axios.get(obj.currentMantenedUrl+ '/teste')
 
     if(send && typeof res.data == 'string') 
-        sendTelegramMensage('Funcionando ' + name)
+        sendTelegramMensage('[HIGH] Funcionando ' + name)
 
     if(send && typeof res.data != 'string') 
         sendTelegramMensage('Erro em: ' + name)

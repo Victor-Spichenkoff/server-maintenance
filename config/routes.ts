@@ -4,7 +4,6 @@ import { getHightmenssagesStatus, sendInfosPage, toggleHightMenssages } from "..
 import { sendInfos, sendInfosById } from "../controllers/infos.controller"
 import { callAllOnce, callAllOnceSimple, forceLoadAllOnce, setAll, setOne, testOne, turnOff } from "../controllers/actions.controller"
 import { getBothRemaningTime, getLastDiscount, getLastStart, getRemanigTimeForMain, getRemanigTimeForThis, getThisStatus, setValueTime, turnKeepApiOn, turnOffThisApiController, updateUsageMiddleware } from "../controllers/times.controller"
-import { discountFromApis } from "../times/operations"
 import { requestWithLongTimeout, resetTime, testTelegramSendMessage } from "../controllers/tests.controller"
 
 const routes = Router()
