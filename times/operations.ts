@@ -70,7 +70,7 @@ export const keepThisOn = async () => {
     if (configs?.hightMenssages)
         sendTelegramMensage("[HIGH] API principal chamada")
 
-    setTimeout(() => keepThisOn(), thirteenMinutes / 1.5)
+    setTimeout(() => keepThisOn(), thirteenMinutes / 3)
 }
 
 

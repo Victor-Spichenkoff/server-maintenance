@@ -15,6 +15,7 @@ export async function initialLoad(req:any, res: any) {
 
 
 routes.get('/', (req, res) => res.send('Olá'))
+
 routes.get('/teste', (req, res) => res.send('olá'))
 //teste geral, não é o modo
 routes.get('/isOn', (req, res) => res.send("Está funcionando"))
