@@ -15,7 +15,10 @@ import { sendUsagesToPhoneOnStart } from "./utils/time"
 // checkAndCreateDataForDb()
 
 configDotenv()
-app.use(cors())
+app.use(cors({
+    //deixar tudo, incluindo eu mesmo
+    origin: true
+}))
 app.use(express.json())
 
 

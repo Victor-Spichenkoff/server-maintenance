@@ -139,7 +139,7 @@ export const testOne: RequestHandler = async (req, res) => {
     const { id } = req.params
 
     const url = data.getApiUrlById(Number(id))
-
+    console.log(url)
     try {
         if (process.env.NOT_REQ != "true") {
             const respose = await axios(url + "/teste", { timeout: 7_000 })

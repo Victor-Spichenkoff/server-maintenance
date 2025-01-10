@@ -97,6 +97,7 @@ export const StartKeepApiOnMode = async () => {
     const isAlreadyStarted = (await getTimeData()).alreadyStartedThis
 
     //não precisa ficar inicindo
+    console.log(isAlreadyStarted)
     if (isAlreadyStarted)
         return
 
@@ -114,7 +115,8 @@ export const StartKeepApiOnMode = async () => {
     
     sendUsagesToPhoneOnStart()
 
-    getMonthAndUpdate()
+    const currentMonth = await getMonthAndUpdate()
+    console.log(currentMonth)
     keepThisOn()
 }
 
