@@ -3,6 +3,7 @@ import { ApiName } from "../types/data"
 export default class Urls{
     readonly urls: string[]
     readonly apis: ApiName[]
+    readonly ignoreIndex: number[]
 
     constructor() {
         this.urls = [
@@ -11,6 +12,7 @@ export default class Urls{
             'https://lista-mercado-api.onrender.com',
             'https://pagination-api-ugwo.onrender.com',
             "https://z-backend-t3zn.onrender.com",
+            "https://tic-tac-toe-online-backend-jjv9.onrender.com"
         ]
 
         this.apis = [
@@ -19,7 +21,10 @@ export default class Urls{
             'Lista Mercado',
             'Paginação',
             "Z",
+            "Velha"
         ]
+
+        this.ignoreIndex = [1, 2]
     }
 
     getUrl(id: number) {

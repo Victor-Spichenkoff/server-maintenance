@@ -14,22 +14,21 @@ async function verify() {
   try {
     const array = data.urls.map(async (url, i) => {
       try {
-        const res = await axios(url + '/teste');
-        const returned = await compareResponse(res);
-      //   console.log(returned);
-        return returned;
+        if(data.ignoreIndex.includes(i)) return 0//ignore me
+
+        const res = await axios(url + '/teste')
+        const returned = await compareResponse(res)
+        return returned
       } catch (err) {
-        console.log('Erro: Na busca');
+        console.log('Erro: Na busca')
         return 1
-      //   return null;
       }
     })
     
 
     const statusArray = await Promise.all(array)
-  //   console.log('Todos os status:', statusArray);
 
-    return statusArray;
+    return statusArray
   } catch (err) {
     console.log('Erro ao aguardar todas as promises')
   }

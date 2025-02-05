@@ -21,7 +21,6 @@ app.use(cors({
 }))
 app.use(express.json())
 
-
 //evitar que ele conte coisas erradas ao iniciar (produção apenas)
 baseConfigForTimeOnStart()
 // keepThisOn()
