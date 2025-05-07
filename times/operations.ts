@@ -110,7 +110,7 @@ export const StartKeepApiOnMode = async () => {
         "lastDiscount": Date.now(),
         //novos, tirados do keep this on
         "lastStart": Date.now(),
-        "alreadyStartedThis": true
+        "alreadyStartedThis": true,
     })
     
     sendUsagesToPhoneOnStart()

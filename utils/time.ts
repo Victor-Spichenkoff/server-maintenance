@@ -100,7 +100,7 @@ export const setKeepApiOn = () => writeTimeInfo("keepThisApiOn", true)
  * @param isApiStart Dizer se é inicio geral da api; true só no inicio do app
  */
 export const sendUsagesToPhoneOnStart = async (isApiStart?: boolean) => {
-    if(process.env.DEV == "true")
+    if(process.env.NOT_SEND == "true")
         return
 
     const usageFotThis = await getUSageFor("this")
