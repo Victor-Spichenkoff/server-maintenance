@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import { discountFromApis, StartKeepApiOnMode, turnThisOff } from "../times/operations";
+import { discountFromApis, getMonthAndUpdate, StartKeepApiOnMode, turnThisOff } from "../times/operations";
 import { getlastDiscountFormatted, getLastStartFormatted, getRemanigTimeFor, getUSageFor, timeStampToHourAndMinute } from "../utils/time";
 import { getTimeData, writeTimeInfo } from "../services/times.service";
 import { sendTelegramMensage } from "../functions/sendToPhone";
@@ -42,6 +42,8 @@ export const getLastDiscount: RequestHandler = async (req, res) => {
  * Serve para apenas pegar o restante, só não pasasr os parametros
  */
 export const getRemanigTimeForThis: RequestHandler = async (req, res) => {
+    getMonthAndUpdate()
+    console.log("TOIME")
     discountFromApis()
 
     const remaingForThis = await getRemanigTimeFor('this')
@@ -64,6 +66,8 @@ export const getRemanigTimeForMain: RequestHandler = async (req, res) => {
 
 
 export const getBothRemaningTime: RequestHandler = async (req, res) => {
+    getMonthAndUpdate()// First, check whether you need to reset
+    
     const remaingForThisTimeStamp = await getRemanigTimeFor('this')
     
     const remaingForThis = timeStampToHourAndMinute(remaingForThisTimeStamp)
