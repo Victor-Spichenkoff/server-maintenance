@@ -1,4 +1,4 @@
-export type ApiName = 'Portfolio Api' | 'VSS Artigos' | 'Lista Mercado' | 'Paginação' | "all" | "Z" | "Velha"
+export type ApiName = 'Portfolio Api' | 'VSS Artigos' | 'Lista Mercado' | 'Paginação' | "all" | "Z" | "Velha" | "Million"
 
 export interface IData {
     id?: number 

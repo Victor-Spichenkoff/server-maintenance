@@ -18,7 +18,7 @@ routes.get('/', (req, res) => res.send('Olá'))
 
 routes.get('/teste', (req, res) => res.send('olá'))
 //teste geral, não é o modo
-routes.get('/isOn', (req, res) => res.send("Está funcionando"))
+routes.get('/isOn', (req, res) => res.send("It's working"))
 
 routes.get('/testar', (req, res) => {
     console.log('testado')
@@ -36,6 +36,7 @@ routes.get('/lista', async (req, res) => setOne(2, res))
 routes.get('/paginacao', async (req, res) => setOne(3, res))
 routes.get('/z', async (req, res) => setOne(4, res))
 routes.get('/velha', async (req, res) => setOne(5, res))
+routes.get('/million', async (req, res) => setOne(6, res))
 // routes.get('/olx', async (req, res) => setOne(4, res))
 routes.get('/all', async (req, res) => setAll(res))
 routes.get('/turnoff', turnOff)
