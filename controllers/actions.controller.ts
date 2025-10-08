@@ -6,6 +6,7 @@ import { write } from "../services/apis.service"
 import { isAllWorking, makeOneRequest } from "../utils/requestsToApi"
 import { selectTimer } from "../functions/schedule"
 import axios from "axios"
+import {StartKeepApiOnMode} from "../times/operations";
 
 const data = new Urls()
 
@@ -48,6 +49,7 @@ export async function setOne(index: number, res: any) {
 
     selectTimer()
 
+    await StartKeepApiOnMode()//todo: FIX NOT STARTING MODE? (remove just this if not)
     res.sendStatus(200)
 
     // if(typeof resApi.data == 'string') res.send('Tudo certo em: ' + data.getApi(index))
@@ -132,7 +134,7 @@ export const callAllOnceSimple: RequestHandler = async (req, res) => {
 
 
 /**
- * 
+ *
  * * Vai retornar o Nome dele ou um Status 500
  */
 export const testOne: RequestHandler = async (req, res) => {
