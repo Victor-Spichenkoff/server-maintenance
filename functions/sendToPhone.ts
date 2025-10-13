@@ -4,8 +4,8 @@ import wrongUrls from './verify'
 const telegramBotToken = '6746265132:AAHesfWPU4GGxYyWqnbDZSriNnkFcbRFi0E'
 
 async function sendTelegramMensage(mensagem: string): Promise<void> {
-  if(process.env.NOT_SEND=="true") 
-    return
+  if(process.env.NOT_SEND=="true")
+    return console.log(mensagem)
 
   const chatId = '1139085287'
 
@@ -44,7 +44,7 @@ function formatMensageAndSend(obj: object,times?: number, onlyReturn = false) {
 
         sendTelegramMensage('Tudo funcionando nos conformes. Vez: '+ times)
     }
-    
+
     const apisNames = Object.keys(obj)
     const apisUrls = Object.values(obj)
 

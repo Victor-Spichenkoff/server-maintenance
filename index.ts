@@ -7,6 +7,7 @@ import { routes } from "./config/routes"
 import { configDotenv } from 'dotenv'
 import { baseConfigForTimeOnStart } from "./times/operations"
 import { sendUsagesToPhoneOnStart } from "./utils/time"
+import {selectTimer} from "./functions/schedule";
 
 //Minha conta para  esse: edge(conta secundária)(spichekoffvictor)
 //nome: VictorSpich
@@ -26,6 +27,7 @@ baseConfigForTimeOnStart()
 // keepThisOn()
 
 
+selectTimer(true)
 sendUsagesToPhoneOnStart(true)
 
 app.use(routes)

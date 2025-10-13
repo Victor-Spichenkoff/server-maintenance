@@ -15,23 +15,23 @@ const data = new Urls()
 export async function forceLoadAllOnce(req: any, res: any) {
     const errorsNames: string[] = []
     const ten = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    let finsih = false
+    let finish = false
 
     sendTelegramMensage("Iniciando Req de todos")
 
 
     await Promise.all(ten.map(async () => {
-        if (finsih)
+        if (finish)
             return
 
         const isAllCorrect = await isAllWorking(errorsNames)
 
         if (isAllCorrect)
-            finsih = true
+            finish = true
     }))
 
 
-    if (finsih)
+    if (finish)
         return sendTelegramMensage("Todas funcionando!")
 
 
@@ -49,11 +49,8 @@ export async function setOne(index: number, res: any) {
 
     selectTimer()
 
-    await StartKeepApiOnMode()//todo: FIX NOT STARTING MODE? (remove just this if not)
     res.sendStatus(200)
 
-    // if(typeof resApi.data == 'string') res.send('Tudo certo em: ' + data.getApi(index))
-    // else res.status(500).send('Erro em ' + data.getApi(index))
 }
 
 
@@ -67,9 +64,6 @@ export async function setAll(res: Response) {
     sendTelegramMensage('Setado para TODOS')
     res.send('Setado para todos')
 }
-
-
-
 
 
 export async function turnOff(req?: Request, res?: Response) {
@@ -108,7 +102,7 @@ export const callAllOnce: RequestHandler = async (req, res) => {
 }
 
 
-//ele deve ter uma resposta mais simlples (usar no de forçar)
+//ele deve ter uma resposta mais simples (usar no de forçar)
 //no forçar, o front cuida de fazer várias reqs, aqui, só retornar true ou false
 export const callAllOnceSimple: RequestHandler = async (req, res) => {
     const urls = data.urls

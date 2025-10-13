@@ -5,7 +5,7 @@ import { getTimeData, writeTimeInfo } from "../services/times.service"
 
 
 /**
- * 
+ *
  * @returns ms de quanto ainda sobra
  */
 export const getRemanigTimeFor = async (type: "main" | "this") => {
@@ -96,7 +96,7 @@ export const setKeepApiOn = () => writeTimeInfo("keepThisApiOn", true)
 
 
 /**
- * 
+ *
  * @param isApiStart Dizer se é inicio geral da api; true só no inicio do app
  */
 export const sendUsagesToPhoneOnStart = async (isApiStart?: boolean) => {
@@ -106,7 +106,7 @@ export const sendUsagesToPhoneOnStart = async (isApiStart?: boolean) => {
     const usageFotThis = await getUSageFor("this")
     const usageFotMain = await getUSageFor("main")
 
-    sendTelegramMensage(`Uso na inicialização:
+    await sendTelegramMensage(`Uso na inicialização:
         - Main: ${usageFotMain.hours}h ${usageFotMain.minutes}m
         - THIS: ${usageFotThis.hours}h ${usageFotThis.minutes}m
 

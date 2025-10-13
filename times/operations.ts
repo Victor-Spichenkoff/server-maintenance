@@ -26,8 +26,8 @@ export const resetAccountsTime = async () => {
 
 var times = 0
 /**
- * * Já cuida de deixar essa ligada,     
- * * Só para se acabar o tempo ou setar keepThisOn == false     
+ * * Já cuida de deixar essa ligada,
+ * * Só para se acabar o tempo ou setar keepThisOn == false
  * * Se tiver ligado outro, ele desativa as chamadas desse, não precisa se já é chamdo no schedule
  */
 export const keepThisOn = async () => {
@@ -43,11 +43,10 @@ export const keepThisOn = async () => {
 
     const now = Date.now()
 
-    //debugg
+    //debug
     times++
     const formated = (new Date(now)).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
     console.log("Execução " + times + " - " + formated)
-    //
 
     if (!timeInfo.lastStart) {
         await writeTimeInfo("lastStart", now)
@@ -97,23 +96,20 @@ export const StartKeepApiOnMode = async () => {
     const isAlreadyStarted = (await getTimeData()).alreadyStartedThis
 
     //não precisa ficar inicindo
-    console.log(isAlreadyStarted)
+
     if (isAlreadyStarted)
         return
 
-
     times = 0
 
-
-    multipleWriteTimeIfo({
+    await multipleWriteTimeIfo({
         "keepThisApiOn": true,
         "lastDiscount": Date.now(),
-        //novos, tirados do keep this on
         "lastStart": Date.now(),
         "alreadyStartedThis": true,
     })
-    
-    sendUsagesToPhoneOnStart()
+
+    await sendUsagesToPhoneOnStart()
 
     const currentMonth = await getMonthAndUpdate()
     console.log(currentMonth)
