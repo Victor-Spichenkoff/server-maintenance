@@ -7,6 +7,7 @@ import { isAllWorking, makeOneRequest } from "../utils/requestsToApi"
 import { selectTimer } from "../functions/schedule"
 import axios from "axios"
 import {StartKeepApiOnMode} from "../times/operations";
+import {ApiRepository} from "../services/ApiRepository.service";
 
 const data = new Urls()
 
@@ -35,15 +36,14 @@ export async function forceLoadAllOnce(req: any, res: any) {
         return sendTelegramMensage("Todas funcionando!")
 
 
-    sendTelegramMensage("[Forçar] Erro no req de todos - 10 vezes")
+    await sendTelegramMensage("[Forçar] Erro no req de todos - 10 vezes")
 }
 
 export async function setOne(index: number, res: any) {
     let url = data.getUrl(index)
 
-    await write('currentMantenedUrl', url)
-    await write('currentMantenedName', data.getApi(index))
-    await write('off', false)
+    await ApiRepository.setToOne(data.getApi(index), url)
+
 
     sendTelegramMensage('Setado para: ' + (data.getApi(index)).toUpperCase())
 
@@ -56,8 +56,7 @@ export async function setOne(index: number, res: any) {
 
 export async function setAll(res: Response) {
     setKeepApiOn()
-    await write('currentMantenedName', 'all')
-    await write('off', false)
+    await ApiRepository.setToAll()
 
     selectTimer()
 
@@ -67,9 +66,7 @@ export async function setAll(res: Response) {
 
 
 export async function turnOff(req?: Request, res?: Response) {
-    await write('off', true)
-    await write('currentMantenedUrl', 'https://google.com')
-    await write('currentMantenedName', 'Nenhum Selecionado')
+    await ApiRepository.turnApiOff()
 
     sendTelegramMensage('Tudo OFF')
     res?.send("Tudo OFF")
@@ -138,7 +135,7 @@ export const testOne: RequestHandler = async (req, res) => {
     console.log(url)
     try {
         if (process.env.NOT_REQ != "true") {
-            const respose = await axios(url + "/teste", { timeout: 7_000 })
+            await axios(url + "/teste", { timeout: 7_000 })
 
             res.send(`${data.getApi(Number(id))}`)
         }

@@ -6,7 +6,7 @@
 # Todo:
 
 - Adicionar e testar melhorar no sistema de manter o this on
-- Ver se qunado manda "Desligando servidor", se refere apenas as outra, ou tmabém ao this (off: true)
+- Ver se qunado manda "Desligando servidor", se refere apenas as outra, ou também ao this (off: true)
 - Adicionar se aguenta até o fim do mês
 -DB production não tá pegando os dados
 - Ao mudar a API mantida , pelo menos em prod, ele não atualiza o status (na o resto atualiza)
@@ -30,3 +30,8 @@
 
 ## Bug:
 - Para lidar com usage maior que 597, precisa usar Bigint no usage. Converti para Number, pode perder precisão
+
+
+# Funcionamento
+- Todos as operações básicas de db são feitas no controller
+  - Exceção: Aquelas mudanças que acontecem com ações mais internas, como descontos

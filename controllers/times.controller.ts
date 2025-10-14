@@ -1,12 +1,21 @@
 import { RequestHandler } from "express";
 import { discountFromApis, getMonthAndUpdate, StartKeepApiOnMode, turnThisOff } from "../times/operations";
 import { getlastDiscountFormatted, getLastStartFormatted, getRemanigTimeFor, getUSageFor, timeStampToHourAndMinute } from "../utils/time";
-import { getTimeData, writeTimeInfo } from "../services/times.service";
+import {getTimeData, multipleWriteTimeIfo, writeTimeInfo} from "../services/times.service";
 import { sendTelegramMensage } from "../functions/sendToPhone";
 import { maxTimeAvaliableInMiliseconds } from "../global";
+import {TimeRepository} from "../services/TimeRepository.service";
 
 
-export const turnKeepApiOn: RequestHandler = (req, res) => {
+export const turnKeepApiOn: RequestHandler = async (req, res) => {
+    await multipleWriteTimeIfo({
+        "keepThisApiOn": true,
+        "lastDiscount": Date.now(),
+        "lastStart": Date.now(),
+        "alreadyStartedThis": true,
+    })
+
+
     StartKeepApiOnMode()
 
     res.send("Iniciado")
@@ -15,8 +24,10 @@ export const turnKeepApiOn: RequestHandler = (req, res) => {
 
 
 
-export const turnOffThisApiController: RequestHandler = (req, res) => {
-    turnThisOff()
+export const turnOffThisApiController: RequestHandler = async (req, res) => {
+    await turnThisOff()
+
+    await TimeRepository.turnOffThisApi()
 
     res.send("API OFF")
 }
@@ -39,51 +50,51 @@ export const getLastDiscount: RequestHandler = async (req, res) => {
 
 
 /**
- * Serve para apenas pegar o restante, só não pasasr os parametros
+ * Serve para apenas pegar o restante, só não passar os parâmetros
  */
-export const getRemanigTimeForThis: RequestHandler = async (req, res) => {
-    getMonthAndUpdate()
-    console.log("TOIME")
-    discountFromApis()
+export const getRemainingTimeForThis: RequestHandler = async (req, res) => {
+    await getMonthAndUpdate()
 
-    const remaingForThis = await getRemanigTimeFor('this')
-    
-    const { hours, minutes } = timeStampToHourAndMinute(remaingForThis)
+    await discountFromApis()
 
-    res.send({ hours, minutes })
-}
+    const remainingForThis = await getRemanigTimeFor('this')
 
-
-export const getRemanigTimeForMain: RequestHandler = async (req, res) => {
-    discountFromApis()
-
-    const remaingForThis =  await getRemanigTimeFor('main')
-    
-    const { hours, minutes } = timeStampToHourAndMinute(remaingForThis)
+    const { hours, minutes } = timeStampToHourAndMinute(remainingForThis)
 
     res.send({ hours, minutes })
 }
 
 
-export const getBothRemaningTime: RequestHandler = async (req, res) => {
-    getMonthAndUpdate()// First, check whether you need to reset
-    
-    const remaingForThisTimeStamp = await getRemanigTimeFor('this')
-    
-    const remaingForThis = timeStampToHourAndMinute(remaingForThisTimeStamp)
+export const getRemainingTimeForMain: RequestHandler = async (req, res) => {
+    await discountFromApis()
 
-    const remaingForMainTimeStamp = await getRemanigTimeFor('main')
-    
-    const remaingForMain = timeStampToHourAndMinute(remaingForMainTimeStamp)
+    const remainingForThis =  await getRemanigTimeFor('main')
 
-    res.send({ 
+    const { hours, minutes } = timeStampToHourAndMinute(remainingForThis)
+
+    res.send({ hours, minutes })
+}
+
+
+export const getBothRemainingTime: RequestHandler = async (req, res) => {
+    await getMonthAndUpdate()// First, check whether you need to reset
+
+    const remainingForThisTimeStamp = await getRemanigTimeFor('this')
+
+    const remainingForThis = timeStampToHourAndMinute(remainingForThisTimeStamp)
+
+    const remainingForMainTimeStamp = await getRemanigTimeFor('main')
+
+    const remainingForMain = timeStampToHourAndMinute(remainingForMainTimeStamp)
+
+    res.send({
         main: {
-            hours: remaingForMain.hours,
-            minutes: remaingForMain.minutes
+            hours: remainingForMain.hours,
+            minutes: remainingForMain.minutes
         },
         this: {
-            hours: remaingForThis.hours,
-            minutes: remaingForThis.minutes
+            hours: remainingForThis.hours,
+            minutes: remainingForThis.minutes
         },
         lastStart: await getLastStartFormatted(),
         lastDiscount: await getlastDiscountFormatted()
@@ -93,7 +104,7 @@ export const getBothRemaningTime: RequestHandler = async (req, res) => {
 
 export const updateUsageMiddleware: RequestHandler = async (req, res, next) => {
     await discountFromApis()
-    
+
     next()
 }
 
@@ -109,11 +120,11 @@ export const getThisStatus:RequestHandler = async (req, res) => {
 //para arrumar os tempos, caso erre no deploy
 export const setValueTime: RequestHandler = async (req, res) => {
     let { hours, minutes, type } = req.body
-    
+
     //se ausente, usa o atual
     if(!hours || !minutes) {
         const { hours: storageHours, minutes: storageMinutes } = await getUSageFor(type)
-    
+
         hours = hours ? hours : storageHours
         minutes = minutes ? minutes : storageMinutes
     }
@@ -121,39 +132,35 @@ export const setValueTime: RequestHandler = async (req, res) => {
     if(hours >= 750 && minutes > 0)
         minutes=0
 
-    console.log(hours, minutes)
 
-
-    const timeStamp = Number(hours) * 60 * 60 * 1000 + 
+    const timeStamp = Number(hours) * 60 * 60 * 1000 +
         Number(minutes) * 60 * 1000
 
 
-    var oldTimes: { hours: number, minutes: number } | null = null
+    let oldTimes: { hours: number, minutes: number } | null = null
     if(type == "this") {
-        const remaingForThis =  await getRemanigTimeFor('this')
-        const usage = maxTimeAvaliableInMiliseconds - remaingForThis
-    
+        const remainingForThis =  await getRemanigTimeFor('this')
+        const usage = maxTimeAvaliableInMiliseconds - remainingForThis
+
         oldTimes = timeStampToHourAndMinute(usage)
 
-        
-        console.log(timeStamp)
         await writeTimeInfo("usageThisAccount", timeStamp)
-
     }
+
     if(type == "main") {
-        const remaingForThis =  await getRemanigTimeFor('main')
-        const usage = maxTimeAvaliableInMiliseconds - remaingForThis
-    
+        const remainingForThis =  await getRemanigTimeFor('main')
+        const usage = maxTimeAvaliableInMiliseconds - remainingForThis
+
         oldTimes = timeStampToHourAndMinute(usage)
 
-        
+
         await writeTimeInfo("usageMainAccount", timeStamp)
     }
 
     if(!oldTimes)
         return res.sendStatus(400)
 
-    sendTelegramMensage(`O usage antigo para ${type} era: ${oldTimes.hours}h  ${oldTimes.minutes + 1}m`)
+    await sendTelegramMensage(`O usage antigo para ${type} era: ${oldTimes.hours}h  ${oldTimes.minutes + 1}m`)
 
     res.send(`Novo tempo de uso para ${type} - ${hours}h ${minutes}m`)
 }

@@ -3,7 +3,7 @@ import { informateNewIpAccess } from "../utils/ip"
 import { getHightmenssagesStatus, sendInfosPage, toggleHightMenssages } from "../utils/menssages"
 import { sendInfos, sendInfosById } from "../controllers/infos.controller"
 import { callAllOnce, callAllOnceSimple, forceLoadAllOnce, setAll, setOne, testOne, turnOff } from "../controllers/actions.controller"
-import { getBothRemaningTime, getLastDiscount, getLastStart, getRemanigTimeForMain, getRemanigTimeForThis, getThisStatus, setValueTime, turnKeepApiOn, turnOffThisApiController, updateUsageMiddleware } from "../controllers/times.controller"
+import { getBothRemainingTime, getLastDiscount, getLastStart, getRemainingTimeForMain, getRemainingTimeForThis, getThisStatus, setValueTime, turnKeepApiOn, turnOffThisApiController, updateUsageMiddleware } from "../controllers/times.controller"
 import { requestWithLongTimeout, resetTime, testTelegramSendMessage } from "../controllers/tests.controller"
 
 const routes = Router()
@@ -77,9 +77,9 @@ routes.get('/callAllOnce/force', callAllOnceSimple)
 //tempo
 // routes.use('/usage', updateUsageMiddleware)
 routes.use("/usage", updateUsageMiddleware)
-routes.get('/usage/both', getBothRemaningTime)
-routes.get('/usage/this',getRemanigTimeForThis)
-routes.get('/usage/main',getRemanigTimeForMain)
+routes.get('/usage/both', getBothRemainingTime)
+routes.get('/usage/this',getRemainingTimeForThis)
+routes.get('/usage/main',getRemainingTimeForMain)
 
 routes.get('/keepApiOn', turnKeepApiOn)
 routes.get("/turnOffThis", turnOffThisApiController)
