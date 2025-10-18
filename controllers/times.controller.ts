@@ -16,7 +16,7 @@ export const turnKeepApiOn: RequestHandler = async (req, res) => {
     })
 
 
-    StartKeepApiOnMode()
+    // StartKeepApiOnMode()//TODO: TEST_V1
 
     res.send("Iniciado")
 }

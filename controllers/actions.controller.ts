@@ -1,13 +1,14 @@
 import { Request, RequestHandler, Response } from "express"
 import { sendTelegramMensage } from "../functions/sendToPhone"
 import Urls from "../functions/urls"
-import { setKeepApiOn } from "../utils/time"
+import {setKeepApiOn, Sleep} from "../utils/time"
 import { write } from "../services/apis.service"
 import { isAllWorking, makeOneRequest } from "../utils/requestsToApi"
 import { selectTimer } from "../functions/schedule"
 import axios from "axios"
 import {StartKeepApiOnMode} from "../times/operations";
 import {ApiRepository} from "../services/ApiRepository.service";
+import {TimeRepository} from "../services/TimeRepository.service";
 
 const data = new Urls()
 
@@ -18,7 +19,7 @@ export async function forceLoadAllOnce(req: any, res: any) {
     const ten = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     let finish = false
 
-    sendTelegramMensage("Iniciando Req de todos")
+    await sendTelegramMensage("Iniciando Req de todos")
 
 
     await Promise.all(ten.map(async () => {
@@ -45,22 +46,22 @@ export async function setOne(index: number, res: any) {
     await ApiRepository.setToOne(data.getApi(index), url)
 
 
-    sendTelegramMensage('Setado para: ' + (data.getApi(index)).toUpperCase())
+    await sendTelegramMensage('Setado para: ' + (data.getApi(index)).toUpperCase())
 
-    selectTimer()
+    // selectTimer()TODO: TEST_V1
+    // await Sleep(5_000)//TODO: FIX render error at change status (frontend time error)
 
     res.sendStatus(200)
-
 }
 
 
 export async function setAll(res: Response) {
-    setKeepApiOn()
     await ApiRepository.setToAll()
+    await TimeRepository.setKeepThisOn()
 
-    selectTimer()
+    // selectTimer()//TODO: TEST_V1
 
-    sendTelegramMensage('Setado para TODOS')
+    await sendTelegramMensage('Setado para TODOS')
     res.send('Setado para todos')
 }
 
@@ -68,7 +69,7 @@ export async function setAll(res: Response) {
 export async function turnOff(req?: Request, res?: Response) {
     await ApiRepository.turnApiOff()
 
-    sendTelegramMensage('Tudo OFF')
+    await sendTelegramMensage('Tudo OFF')
     res?.send("Tudo OFF")
 }
 

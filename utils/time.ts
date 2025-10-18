@@ -99,7 +99,7 @@ export const setKeepApiOn = () => writeTimeInfo("keepThisApiOn", true)
  *
  * @param isApiStart Dizer se é inicio geral da api; true só no inicio do app
  */
-export const sendUsagesToPhoneOnStart = async (isApiStart?: boolean) => {
+export const sendUsagesToPhone = async (isApiStart?: boolean) => {
     if(process.env.NOT_SEND == "true")
         return
 
@@ -114,3 +114,7 @@ ${isApiStart && "THIS ligado agora"}
 `)
 
 }
+
+
+export const Sleep = (ms: number) =>
+    new Promise(resolve => setTimeout(resolve, ms))

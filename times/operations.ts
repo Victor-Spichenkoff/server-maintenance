@@ -2,7 +2,7 @@ import { callThis } from "../functions/schedule"
 import { sendTelegramMensage } from "../functions/sendToPhone"
 import { maxTimeAvaliable, thirteenMinutes } from "../global"
 
-import { sendUsagesToPhoneOnStart } from "../utils/time"
+import { sendUsagesToPhone } from "../utils/time"
 import Urls from "../functions/urls"
 import { turnOff } from "../controllers/actions.controller"
 import { getData } from "../services/apis.service"
@@ -49,7 +49,7 @@ export const keepThisOn = async () => {
 
     const configs = await getData()
 
-    callThis()
+    await callThis()
 
     // discountFromApis()
 
@@ -88,7 +88,7 @@ export const StartKeepApiOnMode = async () => {
 
     times = 0
 
-    await sendUsagesToPhoneOnStart()
+    await sendUsagesToPhone()
 
     await getMonthAndUpdate()
     keepThisOn()
@@ -186,7 +186,6 @@ export const discountFromApis = async () => {
  */
 export const turnThisOff = async () => {
     await discountFromThisAccountTime()
-
 
     //se é para desligar essa, desligar as outras também (não vai chamar)
     await turnOff()

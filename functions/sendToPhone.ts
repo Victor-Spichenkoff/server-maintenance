@@ -38,6 +38,18 @@ async function sendTelegramMensage(mensagem: string): Promise<void> {
 }
 
 
+export async function sendTelegramMessageFormatted(message: string, header: string = "SERVER MAINTENANCE") {
+    const messageFormatted = `[ ${header.toUpperCase()} ]
+    
+    ${message}
+    
+            [ SERVER MAINTENANCE ]
+    `
+    return await sendTelegramMensage(``)
+}
+
+
+
 function formatMensageAndSend(obj: object,times?: number, onlyReturn = false) {
     if(Object.keys(obj).length == 0) {
         if(onlyReturn) return 'Tudo funcionando nos conformes'

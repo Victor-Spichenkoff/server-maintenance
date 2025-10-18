@@ -5,6 +5,9 @@ import {write} from "./apis.service";
 
 
 export const ApiRepository = {
+    async get() {
+      return db.api.findFirst({ where: { id: ApiDbId } })
+    },
     async update(infos: Prisma.ApiUpdateInput) {
         await db.api.update({
             where: {id: ApiDbId},

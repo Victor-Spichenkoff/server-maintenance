@@ -6,10 +6,11 @@ import './functions/schedule'
 import { routes } from "./config/routes"
 import { configDotenv } from 'dotenv'
 import { baseConfigForTimeOnStart } from "./times/operations"
-import { sendUsagesToPhoneOnStart } from "./utils/time"
+import { sendUsagesToPhone } from "./utils/time"
 import {selectTimer} from "./functions/schedule";
+import "./new_src/utils/interval"
 
-//Minha conta para  esse: edge(conta secundária)(spichekoffvictor)
+//Minha conta para esse: edge(conta secundária)(spichekoffvictor)
 //nome: VictorSpich
 
 
@@ -26,9 +27,8 @@ app.use(express.json())
 baseConfigForTimeOnStart()
 // keepThisOn()
 
-
-selectTimer(true)
-sendUsagesToPhoneOnStart(true)
+// selectTimer(true).then(r => {})//TODO: TEST_V1
+sendUsagesToPhone(true).then(r => {})
 
 app.use(routes)
 

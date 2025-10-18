@@ -12,15 +12,13 @@ import {Cons} from "../utils/console";
 
 const data = new Urls()
 
-
-// const thisUrl = 'https://server-maintenance.onrender.com'//old
-
 let times = 0
-let first = true
 
 
-export function callThis() {
-    axios.get(thisUrl)
+export async function callThis() {
+    try {
+    await axios(thisUrl)
+    } catch{}
 }
 
 
@@ -56,8 +54,8 @@ async function selectTimer(send: boolean = false) {
 
 
     if (obj.off) {
-        sendTelegramMensage('Sem requisição para APIs (obj.off == true)')
-        if (send) sendTelegramMensage('Desativado')
+        await sendTelegramMensage('Sem requisição para APIs (obj.off == true)')
+        if (send) await sendTelegramMensage('Desativado')
         return
     }
 
