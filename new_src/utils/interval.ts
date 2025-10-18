@@ -27,9 +27,7 @@ const checkStatusAndMakeRequests = async (notRequestThis = false) => {
     } else if (!apiCurrentStatus?.off) {
         const isSend = apiCurrentStatus?.hightMenssages || count % cycleInADay == 0
         await handleCurrentMaintainedCall(isSend)
-    }
-
-//  ALERT -> once a day + right hour
+    }//  ALERT -> once a day + right hour
     await checkTimeAndSendAlert(count)
 
     count++
@@ -37,7 +35,7 @@ const checkStatusAndMakeRequests = async (notRequestThis = false) => {
 }
 
 
-const interval = setInterval(checkStatusAndMakeRequests, 1000 * 60 * 0.1)//TODO -> 20000 -> intervalInMinute
+const interval = setInterval(checkStatusAndMakeRequests, 1000 * 60 * intervalInMinute)
 
 // SUPPORT functions
 

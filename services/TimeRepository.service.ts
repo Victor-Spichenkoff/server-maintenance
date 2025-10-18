@@ -17,7 +17,7 @@ export const TimeRepository = {
     async setKeepThisOn() {
         await db.time.update({
             where: { id: TimeDbId },
-            data: { keepThisApiOn: true }
+            data: { keepThisApiOn: true, lastStart: Date.now() },
         })
     }
 }

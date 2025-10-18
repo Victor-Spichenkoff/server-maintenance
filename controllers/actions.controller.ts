@@ -44,13 +44,12 @@ export async function setOne(index: number, res: any) {
     let url = data.getUrl(index)
 
     await ApiRepository.setToOne(data.getApi(index), url)
+    await TimeRepository.setKeepThisOn()
 
 
     await sendTelegramMensage('Setado para: ' + (data.getApi(index)).toUpperCase())
 
     // selectTimer()TODO: TEST_V1
-    // await Sleep(5_000)//TODO: FIX render error at change status (frontend time error)
-
     res.sendStatus(200)
 }
 
