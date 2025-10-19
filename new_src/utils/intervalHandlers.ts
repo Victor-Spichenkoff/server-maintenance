@@ -1,15 +1,18 @@
+import {sendTelegramMessageFormatted} from "../../functions/sendToPhone";
+import axios from "axios";
+import {checkIfIsNotReqAndLog} from "./envCheckAndLog";
+import {ApiRepository} from "../../services/ApiRepository.service";
+import {Alert} from "./sendAlerts";
+import {thisUrl} from "../../global";
+
+
+
 // MAIN APIs
 
 /*
 * * Just call and return T/F.
 * * Timeout of 8s
 * */
-import {sendTelegramMessageFormatted} from "../../functions/sendToPhone";
-import axios from "axios";
-import {checkIfIsNotReqAndLog} from "./envCheckAndLog";
-import {ApiRepository} from "../../services/ApiRepository.service";
-import {Alert} from "./sendAlerts";
-
 export const callCurrentMaintainedApi = async () => {
     const status = await ApiRepository.get()
 
@@ -26,16 +29,19 @@ export const callCurrentMaintainedApi = async () => {
 }
 
 
-export const handleCurrentMaintainedCall = async (isSend = false) => {
+export const handleCurrentMaintainedCall = async (isSend = false, isHigh = false) => {
     const result = await callCurrentMaintainedApi()
     if(result.isError) {
         return await sendTelegramMessageFormatted("Error at: " + result.apiName)
     }
 
     if(isSend)
-        await Alert.sendWorkingAlert(result.apiName ?? "")
+        await Alert.sendWorkingAlert(`${isHigh ? "[ HIGH ]" : ""} ${result.apiName}` ?? "")
 }
 
-
-
 // This
+export async function callThis() {
+    try {
+        await axios(thisUrl)
+    } catch{}
+}

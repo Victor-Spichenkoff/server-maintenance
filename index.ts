@@ -1,12 +1,13 @@
 import express from "express"
 import cors from 'cors'
+
 const app = express()
 import './functions/sendToPhone'
 import './functions/schedule'
-import { routes } from "./config/routes"
-import { configDotenv } from 'dotenv'
-import { baseConfigForTimeOnStart } from "./times/operations"
-import { sendUsagesToPhone } from "./utils/time"
+import {routes} from "./config/routes"
+import {configDotenv} from 'dotenv'
+import {baseConfigForTimeOnStart} from "./times/operations"
+import {sendUsagesToPhone} from "./utils/time"
 import {selectTimer} from "./functions/schedule";
 import "./new_src/utils/interval"
 import {Alert} from "./new_src/utils/sendAlerts";
@@ -29,9 +30,11 @@ baseConfigForTimeOnStart()
 
 
 // selectTimer(true).then(r => {})//TODO: TEST_V1
-Alert.sendUsages(true).then()
 
 app.use(routes)
 
 
-app.listen(process.env.PORT ?? 2009, () => console.log('Rodando na porta 2009'))
+app.listen(process.env.PORT ?? 2009, () => {
+    Alert.sendUsages(true).then()
+    console.log('Rodando na porta 2009')
+})

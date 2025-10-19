@@ -17,7 +17,7 @@ const checkStatusAndMakeRequests = async (notRequestThis = false) => {
 //  DISCOUNT
     await discountFromApis()
     const apiCurrentStatus = await ApiRepository.get()
-    const timeCurrentStatus = await TimeRepository.get()
+
 
 //  THIS
     if (!(await ApiRepository.get())?.off && !notRequestThis)
@@ -28,7 +28,7 @@ const checkStatusAndMakeRequests = async (notRequestThis = false) => {
         await sendTelegramMessageFormatted("API ALL CALL")
     } else if (!apiCurrentStatus?.off) {
         const isSend = apiCurrentStatus?.hightMenssages || count % cycleInADay == 0
-        await handleCurrentMaintainedCall(isSend)
+        await handleCurrentMaintainedCall(isSend, apiCurrentStatus?.hightMenssages)
     }
 
     //  ALERT -> once a day + right hour

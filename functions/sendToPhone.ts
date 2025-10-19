@@ -39,11 +39,11 @@ async function sendTelegramMensage(mensagem: string): Promise<void> {
 
 
 export async function sendTelegramMessageFormatted(message: string, header: string = "SERVER MAINTENANCE") {
-    const messageFormatted = `[ ${header.toUpperCase()} ]
+    const messageFormatted = `      [ ${header.toUpperCase()} ]
     
-    ${message}
+${message}
     
-            [ SERVER MAINTENANCE ]
+            [ SM ]
     `
     return await sendTelegramMensage(messageFormatted)
 }
