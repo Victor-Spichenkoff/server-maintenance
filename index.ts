@@ -9,6 +9,7 @@ import { baseConfigForTimeOnStart } from "./times/operations"
 import { sendUsagesToPhone } from "./utils/time"
 import {selectTimer} from "./functions/schedule";
 import "./new_src/utils/interval"
+import {Alert} from "./new_src/utils/sendAlerts";
 
 //Minha conta para esse: edge(conta secundária)(spichekoffvictor)
 //nome: VictorSpich
@@ -25,10 +26,10 @@ app.use(express.json())
 
 //evitar que ele conte coisas erradas ao iniciar (produção apenas)
 baseConfigForTimeOnStart()
-// keepThisOn()
+
 
 // selectTimer(true).then(r => {})//TODO: TEST_V1
-sendUsagesToPhone(true).then(r => {})
+Alert.sendUsages(true).then()
 
 app.use(routes)
 

@@ -3,13 +3,17 @@
 - NOT_REQ == Evita iniciar as requições, usar em testes apenas
 - DEV == ambiente é o de desenvolvimento?
 
-# Todo:
+# TODO REFACTOR
+- Update month (remember to remember when change) 
+- Send Usages on API start and start keep this on
+- 
 
-- Adicionar e testar melhorar no sistema de manter o this on
-- Ver se qunado manda "Desligando servidor", se refere apenas as outra, ou também ao this (off: true)
+
+
+# Todo:
 - Adicionar se aguenta até o fim do mês
 -DB production não tá pegando os dados
-- Ao mudar a API mantida , pelo menos em prod, ele não atualiza o status (na o resto atualiza)
+- Ao mudar a API mantida, pelo menos em prod, ele não atualiza o status (na o resto atualiza)
 - valores maiores que 597 horas, não são salvos
 
 

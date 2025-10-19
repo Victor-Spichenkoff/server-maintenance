@@ -45,12 +45,12 @@ export async function sendTelegramMessageFormatted(message: string, header: stri
     
             [ SERVER MAINTENANCE ]
     `
-    return await sendTelegramMensage(``)
+    return await sendTelegramMensage(messageFormatted)
 }
 
 
 
-function formatMensageAndSend(obj: object,times?: number, onlyReturn = false) {
+function formatMessageAndSend(obj: object, times?: number, onlyReturn = false) {
     if(Object.keys(obj).length == 0) {
         if(onlyReturn) return 'Tudo funcionando nos conformes'
 
@@ -73,4 +73,4 @@ function formatMensageAndSend(obj: object,times?: number, onlyReturn = false) {
 }
 
 export { sendTelegramMensage }
-export default formatMensageAndSend
+export default formatMessageAndSend
