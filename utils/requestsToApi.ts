@@ -4,8 +4,8 @@ import Urls from "../functions/urls"
 const data = new Urls()
 
 /**
- * 
- * 
+ *
+ *
  * @returns 1 (sucesso) ou 0 (erro de timeout 5s ou outro)
  */
 export const makeOneRequest = async (url: string, name: string="", erros: string[], timeOut=10_000) => {
@@ -17,7 +17,7 @@ export const makeOneRequest = async (url: string, name: string="", erros: string
         const res = await axios(url + "/teste", {
             timeout: timeOut
         })
-    
+
         if(res.status < 300) {
             return 1
         }
@@ -27,7 +27,7 @@ export const makeOneRequest = async (url: string, name: string="", erros: string
     } catch(e) {
         const error = e as AxiosError//erro aqui
         console.log(error.message)
-        console.log("⬆️ Erro ao fazer 1 requeset para "+ url)
+        console.log("⬆️ Erro ao fazer 1 request para "+ url)
         erros?.push(name)
         return 0
     }
@@ -46,8 +46,5 @@ export const isAllWorking = async (errorsList: string[]) => {
 
     results.forEach(result => successUrlsCount += result)
 
-    if(successUrlsCount >= urls.length)
-        return true
-
-    return false
+    return successUrlsCount >= urls.length
 }

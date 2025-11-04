@@ -6,7 +6,7 @@ import {sendTelegramMessageFormatted} from "../../functions/sendToPhone";
 import axios from "axios";
 import {checkIfIsNotReqAndLog} from "./envCheckAndLog";
 import {handleCurrentMaintainedCall} from "./intervalHandlers";
-import {checkTimeAndSendAlert} from "./intervalTimeHandler";
+import {checkTimeAndSendAlert, checkTimeAndUpdateMonth} from "./intervalTimeHandler";
 
 export let intervalInMinute = 6
 export let cycleInADay = 24*60 / intervalInMinute // now -> 240 cycles/day
@@ -25,7 +25,7 @@ const checkStatusAndMakeRequests = async (notRequestThis = false) => {
 
 //  MAIN
     if(apiCurrentStatus?.currentMantenedUrl == "all") {
-        await sendTelegramMessageFormatted("API ALL CALL")
+        await sendTelegramMessageFormatted("API ALL CALL")//TODO: KEEP ALL
     } else if (!apiCurrentStatus?.off) {
         const isSend = apiCurrentStatus?.hightMenssages || count % cycleInADay == 0
         await handleCurrentMaintainedCall(isSend, apiCurrentStatus?.hightMenssages)
@@ -33,6 +33,7 @@ const checkStatusAndMakeRequests = async (notRequestThis = false) => {
 
     //  ALERT -> once a day + right hour
     await checkTimeAndSendAlert(count)
+    await checkTimeAndUpdateMonth(count)
 
     count++
     console.log("[ INTERVAL ] ITERATION OF NUMBER " + count)

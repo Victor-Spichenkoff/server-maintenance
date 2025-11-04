@@ -9,7 +9,7 @@ import {
     timeStampToHourAndMinute
 } from "../utils/time";
 import {getTimeData, multipleWriteTimeIfo, writeTimeInfo} from "../services/times.service";
-import { sendTelegramMensage } from "../functions/sendToPhone";
+import {sendTelegramMensage, sendTelegramMessageFormatted} from "../functions/sendToPhone";
 import { maxTimeAvaliableInMiliseconds } from "../global";
 import {TimeRepository} from "../services/TimeRepository.service";
 
@@ -166,7 +166,10 @@ export const setValueTime: RequestHandler = async (req, res) => {
     if(!oldTimes)
         return res.sendStatus(400)
 
-    await sendTelegramMensage(`O usage antigo para ${type} era: ${oldTimes.hours}h  ${oldTimes.minutes + 1}m`)
+
+    const newInfos = timeStampToHourAndMinute(timeStamp)
+    await sendTelegramMessageFormatted(`O usage antigo para ${type.toUpperCase()} era: ${oldTimes.hours}h  ${oldTimes.minutes + 1}m
+    O usage novo para ${type.toUpperCase()} é: ${newInfos.hours}h  ${newInfos.minutes + 1}m`)
 
     res.send(`Novo tempo de uso para ${type} - ${hours}h ${minutes}m`)
 }

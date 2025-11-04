@@ -1,5 +1,5 @@
 import { callThis } from "../functions/schedule"
-import { sendTelegramMensage } from "../functions/sendToPhone"
+import {sendTelegramMensage, sendTelegramMessageFormatted} from "../functions/sendToPhone"
 import { maxTimeAvaliable, thirteenMinutes } from "../global"
 
 import { sendUsagesToPhone } from "../utils/time"
@@ -73,7 +73,7 @@ export const getMonthAndUpdate = async () => {
     let newMouth = now.getMonth()
         await writeTimeInfo("currentMonth", newMouth)
 
-    await sendTelegramMensage("Novo mês, novo tempo!")
+    await sendTelegramMessageFormatted("Novo mês, novo tempo!")
 
     return newMouth
 }

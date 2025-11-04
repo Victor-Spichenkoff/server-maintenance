@@ -2,10 +2,10 @@
 
 import {sendTelegramMessageFormatted} from "../../functions/sendToPhone";
 import {cycleInADay, intervalInMinute} from "./interval";
+import {getMonthAndUpdate} from "../../times/operations";
 
 
 export const checkTimeAndSendAlert = async (count: number) => {
-    // TODO: SEND INFOS
     if(count % cycleInADay == 0)
         await sendTelegramMessageFormatted("[ Time Alert ] Running: " + count + " times")
 
@@ -17,4 +17,10 @@ export const checkTimeAndSendAlert = async (count: number) => {
     if (rightHours && min > 0 && min < intervalInMinute + intervalInMinute / 2) {
         await sendTelegramMessageFormatted("[ Time Alert ] Running: " + hour + " : " + min)
     }
+}
+
+/*Once a day it checks*/
+export const checkTimeAndUpdateMonth = async (count: number) => {
+    if(count % cycleInADay == 0)
+        await getMonthAndUpdate()
 }
