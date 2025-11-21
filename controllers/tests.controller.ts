@@ -1,6 +1,6 @@
 import { RequestHandler } from "express"
-import { sendTelegramMensage } from "../functions/sendToPhone"
-import { resetAccountsTime } from "../times/operations"
+import { sendTelegramMensage } from "../lib/sendToPhone"
+import { resetAccountsTime } from "../legacy/times/operations"
 
 
 export const resetTime:RequestHandler = async (req, res) => {

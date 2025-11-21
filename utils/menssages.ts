@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 
-import formatMensageAndSend, { sendTelegramMensage } from "../functions/sendToPhone"
+import formatMensageAndSend, { sendTelegramMensage } from "../lib/sendToPhone"
 import wrongUrls from "../functions/verify"
 import { getData, write } from "../services/apis.service"
 

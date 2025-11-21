@@ -1,12 +1,12 @@
 import { Request, RequestHandler, Response } from "express"
-import { sendTelegramMensage } from "../functions/sendToPhone"
+import { sendTelegramMensage } from "../lib/sendToPhone"
 import Urls from "../functions/urls"
 import {setKeepApiOn, Sleep} from "../utils/time"
 import { write } from "../services/apis.service"
 import { isAllWorking, makeOneRequest } from "../utils/requestsToApi"
-import { selectTimer } from "../functions/schedule"
+import { selectTimer } from "../legacy/functions/schedule"
 import axios from "axios"
-import {StartKeepApiOnMode} from "../times/operations";
+import {StartKeepApiOnMode} from "../legacy/times/operations";
 import {ApiRepository} from "../services/ApiRepository.service";
 import {TimeRepository} from "../services/TimeRepository.service";
 

@@ -1,9 +1,9 @@
-import {sendTelegramMessageFormatted} from "../../functions/sendToPhone";
+import {sendTelegramMessageFormatted} from "../lib/sendToPhone";
 import axios from "axios";
-import {checkIfIsNotReqAndLog} from "./envCheckAndLog";
-import {ApiRepository} from "../../services/ApiRepository.service";
-import {Alert} from "./sendAlerts";
-import {thisUrl} from "../../global";
+import {checkIfIsNotReqAndLog} from "../lib/envCheckAndLog";
+import {ApiRepository} from "../services/ApiRepository.service";
+import {Alert} from "../lib/sendAlerts";
+import {thisUrl} from "../global";
 
 
 

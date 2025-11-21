@@ -1,10 +1,10 @@
-import {discountFromApis} from "../../times/operations";
-import {callThis} from "../../functions/schedule";
-import {ApiRepository} from "../../services/ApiRepository.service";
-import {TimeRepository} from "../../services/TimeRepository.service";
-import {sendTelegramMessageFormatted} from "../../functions/sendToPhone";
+import {discountFromApis} from "../legacy/times/operations";
+import {callThis} from "../legacy/functions/schedule";
+import {ApiRepository} from "../services/ApiRepository.service";
+import {TimeRepository} from "../services/TimeRepository.service";
+import {sendTelegramMessageFormatted} from "../lib/sendToPhone";
 import axios from "axios";
-import {checkIfIsNotReqAndLog} from "./envCheckAndLog";
+import {checkIfIsNotReqAndLog} from "../lib/envCheckAndLog";
 import {handleCurrentMaintainedCall} from "./intervalHandlers";
 import {checkTimeAndSendAlert, checkTimeAndUpdateMonth} from "./intervalTimeHandler";
 

@@ -2,15 +2,15 @@ import express from "express"
 import cors from 'cors'
 
 const app = express()
-import './functions/sendToPhone'
-import './functions/schedule'
+import './lib/sendToPhone'
+import './legacy/functions/schedule'
 import {routes} from "./config/routes"
 import {configDotenv} from 'dotenv'
-import {baseConfigForTimeOnStart} from "./times/operations"
+import {baseConfigForTimeOnStart} from "./legacy/times/operations"
 import {sendUsagesToPhone} from "./utils/time"
-import {selectTimer} from "./functions/schedule";
-import "./new_src/utils/interval"
-import {Alert} from "./new_src/utils/sendAlerts";
+import {selectTimer} from "./legacy/functions/schedule";
+import "./functions/interval"
+import {Alert} from "./lib/sendAlerts";
 
 //Minha conta para esse: edge(conta secundária)(spichekoffvictor)
 //nome: VictorSpich

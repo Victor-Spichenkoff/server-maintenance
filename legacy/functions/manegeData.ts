@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
-import Urls from './urls';
-import { IData } from '../types/data';
+import Urls from '../../functions/urls';
+import { IData } from '../../types/data';
 // const path = 'functions/data.json'
 
 const dataPath = path.join(__dirname, 'data.json');
@@ -24,16 +24,16 @@ export async function getDataOld(): Promise<IData> {
 export type keysApi = 'currentMantenedUrl' | 'currentMantenedName' | 'off' | 'hightMenssages'
 
 export async function writeOld(key: keysApi, value: string | boolean) {
-    
+
     try {
         const dados:any = await getDataOld()
 
         dados[key] = value
-        
-      
+
+
         const novoConteudo = JSON.stringify(dados, null, 2)
         fs.writeFileSync(dataPath, novoConteudo, 'utf8')
-      
+
         // console.log('Arquivo modificado')
       } catch (err) {
         console.error('Erro ao modificar o arquivo:', err)
@@ -42,7 +42,7 @@ export async function writeOld(key: keysApi, value: string | boolean) {
 
 
 
-// base: 
+// base:
 // {
 //   "currentMantenedUrl": "https://google.com",
 //   "currentMantenedName": "Nenhum Selecionado",

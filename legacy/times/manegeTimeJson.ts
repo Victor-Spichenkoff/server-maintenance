@@ -1,5 +1,5 @@
 import path from 'path'
-import { ITime, timeKeys } from '../types/times'
+import { ITime, timeKeys } from '../../types/times'
 import fs from 'fs'
 
 const timeDataPath = path.join(__dirname, 'time.json');
@@ -17,7 +17,7 @@ export function writeTimeInfoOld(key: timeKeys, value: number | null | boolean) 
         const dados:any = getTimeDataOld()
 
         dados[key] = value
-      
+
         const novoConteudo = JSON.stringify(dados, null, 2)
         fs.writeFileSync(timeDataPath, novoConteudo, 'utf8')
       } catch (err) {

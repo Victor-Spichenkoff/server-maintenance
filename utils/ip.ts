@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { sendTelegramMensage } from "../functions/sendToPhone";
+import { sendTelegramMensage } from "../lib/sendToPhone";
 
 export const informateNewIpAccess = (req: Request, res: Response) => {
     let ip = req.params.ip

@@ -1,6 +1,6 @@
-import {sendTelegramMessageFormatted} from "../../functions/sendToPhone";
-import {getUSageFor} from "../../utils/time";
-import {TimeRepository} from "../../services/TimeRepository.service";
+import {sendTelegramMessageFormatted} from "./sendToPhone";
+import {getUSageFor} from "../utils/time";
+import {TimeRepository} from "../services/TimeRepository.service";
 
 export const Alert = {
     async sendUsages(isStart = false) {

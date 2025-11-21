@@ -1,4 +1,4 @@
-import { sendTelegramMensage } from "../functions/sendToPhone"
+import { sendTelegramMensage } from "../lib/sendToPhone"
 import { maxTimeAvaliable } from "../global"
 import { getTimeData, writeTimeInfo } from "../services/times.service"
 

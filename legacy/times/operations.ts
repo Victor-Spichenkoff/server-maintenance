@@ -1,12 +1,12 @@
 import { callThis } from "../functions/schedule"
-import {sendTelegramMensage, sendTelegramMessageFormatted} from "../functions/sendToPhone"
-import { maxTimeAvaliable, thirteenMinutes } from "../global"
+import {sendTelegramMensage, sendTelegramMessageFormatted} from "../../lib/sendToPhone"
+import { maxTimeAvaliable, thirteenMinutes } from "../../global"
 
-import { sendUsagesToPhone } from "../utils/time"
-import Urls from "../functions/urls"
-import { turnOff } from "../controllers/actions.controller"
-import { getData } from "../services/apis.service"
-import { getTimeData, multipleWriteTimeIfo, writeTimeInfo } from "../services/times.service"
+import { sendUsagesToPhone } from "../../utils/time"
+import Urls from "../../functions/urls"
+import { turnOff } from "../../controllers/actions.controller"
+import { getData } from "../../services/apis.service"
+import { getTimeData, multipleWriteTimeIfo, writeTimeInfo } from "../../services/times.service"
 
 
 

@@ -1,3 +1,8 @@
+# ADD NEW API
+- types/data -> name
+- functions/urls (url+name)
+
+
 # .ENV
 - NOT_SEND == mandar as mensagens? (true só em dev)
 - NOT_REQ == Evita iniciar as requições, usar em testes apenas

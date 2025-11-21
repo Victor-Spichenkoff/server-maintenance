@@ -1,14 +1,14 @@
 import axios, {AxiosError} from 'axios'
 
 const schedule = require('node-schedule')
-import wrongUrls from './verify'
-import formatMensageAndSend, {sendTelegramMensage} from './sendToPhone'
-import Urls from "./urls"
+import wrongUrls from '../../functions/verify'
+import formatMensageAndSend, {sendTelegramMensage} from '../../lib/sendToPhone'
+import Urls from "../../functions/urls"
 
 import {StartKeepApiOnMode} from '../times/operations'
-import {getData} from '../services/apis.service'
-import {thisUrl} from '../global'
-import {Cons} from "../utils/console";
+import {getData} from '../../services/apis.service'
+import {thisUrl} from '../../global'
+import {Cons} from "../../utils/console";
 
 const data = new Urls()
 

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import wrongUrls from './verify'
+import wrongUrls from '../functions/verify'
 
 const telegramBotToken = '6746265132:AAHesfWPU4GGxYyWqnbDZSriNnkFcbRFi0E'
 

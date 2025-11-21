@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import { discountFromApis, getMonthAndUpdate, StartKeepApiOnMode, turnThisOff } from "../times/operations";
+import { discountFromApis, getMonthAndUpdate, StartKeepApiOnMode, turnThisOff } from "../legacy/times/operations";
 import {
     getlastDiscountFormatted,
     getLastStartFormatted,
@@ -9,7 +9,7 @@ import {
     timeStampToHourAndMinute
 } from "../utils/time";
 import {getTimeData, multipleWriteTimeIfo, writeTimeInfo} from "../services/times.service";
-import {sendTelegramMensage, sendTelegramMessageFormatted} from "../functions/sendToPhone";
+import {sendTelegramMensage, sendTelegramMessageFormatted} from "../lib/sendToPhone";
 import { maxTimeAvaliableInMiliseconds } from "../global";
 import {TimeRepository} from "../services/TimeRepository.service";
 

@@ -1,8 +1,8 @@
 // Time
 
-import {sendTelegramMessageFormatted} from "../../functions/sendToPhone";
+import {sendTelegramMessageFormatted} from "../lib/sendToPhone";
 import {cycleInADay, intervalInMinute} from "./interval";
-import {getMonthAndUpdate} from "../../times/operations";
+import {getMonthAndUpdate} from "../legacy/times/operations";
 
 
 export const checkTimeAndSendAlert = async (count: number) => {
