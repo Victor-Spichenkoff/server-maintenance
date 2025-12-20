@@ -1,7 +1,10 @@
 import axios from 'axios'
 import wrongUrls from '../functions/verify'
+import {configDotenv} from "dotenv";
 
-const telegramBotToken = '6746265132:AAHesfWPU4GGxYyWqnbDZSriNnkFcbRFi0E'
+
+configDotenv()
+const telegramBotToken = process.env.TELEGRAM_TOKEN
 
 async function sendTelegramMensage(mensagem: string): Promise<void> {
   if(process.env.NOT_SEND=="true")
