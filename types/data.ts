@@ -1,9 +1,11 @@
-export type ApiName = 'Portfolio Api' | 'VSS Artigos' | 'Lista Mercado' | 'Paginação' | "all" | "Z" | "Velha" | "Million"
+export type ApiName = 'Portfolios Api' | 'VSS Articles'
+    | 'Shopping List' | 'Pagination' | "all" | "Z"
+    | "Tic Tac Toe" | "Million" | "Nothing Selected"
 
 export interface IData {
-    id?: number 
+    id?: number
     currentMantenedUrl: string
-    currentMantenedName: ApiName | "Nenhum Selecionado",
+    currentMantenedName: ApiName,
     off: boolean,
     hightMenssages: boolean
     keepThisApiOn: boolean

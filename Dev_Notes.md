@@ -1,3 +1,11 @@
+# TODO -> FIX MAINTENCA TO ADD NEW
+- Url and title must be one thing, an array
+- Set endpoint must be a single thing /set/{id}
+- Frontend must be able to receive same response
+- Backend must change the way
+- In the end of everithing (branch just for that), fix the name of the things (Mantened)
+
+
 # ADD NEW API
 - types/data -> name
 - functions/urls (url+name)

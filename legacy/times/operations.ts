@@ -3,10 +3,11 @@ import {sendTelegramMensage, sendTelegramMessageFormatted} from "../../lib/sendT
 import { maxTimeAvaliable, thirteenMinutes } from "../../global"
 
 import { sendUsagesToPhone } from "../../utils/time"
-import Urls from "../../functions/urls"
+// import Urls from "../../functions/urls"
 import { turnOff } from "../../controllers/actions.controller"
 import { getData } from "../../services/apis.service"
 import { getTimeData, multipleWriteTimeIfo, writeTimeInfo } from "../../services/times.service"
+import {onlyAllowedToCallApiUrls} from "../../data/apisInfo";
 
 
 
@@ -115,7 +116,7 @@ export const discountFromMainAccountTime = async () => {
     let difference = now - Number(timeInfo.lastDiscount)
 
     if (config?.currentMantenedName == 'all')
-        difference *= (new Urls()).urls.length
+        difference *= onlyAllowedToCallApiUrls.length
 
     await writeTimeInfo("usageMainAccount", Number(timeInfo.usageMainAccount) + difference)
 }
@@ -172,7 +173,7 @@ export const discountFromApis = async () => {
     let differenceForMain = now - Number(timeInfo.lastDiscount)
 
     if (config?.currentMantenedName == "all")
-        differenceForMain *= (new Urls()).urls.length
+        differenceForMain *= onlyAllowedToCallApiUrls.length
 
     await writeTimeInfo("usageMainAccount", Number(timeInfo.usageMainAccount) + differenceForMain)
 }

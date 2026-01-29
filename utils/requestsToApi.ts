@@ -1,7 +1,6 @@
 import axios, { AxiosError } from "axios"
-import Urls from "../functions/urls"
+import {allApisUrls, apisInfo, getApiInfoById} from "../data/apisInfo";
 
-const data = new Urls()
 
 /**
  *
@@ -35,13 +34,13 @@ export const makeOneRequest = async (url: string, name: string="", erros: string
 
 
 export const isAllWorking = async (errorsList: string[]) => {
-    const urls = data.urls
+    const urls = allApisUrls//data.urls
     let successUrlsCount = 0
 
     let results: any[] = [1]//lidar com erro de inexistente
 
     results = await Promise.all(urls.map(async (url, i) => {
-        return await makeOneRequest(url, data.getApi(i), errorsList)
+        return await makeOneRequest(url, getApiInfoById(i)?.title, errorsList)
     }))
 
     results.forEach(result => successUrlsCount += result)

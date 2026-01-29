@@ -1,12 +1,13 @@
 import { Request, RequestHandler, Response } from "express"
 import { sendTelegramMensage } from "../lib/sendToPhone"
-import Urls from "../functions/urls"
+// import Urls from "../functions/urls"
 import { isAllWorking, makeOneRequest } from "../utils/requestsToApi"
 import axios from "axios"
 import {ApiRepository} from "../services/ApiRepository.service";
 import {TimeRepository} from "../services/TimeRepository.service";
+import {allApisUrls, apisInfo, getApiInfoById, onlyAllowedToCallApiUrls} from "../data/apisInfo";
 
-const data = new Urls()
+// const data = new Urls()
 
 
 
@@ -36,18 +37,28 @@ export async function forceLoadAllOnce(req: any, res: any) {
     await sendTelegramMensage("[Forçar] Erro no req de todos - 10 vezes")
 }
 
-export async function setOne(index: number, res: any) {
-    let url = data.getUrl(index)
+export async function setOne(req: Request, res: any) {
+    let apiInfo = apisInfo.filter(x => x.id == Number(req.params.id))[0]
 
-    await ApiRepository.setToOne(data.getApi(index), url)
+    await ApiRepository.setToOne(apiInfo.title, apiInfo.url)
     await TimeRepository.setKeepThisOn()
 
+    await sendTelegramMensage('Setado para: ' + (apiInfo.title).toUpperCase())
 
-    await sendTelegramMensage('Setado para: ' + (data.getApi(index)).toUpperCase())
-
-    // selectTimer()TODO: TEST_V1
     res.sendStatus(200)
 }
+// export async function setOne(index: number, res: any) {
+//     let url = data.getUrl(index)
+//
+//     await ApiRepository.setToOne(data.getApi(index), url)
+//     await TimeRepository.setKeepThisOn()
+//
+//
+//     await sendTelegramMensage('Setado para: ' + (data.getApi(index)).toUpperCase())
+//
+//     // selectTimer()TODO: TEST_V1
+//     res.sendStatus(200)
+// }
 
 
 export async function setAll(res: Response) {
@@ -72,7 +83,7 @@ export async function turnOff(req?: Request, res?: Response) {
  * * Demora 10 segundos cada (vai ter 5, OLX == ultima atualização)
  */
 export const callAllOnce: RequestHandler = async (req, res) => {
-    const urls = data.urls
+    const urls = allApisUrls//data.urls
     const errorsNames: string[] = []
     let successUrlsCount = 0
 
@@ -80,7 +91,7 @@ export const callAllOnce: RequestHandler = async (req, res) => {
     let results: any[] = [1, 1, 1, 1]
 
     results = await Promise.all(urls.map(async (url, i) => {
-        return await makeOneRequest(url, data.getApi(i), errorsNames)
+        return await makeOneRequest(url, getApiInfoById(i)?.title, errorsNames)
     }))
 
 
@@ -97,16 +108,18 @@ export const callAllOnce: RequestHandler = async (req, res) => {
 
 //ele deve ter uma resposta mais simples (usar no de forçar)
 //no forçar, o front cuida de fazer várias reqs, aqui, só retornar true ou false
-export const callAllOnceSimple: RequestHandler = async (req, res) => {
-    const urls = data.urls
+export const callAllOnceSimpleAndIgnore: RequestHandler = async (req, res) => {
+    const urls = onlyAllowedToCallApiUrls
     const errorsNames: string[] = []
-    // const urls = ['https://portfolio-api-i3t0.onrender.com']
+
     let successUrlsCount = 0
 
     let results: any[] = [1, 0, 0]
     if (process.env.NOT_REQ != "true") {
         results = await Promise.all(urls.map(async (url, i) => {
-            return await makeOneRequest(url, data.getApi(i), errorsNames, 4_000)
+            if(getApiInfoById(i)?.isIgnore)
+                return
+            return await makeOneRequest(url, getApiInfoById(i)?.title, errorsNames, 4_000)
         }))
     }
 
@@ -126,18 +139,19 @@ export const callAllOnceSimple: RequestHandler = async (req, res) => {
  */
 export const testOne: RequestHandler = async (req, res) => {
     const { id } = req.params
+    const api = getApiInfoById(Number(id))
 
-    const url = data.getApiUrlById(Number(id))
+    const url = api?.url
     console.log(url)
     try {
         if (process.env.NOT_REQ != "true") {
             await axios(url + "/teste", { timeout: 7_000 })
 
-            res.send(`${data.getApi(Number(id))}`)
+            res.send(`${api?.title}`)
         }
         else {
             setTimeout(() => {
-                res.send(data.getApi(Number(id)) + "[FAKE]")
+                res.send(api?.title + "[FAKE]")
             }, 5000)
         }
 

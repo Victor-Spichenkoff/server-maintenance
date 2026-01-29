@@ -1,11 +1,11 @@
 import fs from 'fs'
 import path from 'path'
-import Urls from '../../functions/urls';
+// import Urls from '../../functions/urls';
 import { IData } from '../../types/data';
 // const path = 'functions/data.json'
 
 const dataPath = path.join(__dirname, 'data.json');
-const urls = new Urls()
+// const urls = new Urls()
 
 export type jsonData = {
   currentMantenedUrl: string,
