@@ -23,7 +23,7 @@ model Api {
 
 model Time {
   id Int @id @default(autoincrement())
-  currentMonth Int 
+  currentMonth Int
   keepThisApiOn Boolean
   usageMainAccount BigInt
   usageThisAccount BigInt
