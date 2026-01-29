@@ -1,12 +1,13 @@
 import { Prisma } from "@prisma/client"
 import { db } from "../lib/db"
 import { IData } from "../types/data"
+import {ApiInfo} from "../types/apiInfo";
 
 export const createBaseApisData = async () => {
     const data = {
         id: 1,
         currentMantenedUrl: "https://google.com",
-        currentMantenedName: "Nenhum Selecionado",
+        currentMantenedName: "Nothing Selected",
         off: true,
         hightMenssages: false
     }
@@ -20,7 +21,7 @@ export const getData = async () => {
     const data = await db.api.findFirst({ where: { id: 1 } })
     if (!data)
         throw "Sem dados no \"data\""
-    
+
     return data
 }
 

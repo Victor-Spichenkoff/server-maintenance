@@ -83,7 +83,7 @@ async function selectTimer(send: boolean = false) {
     if (process.env.NOT_REQ == "true")
         return console.log("[ NOT_REQ ] REQUEST to " + obj.currentMantenedName)
 
-    if (obj.currentMantenedName == 'all') return verifyAndSendAll(send)
+    if (obj.currentMantenedName == 'All') return verifyAndSendAll(send)
 
     try {
     const res = await axios.get(obj.currentMantenedUrl + '/teste')

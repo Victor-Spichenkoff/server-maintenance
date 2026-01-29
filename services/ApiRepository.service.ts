@@ -18,10 +18,10 @@ export const ApiRepository = {
     async turnApiOff() {
         await write('off', true)
         await write('currentMantenedUrl', 'https://google.com')
-        await write('currentMantenedName', 'Nenhum Selecionado')
+        await write('currentMantenedName', 'Nothing Selected')
     },
     async setToAll(){
-        await write('currentMantenedName', 'all')
+        await write('currentMantenedName', 'All')
         await write('off', false)
     },
     async setToOne(name: string, url: string){

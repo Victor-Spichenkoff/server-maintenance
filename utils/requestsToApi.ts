@@ -34,7 +34,7 @@ export const makeOneRequest = async (url: string, name: string="", erros: string
 
 
 export const isAllWorking = async (errorsList: string[]) => {
-    const urls = allApisUrls//data.urls
+    const urls = allApisUrls
     let successUrlsCount = 0
 
     let results: any[] = [1]//lidar com erro de inexistente

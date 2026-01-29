@@ -30,6 +30,8 @@ routes.post('/setTime', setValueTime)
 
 
 //seleção de 1 para manter
+routes.get('/set/1717', async (req, res) => setAll(res))
+routes.get('/set/9999', turnOff)
 routes.get('/set/:id', async (req, res) => setOne(req, res))
 // routes.get('/portfolio', async (req, res) => setOne(0, res))
 // routes.get('/vss', async (req, res) => setOne(1, res))
@@ -39,8 +41,6 @@ routes.get('/set/:id', async (req, res) => setOne(req, res))
 // routes.get('/velha', async (req, res) => setOne(5, res))
 // routes.get('/million', async (req, res) => setOne(6, res))
 // // routes.get('/olx', async (req, res) => setOne(4, res))
-// routes.get('/all', async (req, res) => setAll(res))
-// routes.get('/turnoff', turnOff)
 
 
 //mudar prioridades

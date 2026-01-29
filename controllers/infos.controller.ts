@@ -16,10 +16,10 @@ export async function sendInfos(req:any, res:any) {
 export const sendInfosById: RequestHandler = async (req, res) => {
     const data = await getData()
     if(data.currentMantenedName == 'Nothing Selected')
-      return res.json(-1)
+      return res.json(9999)
 
-    if(data.currentMantenedName == "all")
-      return res.json(17)//id do all. coloquei alto mesmo
+    if(data.currentMantenedName == "All")
+      return res.json(1717)//id do all. coloquei alto mesmo
 
     console.log(data.currentMantenedName)
     const id = apisInfo.filter(x => x.title == data.currentMantenedName)[0].id

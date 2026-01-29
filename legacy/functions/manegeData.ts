@@ -45,7 +45,7 @@ export async function writeOld(key: keysApi, value: string | boolean) {
 // base:
 // {
 //   "currentMantenedUrl": "https://google.com",
-//   "currentMantenedName": "Nenhum Selecionado",
+//   "currentMantenedName": "Nothing Selected",
 //   "off": true,
 //   "hightMenssages": false
 // }
