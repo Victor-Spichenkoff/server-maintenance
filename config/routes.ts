@@ -1,6 +1,6 @@
 import { Router } from "express"
 import { informateNewIpAccess } from "../utils/ip"
-import { getHightmenssagesStatus, sendInfosPage, toggleHightMenssages } from "../utils/menssages"
+import { getHighMessagesStatus, sendInfosPage, toggleHighMessages } from "../utils/menssages"
 import { sendInfos, sendInfosById } from "../controllers/infos.controller"
 import { callAllOnce, callAllOnceSimpleAndIgnore, forceLoadAllOnce, setAll, setOne, testOne, turnOff } from "../controllers/actions.controller"
 import { getBothRemainingTime, getLastDiscount, getLastStart, getRemainingTimeForMain, getRemainingTimeForThis, getThisStatus, setValueTime, turnKeepApiOn, turnOffThisApiController, updateUsageMiddleware } from "../controllers/times.controller"
@@ -29,23 +29,15 @@ routes.get('/sendMessage', testTelegramSendMessage)
 routes.post('/setTime', setValueTime)
 
 
-//seleção de 1 para manter
+//seleção de 1 para manter/status da api
 routes.get('/set/1717', async (req, res) => setAll(res))
 routes.get('/set/9999', turnOff)
 routes.get('/set/:id', async (req, res) => setOne(req, res))
-// routes.get('/portfolio', async (req, res) => setOne(0, res))
-// routes.get('/vss', async (req, res) => setOne(1, res))
-// routes.get('/lista', async (req, res) => setOne(2, res))
-// routes.get('/paginacao', async (req, res) => setOne(3, res))
-// routes.get('/z', async (req, res) => setOne(4, res))
-// routes.get('/velha', async (req, res) => setOne(5, res))
-// routes.get('/million', async (req, res) => setOne(6, res))
-// // routes.get('/olx', async (req, res) => setOne(4, res))
 
 
 //mudar prioridades
-routes.get('/hightMenssages/toggle', toggleHightMenssages)
-routes.get('/hightMenssages/status', getHightmenssagesStatus)
+routes.get('/highMessages/toggle', toggleHighMessages)
+routes.get('/highMessages/status', getHighMessagesStatus)
 
 
 routes.get('/sendIp/:ip',informateNewIpAccess)
@@ -54,7 +46,7 @@ routes.get('/sendIp/:ip',informateNewIpAccess)
 //infos
 routes.get('/currenton', sendInfos)
 routes.get('/currenton/id', sendInfosById)
-routes.get('/hightMenssagesStatus', getHightmenssagesStatus)
+routes.get('/highMessagesStatus', getHighMessagesStatus)
 routes.get('/apiStatus', getThisStatus)
 
 

@@ -8,10 +8,10 @@ const dataPath = path.join(__dirname, 'data.json');
 // const urls = new Urls()
 
 export type jsonData = {
-  currentMantenedUrl: string,
-  currentMantenedName: string,
+  curreMaintainedUrl: string,
+  curreMaintainedName: string,
   off: boolean,
-  hightMenssages: boolean
+  highMessages: boolean
 }
 
 export async function getDataOld(): Promise<IData> {
@@ -21,7 +21,7 @@ export async function getDataOld(): Promise<IData> {
 }
 
 
-export type keysApi = 'currentMantenedUrl' | 'currentMantenedName' | 'off' | 'hightMenssages'
+export type keysApi = 'currentMaintainedUrl' | 'currentMaintainedName' | 'off' | 'highMessages'
 
 export async function writeOld(key: keysApi, value: string | boolean) {
 
@@ -44,8 +44,8 @@ export async function writeOld(key: keysApi, value: string | boolean) {
 
 // base:
 // {
-//   "currentMantenedUrl": "https://google.com",
-//   "currentMantenedName": "Nothing Selected",
+//   "currentMaintainedUrl": "https://google.com",
+//   "currentMaintainedName": "Nothing Selected",
 //   "off": true,
-//   "hightMenssages": false
+//   "highMessages": false
 // }

@@ -17,14 +17,14 @@ export const callCurrentMaintainedApi = async () => {
     const status = await ApiRepository.get()
 
     try {
-        if(checkIfIsNotReqAndLog("Fake Called " + status?.currentMantenedName)) {
-            return { isError: false, apiName: status?.currentMantenedName }
+        if(checkIfIsNotReqAndLog("Fake Called " + status?.currentMaintainedName)) {
+            return { isError: false, apiName: status?.currentMaintainedName }
         }
-        await axios(status?.currentMantenedUrl + "/teste", { timeout: 8_000 })
-        return { isError: false, apiName: status?.currentMantenedName }
+        await axios(status?.currentMaintainedUrl + "/teste", { timeout: 8_000 })
+        return { isError: false, apiName: status?.currentMaintainedName }
 
     } catch {
-        return { isError: true, apiName: status?.currentMantenedName }
+        return { isError: true, apiName: status?.currentMaintainedName }
     }
 }
 

@@ -5,11 +5,11 @@ import wrongUrls from "../functions/verify"
 import { getData, write } from "../services/apis.service"
 
 
-export async function toggleHightMenssages(req: Request, res: Response) {
+export async function toggleHighMessages(req: Request, res: Response) {
     try {
         const obj = await getData()
-        const current = obj?.hightMenssages
-        await write('hightMenssages', !current)
+        const current = obj?.highMessages
+        await write('highMessages', !current)
 
         res.send(!current)
 
@@ -19,17 +19,17 @@ export async function toggleHightMenssages(req: Request, res: Response) {
 }
 
 
-export async function getHightmenssagesStatus(req: Request, res: Response) {
+export async function getHighMessagesStatus(req: Request, res: Response) {
     const data = await getData()
 
-    res.send(data?.hightMenssages)
+    res.send(data?.highMessages)
 }
 
 
 
 //legado
 export const  sendInfosPage = async (req: Request, res: Response) => {
-    sendTelegramMensage('inciado load Geral')
+    await sendTelegramMensage('Inciado load Geral')
     const objectWithWrong = await wrongUrls()
 
     const msg = formatMensageAndSend(objectWithWrong, 1, true)

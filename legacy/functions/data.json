@@ -1,6 +1,6 @@
 {
-  "currentMantenedUrl": "https://google.com",
-  "currentMantenedName": "Nenhum Selecionado",
+  "currentMaintainedUrl": "https://google.com",
+  "currentMaintainedName": "Nenhum Selecionado",
   "off": true,
-  "hightMenssages": false
+  "highMessages": false
 }

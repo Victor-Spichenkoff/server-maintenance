@@ -14,20 +14,20 @@ datasource db {
 }
 
 model Api {
-  id                  Int     @id @default(autoincrement())
-  currentMantenedUrl  String
-  currentMantenedName String
-  off                 Boolean
-  hightMenssages      Boolean
+  id                    Int     @id @default(autoincrement())
+  currentMaintainedUrl  String  @default("https://google.com")
+  currentMaintainedName String  @default("Nothing Selected")
+  off                   Boolean
+  highMessages          Boolean @default(false)
 }
 
 model Time {
-  id Int @id @default(autoincrement())
-  currentMonth Int
-  keepThisApiOn Boolean
-  usageMainAccount BigInt
-  usageThisAccount BigInt
-  lastStart BigInt?
-  lastDiscount BigInt?
+  id                 Int     @id @default(autoincrement())
+  currentMonth       Int
+  keepThisApiOn      Boolean
+  usageMainAccount   BigInt
+  usageThisAccount   BigInt
+  lastStart          BigInt?
+  lastDiscount       BigInt?
   alreadyStartedThis Boolean
 }

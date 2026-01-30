@@ -54,7 +54,7 @@ export const keepThisOn = async () => {
 
     // discountFromApis()
 
-    if (configs?.hightMenssages)
+    if (configs?.highMessages)
         await sendTelegramMensage("[HIGH] API principal chamada")
 
     setTimeout(() => keepThisOn(), thirteenMinutes / 3)
@@ -100,7 +100,7 @@ export const StartKeepApiOnMode = async () => {
  */
 export const discountFromMainAccountTime = async () => {
     const config = await getData()
-    if (config?.currentMantenedName == "Nothing Selected")
+    if (config?.currentMaintainedName == "Nothing Selected")
         return
 
 
@@ -115,7 +115,7 @@ export const discountFromMainAccountTime = async () => {
 
     let difference = now - Number(timeInfo.lastDiscount)
 
-    if (config?.currentMantenedName == 'All')
+    if (config?.currentMaintainedName == 'All')
         difference *= onlyAllowedToCallApiUrls.length
 
     await writeTimeInfo("usageMainAccount", Number(timeInfo.usageMainAccount) + difference)
@@ -166,13 +166,13 @@ export const discountFromApis = async () => {
 
     await writeTimeInfo("usageThisAccount", Number(timeInfo.usageThisAccount) + differenceForThis)
 
-    if (config?.currentMantenedName == "Nothing Selected")
+    if (config?.currentMaintainedName == "Nothing Selected")
         return
 
 
     let differenceForMain = now - Number(timeInfo.lastDiscount)
 
-    if (config?.currentMantenedName == "all")
+    if (config?.currentMaintainedName == "all")
         differenceForMain *= onlyAllowedToCallApiUrls.length
 
     await writeTimeInfo("usageMainAccount", Number(timeInfo.usageMainAccount) + differenceForMain)

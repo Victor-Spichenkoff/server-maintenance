@@ -4,9 +4,9 @@ export type ApiName = 'Portfolios Api' | 'VSS Articles'
 
 export interface IData {
     id?: number
-    currentMantenedUrl: string
-    currentMantenedName: ApiName,
+    currentMaintainedUrl: string
+    currentMaintainedName: ApiName,
     off: boolean,
-    hightMenssages: boolean
+    highMenssages: boolean
     keepThisApiOn: boolean
 }

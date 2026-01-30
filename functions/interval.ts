@@ -1,10 +1,7 @@
 import {discountFromApis} from "../legacy/times/operations";
 import {callThis} from "../legacy/functions/schedule";
 import {ApiRepository} from "../services/ApiRepository.service";
-import {TimeRepository} from "../services/TimeRepository.service";
 import {sendTelegramMessageFormatted} from "../lib/sendToPhone";
-import axios from "axios";
-import {checkIfIsNotReqAndLog} from "../lib/envCheckAndLog";
 import {handleCurrentMaintainedCall} from "./intervalHandlers";
 import {checkTimeAndSendAlert, checkTimeAndUpdateMonth} from "./intervalTimeHandler";
 
@@ -24,11 +21,11 @@ const checkStatusAndMakeRequests = async (notRequestThis = false) => {
         await callThis()
 
 //  MAIN
-    if(apiCurrentStatus?.currentMantenedUrl == "all") {
+    if(apiCurrentStatus?.currentMaintainedUrl == "all") {
         await sendTelegramMessageFormatted("API ALL CALL")//TODO: KEEP ALL
     } else if (!apiCurrentStatus?.off) {
-        const isSend = apiCurrentStatus?.hightMenssages || count % cycleInADay == 0
-        await handleCurrentMaintainedCall(isSend, apiCurrentStatus?.hightMenssages)
+        const isSend = apiCurrentStatus?.highMessages || count % cycleInADay == 0
+        await handleCurrentMaintainedCall(isSend, apiCurrentStatus?.highMessages)
     }
 
     //  ALERT -> once a day + right hour

@@ -5,7 +5,7 @@
 - Frontend must be able to receive same response
 - Backend must change the way
 - In the end of everithing (branch just for that), fix the name of the things (Mantened)
-
+  - and hight or hightMenssages
 
 # ADD NEW API
 - types/data -> name

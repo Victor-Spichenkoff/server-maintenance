@@ -1,15 +1,12 @@
-import { Prisma } from "@prisma/client"
 import { db } from "../lib/db"
-import { IData } from "../types/data"
-import {ApiInfo} from "../types/apiInfo";
 
 export const createBaseApisData = async () => {
     const data = {
         id: 1,
-        currentMantenedUrl: "https://google.com",
-        currentMantenedName: "Nothing Selected",
+        currentMaintainedUrl: "https://google.com",
+        currentMaintainedName: "Nothing Selected",
         off: true,
-        hightMenssages: false
+        highMessages: false
     }
 
     await db.api.create({ data })
@@ -26,7 +23,7 @@ export const getData = async () => {
 }
 
 
-export type keysApi = 'currentMantenedUrl' | 'currentMantenedName' | 'off' | 'hightMenssages' | "id"
+export type keysApi = 'currentMaintainedUrl' | 'currentMaintainedName' | 'off' | 'highMessages' | "id"
 
 
 export async function write(key: keysApi, value: string | boolean) {
