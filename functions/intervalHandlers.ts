@@ -36,7 +36,7 @@ export const handleCurrentMaintainedCall = async (isSend = false, isHigh = false
     }
 
     if(isSend)
-        await Alert.sendWorkingAlert(`${isHigh ? "[ HIGH ]" : ""} ${result.apiName}` ?? "")
+        await Alert.sendWorkingAlert(`${isHigh ? "[ HIGH ]" : ""} ${result.apiName}`)
 }
 
 // This
