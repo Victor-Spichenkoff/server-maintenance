@@ -1,11 +1,9 @@
-# TODO -> FIX MAINTENCA TO ADD NEW
+# TODO -> FIX MAINTENANCE TO ADD NEW
 - Use prisma + ID in API entity (currentId)
-- Url and title must be one thing, an array
-- Set endpoint must be a single thing /set/{id}
 - Frontend must be able to receive same response
 - Backend must change the way
 
-- Primsma migrate dev
+- Prisma migrate dev
 
 
 # ADD NEW API
