@@ -1,6 +1,6 @@
 import {sendTelegramMensage} from "../lib/sendToPhone"
 import {maxTimeAvaliable} from "../global"
-import {getTimeData} from "../services/times.service"
+import {getTimeDataAndValidateIfExists} from "../services/times.service"
 
 
 /**
@@ -8,7 +8,7 @@ import {getTimeData} from "../services/times.service"
  * @returns ms de quanto ainda sobra
  */
 export const getRemainingTimeFor = async (type: "main" | "this") => {
-    const timeInfo = await getTimeData()
+    const timeInfo = await getTimeDataAndValidateIfExists()
 
     let remaining
 
@@ -26,7 +26,7 @@ export const getRemainingTimeFor = async (type: "main" | "this") => {
  * * Deve retornar o tempo de uso em horas em minutos
  */
 export const getUSageFor = async (type: "main" | "this") => {
-    const timeInfo = await getTimeData()
+    const timeInfo = await getTimeDataAndValidateIfExists()
 
     let usage
 
@@ -61,7 +61,7 @@ export const getHoursAndMinutesRemaining = async () => {
 
 
 export const getLastStartFormatted = async () => {
-    const stoarge = (await getTimeData()).lastStart
+    const stoarge = (await getTimeDataAndValidateIfExists()).lastStart
     if (!stoarge)
         return null
 
@@ -70,7 +70,7 @@ export const getLastStartFormatted = async () => {
 }
 
 export const getLastDiscountFormatted = async () => {
-    const storage = (await getTimeData()).lastDiscount
+    const storage = (await getTimeDataAndValidateIfExists()).lastDiscount
     if (!storage)
         return null
 

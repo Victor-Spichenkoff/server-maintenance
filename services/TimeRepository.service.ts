@@ -1,4 +1,3 @@
-import {multipleWriteTimeIfo} from "./times.service";
 import {db} from "../lib/db";
 import {TimeDbId} from "../global";
 import {Prisma} from "@prisma/client";
@@ -38,12 +37,5 @@ export const TimeRepository = {
             lastStart: Date.now(),
             alreadyStartedThis: true
         })
-
-            await multipleWriteTimeIfo({
-                "keepThisApiOn": true,
-                "lastDiscount": Date.now(),
-                "lastStart": Date.now(),
-                "alreadyStartedThis": true,
-            })
     }
 }

@@ -9,7 +9,11 @@
 - Frontend must be able to receive same response
 - Backend must change the way
 
-- Prisma migrate dev
+## Tests while changing from name (text) to id
+- Continues to discount?
+  - now: 18:43 ->
+       - Main: 16h 7m
+       - THIS: 17h 26m
 
 
 # ADD NEW API

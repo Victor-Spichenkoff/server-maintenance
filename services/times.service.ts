@@ -1,7 +1,6 @@
 import { db } from "../lib/db"
-import { ITimeUpdate, timeKeys } from "../types/times"
 import {getData} from "./apis.service";
-import {onlyAllowedToCallApiUrls} from "../data/apisInfo";
+import {ApiOperationsIds, onlyAllowedToCallApiUrls} from "../data/apisInfo";
 import {sendTelegramMessageFormatted} from "../lib/sendToPhone";
 import {TimeRepository} from "./TimeRepository.service";
 
@@ -24,11 +23,11 @@ export const createBaseTimesData = async () => {
 
 
 export const resetAccountsTime = async () => {
-    await multipleWriteTimeIfo({
-        "lastStart": null,
-        "lastDiscount": null,
-        "usageMainAccount": 0,
-        "usageThisAccount": 0
+    await TimeRepository.update({
+        lastStart: null,
+        lastDiscount: null,
+        usageMainAccount: 0,
+        usageThisAccount: 0,
     })
 }
 
@@ -37,7 +36,7 @@ export const resetAccountsTime = async () => {
  * Essa que realmente diminui os dados
  */
 export const discountFromApis = async () => {
-    const timeInfo = await getTimeData()
+    const timeInfo = await getTimeDataAndValidateIfExists()
     const config = await getData()
 
 
@@ -57,23 +56,23 @@ export const discountFromApis = async () => {
 
     await TimeRepository.update({usageThisAccount: Number(timeInfo.usageThisAccount) + differenceForThis})
 
-    if (config?.currentMaintainedName == "Nothing Selected")
+    if (config?.currentMaintainedId == ApiOperationsIds.nothing)
         return
 
 
     let differenceForMain = now - Number(timeInfo.lastDiscount)
 
-    if (config?.currentMaintainedName == "all")
+    if (config?.currentMaintainedId ==  ApiOperationsIds.all)
         differenceForMain *= onlyAllowedToCallApiUrls.length
 
-    await writeTimeInfo("usageMainAccount", Number(timeInfo.usageMainAccount) + differenceForMain)
+    await TimeRepository.update({usageMainAccount: Number(timeInfo.usageMainAccount) + differenceForMain})
 }
 
 
 
 
 export const getMonthAndUpdate = async () => {
-    let storageMonth = (await getTimeData()).currentMonth
+    let storageMonth = (await getTimeDataAndValidateIfExists()).currentMonth
     const now = new Date()
 
     if (now.getMonth() == storageMonth)
@@ -97,9 +96,9 @@ export const getMonthAndUpdate = async () => {
 export const discountFromThisAccountTime = async () => {
     const now = Date.now()
 
-    const timeInfo = await getTimeData()
+    const timeInfo = await getTimeDataAndValidateIfExists()
 
-    await writeTimeInfo("lastDiscount", now)
+    await TimeRepository.update({lastDiscount: now})
 
     if (!timeInfo.lastDiscount)
         return
@@ -112,10 +111,8 @@ export const discountFromThisAccountTime = async () => {
 
 
 
-/*TODO: REMOVE EVERYTHING BELOW*/
 
-
-export const getTimeData = async () => {
+export const getTimeDataAndValidateIfExists = async () => {
     const data = await db.time.findFirst({ where: { id: 1 } })
 
     if(!data) {
@@ -124,32 +121,4 @@ export const getTimeData = async () => {
     }
 
     return data
-}
-
-
-export const writeTimeInfo = async (key: timeKeys, value: number | null | boolean) => {
-    const data: any = {}
-    data[key] = value
-
-    try {
-        const res = await db.time.update({
-            where: { id: 1 },
-            data
-        })
-
-        if(!res)
-            throw new Error("Erro ao atualizar tempos")
-
-      } catch (err) {
-        console.error('Erro ao modificar o Time:', err)
-        // await createBaseTimesData()
-        // await writeTimeInfo(key, value)
-      }
-}
-
-export const multipleWriteTimeIfo = async (data: ITimeUpdate) => {
-    const res = await db.time.update({
-        where: { id: 1 },
-        data
-    })
 }

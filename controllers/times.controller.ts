@@ -9,7 +9,7 @@ import {
 import {
     discountFromApis,
     getMonthAndUpdate,
-    getTimeData,
+    getTimeDataAndValidateIfExists,
 } from "../services/times.service";
 import {sendTelegramMensage, sendTelegramMessageFormatted} from "../lib/sendToPhone";
 import { maxTimeAvaliableInMiliseconds } from "../global";
@@ -43,7 +43,7 @@ export const getLastStart: RequestHandler = async (req, res) => {
 
 export const getLastDiscount: RequestHandler = async (req, res) => {
     const storageLast = new Date(Number(
-        (await getTimeData()).lastDiscount
+        (await getTimeDataAndValidateIfExists()).lastDiscount
     ))
     const brTime = storageLast.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
 
@@ -112,7 +112,7 @@ export const updateUsageMiddleware: RequestHandler = async (req, res, next) => {
 
 
 export const getThisStatus:RequestHandler = async (req, res) => {
-    const response = await getTimeData()
+    const response = await getTimeDataAndValidateIfExists()
     const status = response.keepThisApiOn
 
     res.send(status)
