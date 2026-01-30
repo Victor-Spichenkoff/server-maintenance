@@ -1,6 +1,10 @@
 import {ApiInfo} from "../types/apiInfo";
 import { ApiNames, ApiUrls} from "./data";
 
+/*
+* Things related directly with the data
+* */
+
 
 export const apisInfo: ApiInfo[] = [
     {
@@ -60,12 +64,4 @@ export const getApiInfoById = (id: number) => {
 * * Z
 * */
 // export const idsToIgnore = [1, 2, 4]
-/*
-* Important IDs for operations
-* * All
-* * Nothing Selected
-* */
-export const ApiOperationsIds = {
-    all: 1717,
-    nothing: 9999,
-}
+

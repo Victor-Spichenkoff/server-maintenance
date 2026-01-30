@@ -1,8 +1,9 @@
 import { db } from "../lib/db"
 import {getApiDataAndValidateIfExists} from "./apis.service";
-import {ApiOperationsIds, onlyAllowedToCallApiUrls} from "../data/apisInfo";
+import {onlyAllowedToCallApiUrls} from "../data/apisInfo";
 import {sendTelegramMessageFormatted} from "../lib/sendToPhone";
 import {TimeRepository} from "./TimeRepository.service";
+import {ApiOperationsIds} from "../data/data";
 
 export const createBaseTimesData = async () => {
     const data = {

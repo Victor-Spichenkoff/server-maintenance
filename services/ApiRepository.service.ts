@@ -1,8 +1,7 @@
 import {db} from "../lib/db";
 import {Prisma} from '@prisma/client';
 import {ApiDbId} from "../global";
-import {ApiOperationsIds} from "../data/apisInfo";
-import {ApiNames, ApiUrls} from "../data/data";
+import {ApiNames, ApiOperationsIds, ApiUrls} from "../data/data";
 
 
 export const ApiRepository = {

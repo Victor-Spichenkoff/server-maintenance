@@ -1,12 +1,11 @@
-import { RequestHandler } from "express"
+import {RequestHandler} from "express"
 
-import { getApiDataAndValidateIfExists } from "../services/apis.service"
+import {getApiDataAndValidateIfExists} from "../services/apis.service"
 import {apisInfo} from "../data/apisInfo";
+import {ApiOperationsIds} from "../data/data";
 
 
-
-
-export async function sendInfos(req:any, res:any) {
+export async function sendInfos(req: any, res: any) {
     const data = await getApiDataAndValidateIfExists()
 
     res.send(data.currentMaintainedName)
@@ -15,14 +14,13 @@ export async function sendInfos(req:any, res:any) {
 
 export const sendInfosById: RequestHandler = async (req, res) => {
     const data = await getApiDataAndValidateIfExists()
-    if(data.currentMaintainedName == 'Nothing Selected')
-      return res.json(9999)
+    if (data.currentMaintainedId == ApiOperationsIds.nothing)
+        return res.json(ApiOperationsIds.nothing)
 
-    if(data.currentMaintainedName == "All")
-      return res.json(1717)//id do all. coloquei alto mesmo
+    if (data.currentMaintainedId == ApiOperationsIds.all)
+        return res.json(ApiOperationsIds.all)//id do all. coloquei alto mesmo
 
-    console.log(data.currentMaintainedName)
     const id = apisInfo.filter(x => x.title == data.currentMaintainedName)[0].id
-    // const id = urls.getApiIdByName(data.currentMaintainedName as ApiName)//erro aqui
+
     res.json(id)
-  }
+}

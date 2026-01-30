@@ -1,9 +1,14 @@
 # Update flow
 ## Backend
 1. /data/data.ts
-   - add to  
+   - add url and name 
+2. /data/apiInfo.ts
+   - add infos using the helpers in data/data+ id
+3. Frontend/data:
+4. _db_api_typing_and_values -> copy to here the data/data.ts update
+5. add to App and to selectablePoints
 
-
+# IMPORTANT: API must have an endpoint with /teste
 
 
 # ID

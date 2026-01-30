@@ -5,6 +5,7 @@ import { sendInfos, sendInfosById } from "../controllers/infos.controller"
 import { callAllOnce, callAllOnceSimpleAndIgnore, forceLoadAllOnce, setAll, setOne, testOne, turnOff } from "../controllers/actions.controller"
 import { getBothRemainingTime, getLastDiscount, getLastStart, getRemainingTimeForMain, getRemainingTimeForThis, getThisStatus, setValueTime, turnKeepApiOn, turnOffThisApiController, updateUsageMiddleware } from "../controllers/times.controller"
 import { requestWithLongTimeout, resetTime, testTelegramSendMessage } from "../controllers/tests.controller"
+import {ApiOperationsIds} from "../data/data";
 
 const routes = Router()
 
@@ -30,8 +31,8 @@ routes.post('/setTime', setValueTime)
 
 
 //seleção de 1 para manter/status da api
-routes.get('/set/1717', async (req, res) => setAll(res))
-routes.get('/set/9999', turnOff)
+routes.get(`/set/${ApiOperationsIds.all}`, async (req, res) => setAll(res))
+routes.get(`/set/${ApiOperationsIds.nothing}`, turnOff)
 routes.get('/set/:id', async (req, res) => setOne(req, res))
 
 

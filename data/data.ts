@@ -1,6 +1,10 @@
-// export type ApiName = 'Portfolios Api' | 'VSS Articles'
-//     | 'Shopping List' | 'Pagination' | "All" | "Z"//TODO CHANGE all -> all
-//     | "Tic Tac Toe" | "Million" | "Nothing Selected"
+/*
+* Things related directly typing and reuse of basic data
+* API Names
+* API URLs
+* */
+
+
 
 export type ApiName = typeof ApiNames[keyof typeof ApiNames]
 
@@ -32,3 +36,15 @@ export const ApiUrls = {
 } as const
 
 export type ApiUrl = typeof ApiUrls[keyof typeof ApiUrls]
+
+
+
+/*
+* Important IDs for operations
+* * All
+* * Nothing Selected
+* */
+export const ApiOperationsIds = {
+    all: 1717,
+    nothing: 9999,
+}
