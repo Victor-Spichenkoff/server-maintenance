@@ -1,4 +1,9 @@
 # TODO -> FIX MAINTENANCE TO ADD NEW
+- Check telegrams, reports are terrible
+  - 
+- RUN MIGRATIONS PRISMA
+  - TIMES: 202h 35m
+  - I've run migrations, but it complains about unreacheble
 - Did it can start and call or need a reset?
 - Use prisma + ID in API entity (currentId)
 - Frontend must be able to receive same response
@@ -14,7 +19,7 @@
 
 # .ENV
 - NOT_SEND == mandar as mensagens? (true só em dev)
-- NOT_REQ == Evita iniciar as requições, usar em testes apenas
+- NOT_REQ == Evita iniciar as requisições, usar em testes apenas
 - DEV == ambiente é o de desenvolvimento?
 
 # TODO REFACTOR

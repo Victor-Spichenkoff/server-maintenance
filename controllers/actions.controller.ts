@@ -1,14 +1,10 @@
 import { Request, RequestHandler, Response } from "express"
 import { sendTelegramMensage } from "../lib/sendToPhone"
-// import Urls from "../functions/urls"
 import { isAllWorking, makeOneRequest } from "../utils/requestsToApi"
 import axios from "axios"
 import {ApiRepository} from "../services/ApiRepository.service";
 import {TimeRepository} from "../services/TimeRepository.service";
 import {allApisUrls, apisInfo, getApiInfoById, onlyAllowedToCallApiUrls} from "../data/apisInfo";
-
-// const data = new Urls()
-
 
 
 export async function forceLoadAllOnce(req: any, res: any) {
