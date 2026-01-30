@@ -1,5 +1,5 @@
 import { db } from "../lib/db"
-import {getData} from "./apis.service";
+import {getApiDataAndValidateIfExists} from "./apis.service";
 import {ApiOperationsIds, onlyAllowedToCallApiUrls} from "../data/apisInfo";
 import {sendTelegramMessageFormatted} from "../lib/sendToPhone";
 import {TimeRepository} from "./TimeRepository.service";
@@ -37,7 +37,7 @@ export const resetAccountsTime = async () => {
  */
 export const discountFromApis = async () => {
     const timeInfo = await getTimeDataAndValidateIfExists()
-    const config = await getData()
+    const config = await getApiDataAndValidateIfExists()
 
 
     //nada ocorrendo para ter que descontar

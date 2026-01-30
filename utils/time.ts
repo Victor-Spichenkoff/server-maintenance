@@ -1,4 +1,4 @@
-import {sendTelegramMensage} from "../lib/sendToPhone"
+import {sendTelegramMessage} from "../lib/sendToPhone"
 import {maxTimeAvaliable} from "../global"
 import {getTimeDataAndValidateIfExists} from "../services/times.service"
 
@@ -97,7 +97,7 @@ export const sendUsagesToPhone = async (isApiStart?: boolean) => {
     const usageFotThis = await getUSageFor("this")
     const usageFotMain = await getUSageFor("main")
 
-    await sendTelegramMensage(`Uso na inicialização:
+    await sendTelegramMessage(`Uso na inicialização:
         - Main: ${usageFotMain.hours}h ${usageFotMain.minutes}m
         - THIS: ${usageFotThis.hours}h ${usageFotThis.minutes}m
 

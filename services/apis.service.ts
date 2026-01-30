@@ -14,7 +14,7 @@ export const createBaseApisData = async () => {
 }
 
 
-export const getData = async () => {
+export const getApiDataAndValidateIfExists = async () => {
     const data = await db.api.findFirst({ where: { id: 1 } })
     if (!data)
         throw "Sem dados no \"data\""

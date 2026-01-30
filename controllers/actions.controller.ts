@@ -1,5 +1,5 @@
 import { Request, RequestHandler, Response } from "express"
-import { sendTelegramMensage } from "../lib/sendToPhone"
+import { sendTelegramMessage } from "../lib/sendToPhone"
 import { isAllWorking, makeOneRequest } from "../utils/requestsToApi"
 import axios from "axios"
 import {ApiRepository} from "../services/ApiRepository.service";
@@ -12,7 +12,7 @@ export async function forceLoadAllOnce(req: any, res: any) {
     const ten = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     let finish = false
 
-    await sendTelegramMensage("Iniciando Req de todos")
+    await sendTelegramMessage("Iniciando Req de todos")
 
 
     await Promise.all(ten.map(async () => {
@@ -27,10 +27,10 @@ export async function forceLoadAllOnce(req: any, res: any) {
 
 
     if (finish)
-        return sendTelegramMensage("Todas funcionando!")
+        return sendTelegramMessage("Todas funcionando!")
 
 
-    await sendTelegramMensage("[Forçar] Erro no req de todos - 10 vezes")
+    await sendTelegramMessage("[Forçar] Erro no req de todos - 10 vezes")
 }
 
 export async function setOne(req: Request, res: any) {
@@ -43,7 +43,7 @@ export async function setOne(req: Request, res: any) {
     await ApiRepository.setToOne(id, apiInfo.title, apiInfo.url)
     await TimeRepository.setKeepThisOn()
 
-    await sendTelegramMensage('Setado para: ' + (apiInfo.title).toUpperCase())
+    await sendTelegramMessage('Setado para: ' + (apiInfo.title).toUpperCase())
 
     res.sendStatus(200)
 }
@@ -53,7 +53,7 @@ export async function setAll(res: Response) {
     await TimeRepository.setKeepThisOn()
 
 
-    await sendTelegramMensage('Setado para TODOS')
+    await sendTelegramMessage('Setado para TODOS')
     res.send('Setado para todos')
 }
 
@@ -61,7 +61,7 @@ export async function setAll(res: Response) {
 export async function turnOff(req?: Request, res?: Response) {
     await ApiRepository.turnApiOff()
 
-    await sendTelegramMensage('Tudo OFF')
+    await sendTelegramMessage('Tudo OFF')
     res?.send("Tudo OFF")
 }
 

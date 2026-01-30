@@ -1,15 +1,16 @@
 import { Request, Response } from "express"
 
-import formatMensageAndSend, { sendTelegramMensage } from "../lib/sendToPhone"
+import formatMessageAndSend, { sendTelegramMessage } from "../lib/sendToPhone"
 import wrongUrls from "../functions/verify"
-import { getData, write } from "../services/apis.service"
+import { getApiDataAndValidateIfExists } from "../services/apis.service"
+import {ApiRepository} from "../services/ApiRepository.service";
 
 
 export async function toggleHighMessages(req: Request, res: Response) {
     try {
-        const obj = await getData()
+        const obj = await getApiDataAndValidateIfExists()
         const current = obj?.highMessages
-        await write('highMessages', !current)
+        await ApiRepository.update({highMessages: !current })
 
         res.send(!current)
 
@@ -20,7 +21,7 @@ export async function toggleHighMessages(req: Request, res: Response) {
 
 
 export async function getHighMessagesStatus(req: Request, res: Response) {
-    const data = await getData()
+    const data = await getApiDataAndValidateIfExists()
 
     res.send(data?.highMessages)
 }
@@ -29,10 +30,10 @@ export async function getHighMessagesStatus(req: Request, res: Response) {
 
 //legado
 export const  sendInfosPage = async (req: Request, res: Response) => {
-    await sendTelegramMensage('Inciado load Geral')
+    await sendTelegramMessage('Inciado load Geral')
     const objectWithWrong = await wrongUrls()
 
-    const msg = formatMensageAndSend(objectWithWrong, 1, true)
+    const msg = formatMessageAndSend(objectWithWrong, 1, true)
 
     res.send(msg)
 }

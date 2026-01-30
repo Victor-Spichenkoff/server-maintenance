@@ -1,5 +1,5 @@
 import { RequestHandler } from "express"
-import { sendTelegramMensage } from "../lib/sendToPhone"
+import { sendTelegramMessage } from "../lib/sendToPhone"
 import {resetAccountsTime} from "../services/times.service";
 
 
@@ -16,7 +16,7 @@ export const requestWithLongTimeout:RequestHandler = (req, res) => {
 
 
 export const testTelegramSendMessage:RequestHandler = async (req, res) => {
-    await sendTelegramMensage("Testando envio de mensagem")
+    await sendTelegramMessage("Testando envio de mensagem")
 
     res.sendStatus(202)
 }

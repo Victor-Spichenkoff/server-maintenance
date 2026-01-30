@@ -1,20 +1,20 @@
 import { RequestHandler } from "express"
 
-import { getData } from "../services/apis.service"
+import { getApiDataAndValidateIfExists } from "../services/apis.service"
 import {apisInfo} from "../data/apisInfo";
 
 
 
 
 export async function sendInfos(req:any, res:any) {
-    const data = await getData()
+    const data = await getApiDataAndValidateIfExists()
 
     res.send(data.currentMaintainedName)
 }
 
 
 export const sendInfosById: RequestHandler = async (req, res) => {
-    const data = await getData()
+    const data = await getApiDataAndValidateIfExists()
     if(data.currentMaintainedName == 'Nothing Selected')
       return res.json(9999)
 

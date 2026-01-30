@@ -11,7 +11,7 @@ import {
     getMonthAndUpdate,
     getTimeDataAndValidateIfExists,
 } from "../services/times.service";
-import {sendTelegramMensage, sendTelegramMessageFormatted} from "../lib/sendToPhone";
+import {sendTelegramMessage, sendTelegramMessageFormatted} from "../lib/sendToPhone";
 import { maxTimeAvaliableInMiliseconds } from "../global";
 import {TimeRepository} from "../services/TimeRepository.service";
 import { discountFromThisAccountTime } from "../services/times.service"
@@ -29,7 +29,7 @@ export const turnOffThisApiController: RequestHandler = async (req, res) => {
     await TimeRepository.turnOffThisApi()
     await ApiRepository.turnApiOff()
 
-    await sendTelegramMensage('Tudo OFF')
+    await sendTelegramMessage('Tudo OFF')
 
     res.send("API OFF")
 }

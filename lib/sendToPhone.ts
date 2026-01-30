@@ -6,7 +6,7 @@ import {configDotenv} from "dotenv";
 configDotenv()
 const telegramBotToken = process.env.TELEGRAM_TOKEN
 
-async function sendTelegramMensage(mensagem: string): Promise<void> {
+async function sendTelegramMessage(mensagem: string): Promise<void> {
   if(process.env.NOT_SEND=="true")
     return console.log(mensagem)
 
@@ -48,7 +48,7 @@ ${message}
     
             [ SM ]
     `
-    return await sendTelegramMensage(messageFormatted)
+    return await sendTelegramMessage(messageFormatted)
 }
 
 
@@ -57,7 +57,7 @@ function formatMessageAndSend(obj: object, times?: number, onlyReturn = false) {
     if(Object.keys(obj).length == 0) {
         if(onlyReturn) return 'Tudo funcionando nos conformes'
 
-        sendTelegramMensage('Tudo funcionando nos conformes. Vez: '+ times)
+        sendTelegramMessage('Tudo funcionando nos conformes. Vez: '+ times)
     }
 
     const apisNames = Object.keys(obj)
@@ -72,8 +72,8 @@ function formatMessageAndSend(obj: object, times?: number, onlyReturn = false) {
     })
 
     if(onlyReturn) return finalMensage
-    sendTelegramMensage(finalMensage)
+    sendTelegramMessage(finalMensage)
 }
 
-export { sendTelegramMensage }
+export { sendTelegramMessage }
 export default formatMessageAndSend
