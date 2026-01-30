@@ -1,8 +1,8 @@
-import {ApiName} from "./data";
+import {ApiName, ApiUrl} from "../data/data";
 
 export type ApiInfo = {
     id: number,
     title: ApiName
-    url: string,
+    url: ApiUrl,
     isIgnore?: boolean,
 }

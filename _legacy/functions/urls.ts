@@ -1,4 +1,4 @@
-import { ApiName } from "../../types/data"
+import { ApiName } from "../../data/data"
 import {apisInfo} from "../../data/apisInfo";
 
 // export default class Urls{

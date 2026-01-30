@@ -2,7 +2,7 @@
 
 import {sendTelegramMessageFormatted} from "../lib/sendToPhone";
 import {cycleInADay, intervalInMinute} from "./interval";
-import {getMonthAndUpdate} from "../legacy/times/operations";
+import {getMonthAndUpdate} from "../services/times.service";
 
 
 export const checkTimeAndSendAlert = async (count: number) => {

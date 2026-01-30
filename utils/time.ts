@@ -1,26 +1,25 @@
-import { sendTelegramMensage } from "../lib/sendToPhone"
-import { maxTimeAvaliable } from "../global"
-import { getTimeData, writeTimeInfo } from "../services/times.service"
-
+import {sendTelegramMensage} from "../lib/sendToPhone"
+import {maxTimeAvaliable} from "../global"
+import {getTimeData} from "../services/times.service"
 
 
 /**
  *
  * @returns ms de quanto ainda sobra
  */
-export const getRemanigTimeFor = async (type: "main" | "this") => {
+export const getRemainingTimeFor = async (type: "main" | "this") => {
     const timeInfo = await getTimeData()
 
-    var remaing
+    let remaining
 
     if (type == "main") {
-        //horas disponiveis (min) - (ms -->min)
-        remaing = maxTimeAvaliable * 60 - (Number(timeInfo[`usageMainAccount`]) / 1000 / 60)
+        //horas disponíveis (min) - (ms -->min)
+        remaining = maxTimeAvaliable * 60 - (Number(timeInfo[`usageMainAccount`]) / 1000 / 60)
     } else {
-        remaing = maxTimeAvaliable * 60 - (Number(timeInfo["usageThisAccount"]) / 1000 / 60)
+        remaining = maxTimeAvaliable * 60 - (Number(timeInfo["usageThisAccount"]) / 1000 / 60)
     }
 
-    return remaing * 1000 * 60
+    return remaining * 1000 * 60
 }
 
 /**
@@ -43,8 +42,8 @@ export const getUSageFor = async (type: "main" | "this") => {
 
 
 export const timeStampToHourAndMinute = (timeStamp: number) => {
-    const remanigInMinutes = timeStamp / 1000 / 60
-    var hours = remanigInMinutes / 60
+    const remainingInMinutes = timeStamp / 1000 / 60
+    let hours = remainingInMinutes / 60
     const minutes = Math.floor(hours % 1 * 60)
 
     hours = Math.floor(hours)
@@ -53,34 +52,30 @@ export const timeStampToHourAndMinute = (timeStamp: number) => {
 }
 
 
-export const getHoursAndMinutesRemanig = async () => {
-    const remaing = await getRemanigTimeFor('main')
+export const getHoursAndMinutesRemaining = async () => {
+    const remaining = await getRemainingTimeFor('main')
 
-    return timeStampToHourAndMinute(remaing)
+    return timeStampToHourAndMinute(remaining)
 }
 
 
 
 export const getLastStartFormatted = async () => {
-    const stoarged = (await getTimeData()).lastStart
-    if (!stoarged)
+    const stoarge = (await getTimeData()).lastStart
+    if (!stoarge)
         return null
 
-    const storageLast = new Date(Number(stoarged))
-    const brTime = storageLast.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
-
-    return brTime
+    const storageLast = new Date(Number(stoarge))
+    return storageLast.toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"})
 }
 
-export const getlastDiscountFormatted = async () => {
-    const stoarged = (await getTimeData()).lastDiscount
-    if (!stoarged)
+export const getLastDiscountFormatted = async () => {
+    const storage = (await getTimeData()).lastDiscount
+    if (!storage)
         return null
 
-    const storageLast = new Date(Number(stoarged))
-    const brTime = storageLast.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
-
-    return brTime
+    const storageLast = new Date(Number(storage))
+    return storageLast.toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"})
 }
 
 
@@ -89,10 +84,6 @@ export const getlastDiscountFormatted = async () => {
 export const milisecondsToMinutes = (ms: number) => {
     return ms / 1000 / 60
 }
-
-
-export const setKeepApiOn = () => writeTimeInfo("keepThisApiOn", true)
-
 
 
 /**

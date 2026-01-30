@@ -38,32 +38,19 @@ export async function forceLoadAllOnce(req: any, res: any) {
 }
 
 export async function setOne(req: Request, res: any) {
-    const id: any = req.params.id
-    console.log("ID -> " + id)
+    const id: any = Number(req.params.id)
     if(id >= apisInfo.length || id < 0)
         return res.status(400).send("Invalid ID")
+
     let apiInfo = apisInfo.filter(x => x.id == id)[0]
 
-    await ApiRepository.setToOne(apiInfo.title, apiInfo.url)
+    await ApiRepository.setToOne(id, apiInfo.title, apiInfo.url)
     await TimeRepository.setKeepThisOn()
 
     await sendTelegramMensage('Setado para: ' + (apiInfo.title).toUpperCase())
 
     res.sendStatus(200)
 }
-// export async function setOne(index: number, res: any) {
-//     let url = data.getUrl(index)
-//
-//     await ApiRepository.setToOne(data.getApi(index), url)
-//     await TimeRepository.setKeepThisOn()
-//
-//
-//     await sendTelegramMensage('Setado para: ' + (data.getApi(index)).toUpperCase())
-//
-//     // selectTimer()TODO: TEST_V1
-//     res.sendStatus(200)
-// }
-
 
 export async function setAll(res: Response) {
     await ApiRepository.setToAll()

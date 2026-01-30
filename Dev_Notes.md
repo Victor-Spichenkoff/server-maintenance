@@ -1,4 +1,5 @@
 # TODO -> FIX MAINTENANCE TO ADD NEW
+- Did it can start and call or need a reset?
 - Use prisma + ID in API entity (currentId)
 - Frontend must be able to receive same response
 - Backend must change the way

@@ -1,9 +1,9 @@
-import {discountFromApis} from "../legacy/times/operations";
-import {callThis} from "../legacy/functions/schedule";
+
 import {ApiRepository} from "../services/ApiRepository.service";
 import {sendTelegramMessageFormatted} from "../lib/sendToPhone";
-import {handleCurrentMaintainedCall} from "./intervalHandlers";
+import {callThis, handleCurrentMaintainedCall} from "./intervalHandlers";
 import {checkTimeAndSendAlert, checkTimeAndUpdateMonth} from "./intervalTimeHandler";
+import {discountFromApis} from "../services/times.service";
 
 export let intervalInMinute = 6
 export let cycleInADay = 24*60 / intervalInMinute // now -> 240 cycles/day
@@ -32,8 +32,8 @@ const checkStatusAndMakeRequests = async (notRequestThis = false) => {
     await checkTimeAndSendAlert(count)
     await checkTimeAndUpdateMonth(count)
 
-    count++
     console.log("[ INTERVAL ] ITERATION OF NUMBER " + count)
+    count++
 }
 
 

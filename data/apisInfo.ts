@@ -1,45 +1,46 @@
 import {ApiInfo} from "../types/apiInfo";
+import { ApiNames, ApiUrls} from "./data";
+
 
 export const apisInfo: ApiInfo[] = [
     {
         id: 0,
-        title: 'Portfolios Api',
-        url: 'https://portfolio-api-i3t0.onrender.com',
+        title: ApiNames.portfolios,
+        url: ApiUrls.portfolios
     },
     {
         id: 1,
-        title: 'VSS Articles',
-        url: 'https://vss-artigos-backend.onrender.com',
+        title: ApiNames.articles,
+        url: ApiUrls.articles,
         isIgnore: true,
     },
     {
         id: 2,
-        title: 'Shopping List',
-        url: 'https://lista-mercado-api.onrender.com',
+        title: ApiNames.shoppingList,
+        url: ApiUrls.shoppingList,
         isIgnore: true,
     },
     {
         id: 3,
-        title: 'Pagination',
-        url: 'https://pagination-api-ugwo.onrender.com',
+        title: ApiNames.pagination,
+        url: ApiUrls.pagination
     },
     {
         id: 4,
-        title: 'Z',
-        url: 'https://z-backend-t3zn.onrender.com',
+        title: ApiNames.z,
+        url: ApiUrls.z,
         isIgnore: true,
     },
     {
         id: 5,
-        title: 'Tic Tac Toe',
-        url: 'https://tic-tac-toe-online-backend-jjv9.onrender.com'
+        title: ApiNames.ticTacToe,
+        url: ApiUrls.ticTacToe
     },
     {
         id: 6,
-        title: 'Million',
-        url: 'https://million-show-api.onrender.com'
+        title: ApiNames.million,
+        url: ApiUrls.million
     },
-
 ]
 
 export const allApisUrls = apisInfo.map(x => x.url)
@@ -58,4 +59,13 @@ export const getApiInfoById = (id: number) => {
 * * Shopping list
 * * Z
 * */
-export const idsToIgnore = [1, 2, 4]
+// export const idsToIgnore = [1, 2, 4]
+/*
+* Important IDs for operations
+* * All
+* * Nothing Selected
+* */
+export const ApiOperationsIds = {
+    all: 1717,
+    nothing: 9999,
+}

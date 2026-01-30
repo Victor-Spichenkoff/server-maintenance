@@ -3,12 +3,12 @@ import cors from 'cors'
 
 const app = express()
 import './lib/sendToPhone'
-import './legacy/functions/schedule'
 import {routes} from "./config/routes"
 import {configDotenv} from 'dotenv'
-import {baseConfigForTimeOnStart} from "./legacy/times/operations"
+
 import "./functions/interval"
 import {Alert} from "./lib/sendAlerts";
+import {baseConfigForTimeOnStart} from "./functions/legacyImportant";
 
 //Minha conta para esse: edge(conta secundária)(spichekoffvictor)
 //nome: VictorSpich

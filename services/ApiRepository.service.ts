@@ -2,6 +2,9 @@ import {db} from "../lib/db";
 import {Prisma} from '@prisma/client';
 import {ApiDbId} from "../global";
 import {write} from "./apis.service";
+import {ApiOperationsIds} from "../data/apisInfo";
+import {ApiNames, ApiUrls} from "../data/data";
+import {multipleWriteTimeIfo} from "./times.service";
 
 
 export const ApiRepository = {
@@ -16,17 +19,28 @@ export const ApiRepository = {
     },
 
     async turnApiOff() {
-        await write('off', true)
-        await write('currentMaintainedUrl', 'https://google.com')
-        await write('currentMaintainedName', 'Nothing Selected')
+        await this.update({
+            currentMaintainedId: ApiOperationsIds.nothing,
+            currentMaintainedName: ApiNames.nothing,
+            currentMaintainedUrl: ApiUrls.nothing,
+            off: true,
+
+        })
     },
     async setToAll(){
-        await write('currentMaintainedName', 'All')
-        await write('off', false)
+        await this.update({
+            currentMaintainedId: ApiOperationsIds.all,
+            currentMaintainedName: ApiNames.all,
+            currentMaintainedUrl: ApiUrls.all,
+            off: false,
+        })
     },
-    async setToOne(name: string, url: string){
-        await write('currentMaintainedName', name)
-        await write('currentMaintainedUrl', url)
-        await write('off', false)
-    }
+    async setToOne(apiId: number, name: string, url: string){
+        await this.update({
+            currentMaintainedId: apiId,
+            currentMaintainedName: name,
+            currentMaintainedUrl: url,
+            off: false,
+        })
+    },
 }

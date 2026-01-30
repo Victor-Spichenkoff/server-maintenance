@@ -15,6 +15,7 @@ datasource db {
 
 model Api {
   id                    Int     @id @default(autoincrement())
+  currentMaintainedId   Int     @default(9999)
   currentMaintainedUrl  String  @default("https://google.com")
   currentMaintainedName String  @default("Nothing Selected")
   off                   Boolean

@@ -23,10 +23,10 @@ export const getData = async () => {
 }
 
 
-export type keysApi = 'currentMaintainedUrl' | 'currentMaintainedName' | 'off' | 'highMessages' | "id"
+export type keysApi = 'currentMaintainedUrl' | 'currentMaintainedName' | 'off' | 'highMessages' | "id" | "currentMaintainedId"
 
 
-export async function write(key: keysApi, value: string | boolean) {
+export async function write(key: keysApi, value: string | boolean | number) {
     const data:any = {}
     data[key] = value
 
@@ -39,3 +39,4 @@ export async function write(key: keysApi, value: string | boolean) {
         console.error('Erro ao modificar o arquivo:', err)
     }
 }
+
