@@ -44,7 +44,7 @@ model Server {
   shortLabel             String?
   fullUrl                String  @unique
   isActive               Boolean @default(false)
-  LastCalled             BigInt?
-  LastCalledSuccessfully BigInt?
+  LastCalled             DateTime?
+  LastCalledSuccessfully DateTime?
   callOnAll              Boolean @default(false)
 }

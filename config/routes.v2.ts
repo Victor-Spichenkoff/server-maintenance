@@ -5,7 +5,7 @@ const routesV2 = Router()
 
 routesV2.get("/set/off", ActionControllerV2.setToOff)
 routesV2.get("/set/all", ActionControllerV2.setToAll)
-routesV2.get("/set/:id", ActionControllerV2.toggleOne)
+routesV2.get("/toggle/:id", ActionControllerV2.toggleOne)
 
 // staus
 routesV2.get("/status", ActionControllerV2.getAllServers)

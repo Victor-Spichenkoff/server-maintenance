@@ -5,11 +5,11 @@ import {ServerRepository} from "../services/ServersRepository.service";
 const toggleOne = async (req: Request, res: any) => {
     const { id } = req.params
 
-    await db.$executeRaw`
-          UPDATE "Server"
-          SET "isActive" = NOT "isActive"
-          WHERE id = ${Number(id)}
-    `
+    const server = await ServerRepository.getById(Number(id))
+    if(server == null)
+        return res.status(404).send("Server not found")
+
+    await ServerRepository.toggleItem(server.id, !server.isActive)
 
     res.send("Updated successfully")
 }
@@ -36,7 +36,7 @@ const setSuccessfullyCalledOne = async (req: Request, res: any) => {
 
 export const getAllServers = async (req: Request, res: Response) => {
     const servers = await ServerRepository.getAll()
-    res.send(servers)
+    res.json(servers)
 }
 
 export const ActionControllerV2 = {

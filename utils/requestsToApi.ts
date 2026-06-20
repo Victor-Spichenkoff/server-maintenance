@@ -8,7 +8,7 @@ import {allApisUrls, apisInfo, getApiInfoById} from "../data/apisInfo";
  * @returns 1 (sucesso) ou 0 (erro de timeout 5s ou outro)
  */
 export const makeOneRequest = async (url: string, name: string="", erros: string[], timeOut=10_000) => {
-    if (process.env.NOT_REQ != "true")
+    if (process.env.NOT_REQ == "true")
         return [ 1, 0 , 0 ]
 
 

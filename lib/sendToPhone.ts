@@ -1,14 +1,18 @@
 import axios from 'axios'
 import wrongUrls from '../functions/verify'
 import {configDotenv} from "dotenv";
+import {Cons} from "../utils/console";
 
 
 configDotenv()
 const telegramBotToken = process.env.TELEGRAM_TOKEN
 
 async function sendTelegramMessage(mensagem: string): Promise<void> {
-  if(process.env.NOT_SEND=="true")
-    return console.log(mensagem)
+  if(process.env.NOT_SEND=="true") {
+      Cons.BlueBackground("\n=========================================")
+    console.log(mensagem)
+    return console.log("=========================================")
+  }
 
   const chatId = '1139085287'
 

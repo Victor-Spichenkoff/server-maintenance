@@ -1,20 +1,29 @@
 import {db} from "../lib/db";
-import {ApiDbId} from "../global";
 import {Prisma} from "@prisma/client";
 
 export const ServerRepository = {
     async getById(id: number) {
-        return db.server.findFirst({ where: { id: ApiDbId } })
+        return db.server.findFirst({ where: { id: id } })
     },
     async getAll() {
-        return db.server.findMany()
+        return db.server.findMany({orderBy: { id: "asc" }})
+    },
+    async toggleItem(id: number, newIsActive: boolean) {
+        return db.server.update({
+            where: {id: id},
+            data: {
+                isActive: newIsActive,
+                LastCalledSuccessfully: null,
+                LastCalled: null
+            }
+        })
     },
     async countActive() {
         return db.server.count({  where: { isActive: true } })
     },
     async updateById(id: number, infos: Prisma.ServerUpdateInput) {
         await db.server.update({
-            where: {id: ApiDbId},
+            where: {id: id},
             data: {...infos}
         })
     },
@@ -41,13 +50,14 @@ export const ServerRepository = {
         })
     },
     async setSuccessfullyCalledToNow(id: number) {
+        const now = new Date()
         await db?.server.update({
             where: {
                 id: Number(id)
             },
             data: {
-                LastCalledSuccessfully: Date.now(),
-                LastCalled: Date.now()
+                LastCalledSuccessfully: now,
+                LastCalled: now
             }
         })
     }
