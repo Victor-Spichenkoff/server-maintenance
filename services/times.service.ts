@@ -4,6 +4,7 @@ import {onlyAllowedToCallApiUrls} from "../data/apisInfo";
 import {sendTelegramMessageFormatted} from "../lib/sendToPhone";
 import {TimeRepository} from "./TimeRepository.service";
 import {ApiOperationsIds} from "../data/data";
+import {ServerRepository} from "./ServersRepository.service";
 
 export const createBaseTimesData = async () => {
     const data = {
@@ -30,6 +31,40 @@ export const resetAccountsTime = async () => {
         usageMainAccount: 0,
         usageThisAccount: 0,
     })
+}
+
+
+/*
+ * Essa que realmente diminui os dados
+ */
+export const discountFromApisV2 = async () => {
+    const timeInfo = await getTimeDataAndValidateIfExists()
+    const activeCount = await ServerRepository.countActive()
+
+    //nada ocorrendo para ter que descontar
+    if (!timeInfo.keepThisApiOn && activeCount == 0)
+        return
+
+    const now = Date.now()
+
+    await TimeRepository.update({lastDiscount: now})
+
+    if (!timeInfo.lastDiscount)
+        return
+
+    const differenceForThis = now - Number(timeInfo.lastDiscount)
+
+    await TimeRepository.update({usageThisAccount: Number(timeInfo.usageThisAccount) + differenceForThis})
+
+    // MAIN
+    if (activeCount == 0)
+        return
+
+    let differenceForMain = now - Number(timeInfo.lastDiscount)
+
+    differenceForMain *= activeCount
+
+    await TimeRepository.update({usageMainAccount: Number(timeInfo.usageMainAccount) + differenceForMain})
 }
 
 

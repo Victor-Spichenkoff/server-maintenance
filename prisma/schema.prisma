@@ -4,6 +4,11 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+//
+// New migration: npx prisma migrate dev --name [NOME]
+// Aplicar: npx prisma migrate deploy
+//
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -31,4 +36,15 @@ model Time {
   lastStart          BigInt?
   lastDiscount       BigInt?
   alreadyStartedThis Boolean
+}
+
+model Server {
+  id                     Int     @id @default(autoincrement())
+  label                  String
+  shortLabel             String?
+  fullUrl                String  @unique
+  isActive               Boolean @default(false)
+  LastCalled             BigInt?
+  LastCalledSuccessfully BigInt?
+  callOnAll              Boolean @default(false)
 }
