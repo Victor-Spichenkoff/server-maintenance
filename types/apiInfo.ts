@@ -5,4 +5,5 @@ export type ApiInfo = {
     title: ApiName
     url: ApiUrl,
     isIgnore?: boolean,
+    isShowOnQuickActions?: boolean,
 }

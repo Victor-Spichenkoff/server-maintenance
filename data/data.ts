@@ -61,49 +61,47 @@ export const serverSeedData: CreateServerEntity[] = [
         label: "Million Show",
         fullUrl: "https://million-show-api.onrender.com/teste",
         shortLabel: "Million",
-        callOnAll: true
+        isMain: true,
+        isShowOnQuickActions: true,
     },
     {
         id: 2,
         label: "Online Tic Tac Toe",
-        shortLabel: "Tic Tac Toe",
+        shortLabel: "Tic Tac",
         fullUrl: "https://tic-tac-toe-online-backend-jjv9.onrender.com/teste",
-        callOnAll: true
-    },
-    {
-        id: 2,
-        label: "Online Tic Tac Toe",
-        shortLabel: "Tic Tac Toe",
-        fullUrl: "https://tic-tac-toe-online-backend-jjv9.onrender.com/teste",
-        callOnAll: true
+        isMain: true,
+        isShowOnQuickActions: true,
     },
     {
         id: 3,
         label: "Pagination API",
         shortLabel: "Pagination",
         fullUrl: "https://pagination-api-ugwo.onrender.com/teste",
-        callOnAll: true
+        isMain: true,
+        isShowOnQuickActions: true,
     },
     {
         id: 4,
         label: "Z",
         shortLabel: "Z",
         fullUrl: "https://z-backend-t3zn.onrender.com/teste",
-        callOnAll: true
+        isMain: true,
+        isShowOnQuickActions: true,
     },
     {
         id: 5,
         label: "Share Portfolios",
         shortLabel: "Portfolios",
         fullUrl: "https://portfolio-api-i3t0.onrender.com/teste",
-        callOnAll: false
+        isMain: false,
+        isShowOnQuickActions: true,
     },
     {
         id: 6,
         label: "VSS Articles",
         shortLabel: "Articles",
         fullUrl: "https://vss-artigos-backend.onrender.com/teste",
-        callOnAll: false
+        isMain: false
     },
 
     {
@@ -111,7 +109,7 @@ export const serverSeedData: CreateServerEntity[] = [
         label: "Shopping List",
         shortLabel: "Shopping",
         fullUrl: "https://lista-mercado-api.onrender.com/teste",
-        callOnAll: false
+        isMain: false
     },
 ]
 
@@ -121,5 +119,6 @@ type CreateServerEntity = {
     label: string
     fullUrl: string
     shortLabel: string
-    callOnAll: boolean
+    isMain: boolean,
+    isShowOnQuickActions?: boolean,
 }

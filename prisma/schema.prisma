@@ -39,12 +39,13 @@ model Time {
 }
 
 model Server {
-  id                     Int     @id @default(autoincrement())
+  id                     Int       @id @default(autoincrement())
   label                  String
   shortLabel             String?
-  fullUrl                String  @unique
-  isActive               Boolean @default(false)
+  fullUrl                String    @unique
+  isActive               Boolean   @default(false)
   LastCalled             DateTime?
   LastCalledSuccessfully DateTime?
-  callOnAll              Boolean @default(false)
+  isMain              Boolean   @default(false)
+  isShowOnQuickActions   Boolean   @default(false)
 }

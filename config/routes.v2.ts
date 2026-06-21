@@ -4,7 +4,10 @@ import {ActionControllerV2, getAllServers} from "../controllers/actions.v2.contr
 const routesV2 = Router()
 
 routesV2.get("/set/off", ActionControllerV2.setToOff)
-routesV2.get("/set/all", ActionControllerV2.setToAll)
+// retornam true = setado para true ou false (desligado)
+routesV2.get("/set/this/off", ActionControllerV2.setThisToOff)
+routesV2.get("/set/this/on", ActionControllerV2.setThisToOn)
+routesV2.get("/toggle/all", ActionControllerV2.setToAll)
 routesV2.get("/toggle/:id", ActionControllerV2.toggleOne)
 
 // staus

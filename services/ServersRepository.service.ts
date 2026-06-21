@@ -21,19 +21,32 @@ export const ServerRepository = {
     async countActive() {
         return db.server.count({  where: { isActive: true } })
     },
+    async countMarkedAsMain() {
+        return db.server.count({  where: { isMain: true } })
+    },
     async updateById(id: number, infos: Prisma.ServerUpdateInput) {
         await db.server.update({
             where: {id: id},
             data: {...infos}
         })
     },
-    async setToAll() {
+    async setAllMainOn() {
         await db?.server.updateMany({
             where: {
-                callOnAll: true
+                isMain: true
             },
             data: {
                 isActive: true
+            }
+        })
+    },
+    async turnOffAllMarkedAsMain() {
+        await db?.server.updateMany({
+            where: {
+                isMain: true
+            },
+            data: {
+                isActive: false
             }
         })
     },
