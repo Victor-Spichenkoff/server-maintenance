@@ -63,6 +63,12 @@ export const getAllServers = async (req: Request, res: Response) => {
     res.json(servers)
 }
 
+export const successfullyCalled = async (req: Request, res: Response) => {
+    const { id } = req.params
+    await ServerRepository.setSuccessfullyCalledToNow(Number(id))
+    res.json("Updated!")
+}
+
 export const ActionControllerV2 = {
     toggleOne,
     setToAll: toggleAllMain,
@@ -70,5 +76,6 @@ export const ActionControllerV2 = {
     getAllServers,
     setSuccessfullyCalledOne,
     setThisToOff,
-    setThisToOn
+    setThisToOn,
+    successfullyCalled
 }

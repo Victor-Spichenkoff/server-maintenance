@@ -46,7 +46,9 @@ export const ServerRepository = {
                 isMain: true
             },
             data: {
-                isActive: false
+                isActive: false,
+                LastCalled: null,
+                LastCalledSuccessfully: null
             }
         })
     },

@@ -13,6 +13,8 @@ routesV2.get("/toggle/:id", ActionControllerV2.toggleOne)
 // staus
 routesV2.get("/status", ActionControllerV2.getAllServers)
 
+// chamou no front e deu sucesso, atualiza aqui
+routesV2.get("/success-called/:id", ActionControllerV2.successfullyCalled)
 
 routesV2.get("/success-called/:id", ActionControllerV2.setSuccessfullyCalledOne)
 

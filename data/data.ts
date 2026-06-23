@@ -5,9 +5,6 @@
 * */
 
 
-
-import {Server} from "@prisma/client";
-
 export type ApiName = typeof ApiNames[keyof typeof ApiNames]
 
 
