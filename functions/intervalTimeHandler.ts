@@ -9,7 +9,11 @@ export const checkTimeAndSendAlert = async (count: number) => {
     if(count % cycleInADay == 0)
         await sendTelegramMessageFormatted("[ Time Alert ] Running: " + count + " times")
 
-    const now = new Date()
+    const now = new Date(
+        new Date().toLocaleString("en-US", {
+            timeZone: "America/Sao_Paulo",
+        })
+    )
     const minute = now.getMinutes()
     const hour = now.getHours()
     const rightHours = hour == 11 || hour == 15 || hour == 22
