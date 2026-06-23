@@ -13,8 +13,6 @@ export const ServerRepository = {
             where: {id: id},
             data: {
                 isActive: newIsActive,
-                LastCalledSuccessfully: null,
-                LastCalled: null
             }
         })
     },
