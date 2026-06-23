@@ -2,6 +2,7 @@ import { Request, RequestHandler, Response } from "express"
 import {db} from "../lib/db";
 import {ServerRepository} from "../services/ServersRepository.service";
 import {ApiRepository} from "../services/ApiRepository.service";
+import {TimeRepository} from "../services/TimeRepository.service";
 
 const toggleOne = async (req: Request, res: any) => {
     const { id } = req.params
@@ -12,7 +13,7 @@ const toggleOne = async (req: Request, res: any) => {
 
     // estava desligado, this pode estar desligado, então garantir que ligará
     if(!server.isActive)
-        await ApiRepository.update({ off: false})
+        await TimeRepository.setKeepThisOn()
 
     const result = await ServerRepository.toggleItem(server.id, !server.isActive)
 
@@ -26,7 +27,7 @@ const toggleAllMain = async (req: Request, res: any) => {
     if(isAllMarkedAsMainActive)
         await ServerRepository.turnOffAllMarkedAsMain()
     else {
-        await ApiRepository.update({ off: false})
+        await TimeRepository.setKeepThisOn()
         await ServerRepository.setAllMainOn()
     }
     res.send("Set all MAIN API's to: " + !isAllMarkedAsMainActive)
@@ -47,13 +48,14 @@ const setSuccessfullyCalledOne = async (req: Request, res: any) => {
 }
 
 const setThisToOff = async (req: Request, res: any) => {
-    const result = await ApiRepository.update({ off: true})
-    res.send(!result.off)
+    await TimeRepository.turnOffThisApi()
+    await ServerRepository.setToOff()
+    res.send(false)
 }
 
 const setThisToOn = async (req: Request, res: any) => {
-    const result = await ApiRepository.update({ off: false})
-    res.send(!result.off)
+    await TimeRepository.setKeepThisOn()
+    res.send(true)
 }
 
 export const getAllServers = async (req: Request, res: Response) => {
