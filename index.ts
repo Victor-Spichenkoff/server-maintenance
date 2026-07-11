@@ -11,6 +11,7 @@ import {Alert} from "./lib/sendAlerts";
 import {baseConfigForTimeOnStart} from "./functions/legacyImportant";
 import {routesV2} from "./config/routes.v2";
 import {SeedServerEntity} from "./utils/seedServer";
+import {Cons} from "./utils/console";
 
 //Minha conta para esse: edge(conta secundária)(spichekoffvictor)
 //nome: VictorSpich
@@ -37,5 +38,5 @@ app.use(routes)
 
 app.listen(process.env.PORT ?? 2009, () => {
     Alert.sendUsages(true).then()
-    console.log('Rodando na porta 2009')
+    Cons.Log('Rodando na porta 2009')
 })

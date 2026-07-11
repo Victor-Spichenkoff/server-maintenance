@@ -1,3 +1,9 @@
+
+# BUG FIX:
+- Consultar o off (de ApiRepository, está sempre como OFF, mesmo mudando no frontend e mostrando status correto)
+
+
+
 # TODO -> FIX MAINTENANCE TO ADD NEW
 - Check telegrams, reports are terrible
   - 

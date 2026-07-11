@@ -5,6 +5,7 @@ import {sendTelegramMessageFormatted} from "../lib/sendToPhone";
 import {TimeRepository} from "./TimeRepository.service";
 import {ApiOperationsIds} from "../data/data";
 import {ServerRepository} from "./ServersRepository.service";
+import {Cons} from "../utils/console";
 
 export const createBaseTimesData = async () => {
     const data = {
@@ -42,8 +43,10 @@ export const discountFromApisV2 = async () => {
     const activeCount = await ServerRepository.countActive()
 
     //nada ocorrendo para ter que descontar
-    if (!timeInfo.keepThisApiOn && activeCount == 0)
+    if (!timeInfo.keepThisApiOn && activeCount == 0) {
+        Cons.Log("[DISCOUNTS] Nada para descontar das APIs, nem desconto feito")
         return
+    }
 
     const now = Date.now()
 
@@ -55,6 +58,7 @@ export const discountFromApisV2 = async () => {
     const differenceForThis = now - Number(timeInfo.lastDiscount)
 
     await TimeRepository.update({usageThisAccount: Number(timeInfo.usageThisAccount) + differenceForThis})
+    Cons.Log("[DISCOUNTS] Consumo desde última iteração para THIS: " + differenceForThis.toLocaleString("pt-BR"))
 
     // MAIN
     if (activeCount == 0)
@@ -65,6 +69,7 @@ export const discountFromApisV2 = async () => {
     differenceForMain *= activeCount
 
     await TimeRepository.update({usageMainAccount: Number(timeInfo.usageMainAccount) + differenceForMain})
+    Cons.Log("[DISCOUNTS] Consumo desde última iteração para MAIN: " + differenceForMain.toLocaleString("pt-BR"))
 }
 
 
@@ -123,6 +128,7 @@ export const getMonthAndUpdate = async () => {
 
     await sendTelegramMessageFormatted("Novo mês, novo tempo!")
 
+    Cons.Yellow("Mês atualizado: " + newMouth, true)
     return newMouth
 }
 
