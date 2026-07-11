@@ -30,3 +30,17 @@
 <p>Contrui também um site, permitindo que eu controle todas as APIs a serem carregadas, necessário pois a hospedagem possui um limite de 750 horas</p>
 
 <p>A API cuida do monitoramento de todos os tempos e, no site, tenho gráficos com a utilização dos provedores no mês atual</p>
+
+
+# Setup
+- Open WSL terminal
+```docker compose up```
+- Apply migrations:
+```
+npx prisma migrate deploy
+```
+- If necessary, use the makefile to support:
+```
+make dump FILE_NAME=[name]
+make restore FILE_NAME=[name]
+```
