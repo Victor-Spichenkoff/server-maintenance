@@ -5,8 +5,8 @@ import {discountFromApisV2} from "../services/times.service";
 import {Cons} from "../utils/console";
 import {TimeRepository} from "../services/TimeRepository.service";
 
-export let intervalInMinute = 0.3
-export let cycleInADay = 3//24 * 60 / intervalInMinute // com 6 -> -> 240 cycles/day
+export let intervalInMinute = 6
+export let cycleInADay = 24 * 60 / intervalInMinute // com 6 -> -> 240 cycles/day
 let count = 1
 
 
