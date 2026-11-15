@@ -1,7 +1,6 @@
 import {TimeRepository} from "../services/TimeRepository.service";
+import {ServerRepository} from "../services/ServersRepository.service";
 
 export const baseConfigForTimeOnStart = async () => {
-    if (process.env.DEV == "true") return
-
-    await  TimeRepository.update({lastDiscount: null})
+    await TimeRepository.update({lastDiscount: null, lastStart: Date.now()})
 }

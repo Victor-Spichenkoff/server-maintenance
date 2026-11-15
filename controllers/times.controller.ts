@@ -7,7 +7,7 @@ import {
     timeStampToHourAndMinute
 } from "../utils/time";
 import {
-    discountFromApis,
+    discountFromApisV2,
     getMonthAndUpdate,
     getTimeDataAndValidateIfExists,
 } from "../services/times.service";
@@ -16,6 +16,7 @@ import { maxTimeAvaliableInMiliseconds } from "../global";
 import {TimeRepository} from "../services/TimeRepository.service";
 import { discountFromThisAccountTime } from "../services/times.service"
 import {ApiRepository} from "../services/ApiRepository.service";
+import {Cons} from "../utils/console";
 
 export const turnKeepApiOn: RequestHandler = async (req, res) => {
     await TimeRepository.startKeepThisOn()
@@ -25,7 +26,8 @@ export const turnKeepApiOn: RequestHandler = async (req, res) => {
 
 
 export const turnOffThisApiController: RequestHandler = async (req, res) => {
-    await discountFromThisAccountTime()
+    // await discountFromThisAccountTime()// agora, vai descontar de todos e desligar
+    await discountFromApisV2()
     await TimeRepository.turnOffThisApi()
     await ApiRepository.turnApiOff()
 
@@ -57,7 +59,7 @@ export const getLastDiscount: RequestHandler = async (req, res) => {
 export const getRemainingTimeForThis: RequestHandler = async (req, res) => {
     await getMonthAndUpdate()
 
-    await discountFromApis()
+    // await discountFromApisV2()// sem mais descontar da API
 
     const remainingForThis = await getRemainingTimeFor('this')
 
@@ -68,7 +70,7 @@ export const getRemainingTimeForThis: RequestHandler = async (req, res) => {
 
 
 export const getRemainingTimeForMain: RequestHandler = async (req, res) => {
-    await discountFromApis()
+    // await discountFromApisV2()// sem mais descontar da API
 
     const remainingForThis =  await getRemainingTimeFor('main')
 
@@ -103,10 +105,10 @@ export const getBothRemainingTime: RequestHandler = async (req, res) => {
      })
 }
 
-
+// se quiser descontar antes de enviar, aqui é o lugar
 export const updateUsageMiddleware: RequestHandler = async (req, res, next) => {
-    await discountFromApis()
-
+    // await discountFromApisV2()
+    Cons.Yellow("Deveria descontar aqui? Pensar")
     next()
 }
 

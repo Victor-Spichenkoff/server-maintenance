@@ -2,14 +2,15 @@
 
 import {sendTelegramMessageFormatted} from "../lib/sendToPhone";
 import {cycleInADay, intervalInMinute} from "./interval";
-import {getMonthAndUpdate} from "../services/times.service";
+import {discountFromApisV2, getMonthAndUpdate} from "../services/times.service";
 import {Cons} from "../utils/console";
 
 
 export const checkTimeAndSendAlert = async (count: number) => {
     if(count % cycleInADay == 0) {
         Cons.Yellow("Enviado alerta - Ciclo zero", true)
-        await sendTelegramMessageFormatted("[ Time Alert ] Running: " + count + " times")
+        await sendTelegramMessageFormatted("[ Time Alert - CYCLE ] 1 Cycle done. Running: " + count + " times")
+        await discountFromApisV2()// 1 vez por dia
     }
 
     const now = new Date(

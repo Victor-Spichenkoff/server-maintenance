@@ -3,6 +3,7 @@ import {db} from "../lib/db";
 import {ServerRepository} from "../services/ServersRepository.service";
 import {ApiRepository} from "../services/ApiRepository.service";
 import {TimeRepository} from "../services/TimeRepository.service";
+import {discountFromApisV2} from "../services/times.service";
 
 const toggleOne = async (req: Request, res: any) => {
     const { id } = req.params
@@ -50,6 +51,7 @@ const setSuccessfullyCalledOne = async (req: Request, res: any) => {
 const setThisToOff = async (req: Request, res: any) => {
     await TimeRepository.turnOffThisApi()
     await ServerRepository.setToOff()
+    await discountFromApisV2() // antes de desligar, sempre garantir que está preciso
     res.send(false)
 }
 

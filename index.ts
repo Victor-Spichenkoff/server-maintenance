@@ -12,6 +12,7 @@ import {baseConfigForTimeOnStart} from "./functions/legacyImportant";
 import {routesV2} from "./config/routes.v2";
 import {SeedServerEntity} from "./utils/seedServer";
 import {Cons} from "./utils/console";
+import {onShutdown} from "./functions/shutdown";
 
 //Minha conta para esse: edge(conta secundária)(spichekoffvictor)
 //nome: VictorSpich
@@ -31,7 +32,6 @@ baseConfigForTimeOnStart()
 
 SeedServerEntity()
 
-// selectTimer(true).then(r => {})//TODO: TEST_V1
 
 app.use("/v2", routesV2)
 app.use(routes)
@@ -40,3 +40,6 @@ app.listen(process.env.PORT ?? 2009, () => {
     Alert.sendUsages(true).then()
     Cons.Log('Rodando na porta 2009')
 })
+
+// shutdown por opção:
+process.on("SIGTERM", onShutdown)

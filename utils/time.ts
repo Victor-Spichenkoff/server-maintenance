@@ -109,3 +109,6 @@ ${isApiStart && "THIS ligado agora"}
 
 export const Sleep = (ms: number) =>
     new Promise(resolve => setTimeout(resolve, ms))
+
+
+export const fromMsToMinutes = (timeInMs: number) => (timeInMs / 1000 / 60).toFixed(2)

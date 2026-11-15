@@ -1,7 +1,12 @@
 
 # BUG FIX:
-- Consultar o off (de ApiRepository, está sempre como OFF, mesmo mudando no frontend e mostrando status correto)
+- Acho que ele não está sabendo lidar com lastDiscount como null
+  - Usar o lastStart nesse caso pode servir
 
+
+- Vou deixar ele rodando para testar se LastDiscount só muda quando realiza OFF/Shutdown mesmo
+- Deveria ficar fixo (LastDiscount = X min atrás). Mas, ao desligar, deveria dar um discount final e limpar
+- PRECISO: Não estou descontado ao chamar: updateUsageMiddleware, preciso corrigir isso depois
 
 
 # TODO -> FIX MAINTENANCE TO ADD NEW

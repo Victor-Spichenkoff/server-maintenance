@@ -69,7 +69,6 @@ routes.get('/callAllOnce/force', callAllOnceSimpleAndIgnore)
 
 
 //tempo
-// routes.use('/usage', updateUsageMiddleware)
 routes.use("/usage", updateUsageMiddleware)
 routes.get('/usage/both', getBothRemainingTime)
 routes.get('/usage/this',getRemainingTimeForThis)

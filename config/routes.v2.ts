@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {ActionControllerV2, getAllServers} from "../controllers/actions.v2.controller";
+import {ActionControllerV2} from "../controllers/actions.v2.controller";
 
 const routesV2 = Router()
 

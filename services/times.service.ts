@@ -6,6 +6,7 @@ import {TimeRepository} from "./TimeRepository.service";
 import {ApiOperationsIds} from "../data/data";
 import {ServerRepository} from "./ServersRepository.service";
 import {Cons} from "../utils/console";
+import {fromMsToMinutes} from "../utils/time";
 
 export const createBaseTimesData = async () => {
     const data = {
@@ -44,70 +45,72 @@ export const discountFromApisV2 = async () => {
 
     //nada ocorrendo para ter que descontar
     if (!timeInfo.keepThisApiOn && activeCount == 0) {
-        Cons.Log("[DISCOUNTS] Nada para descontar das APIs, nem desconto feito")
+        Cons.Log("[DISCOUNTS] Nada para descontar das APIs, nenhum desconto feito")
         return
     }
 
     const now = Date.now()
+    const lastDiscount = timeInfo.lastDiscount ?? timeInfo.lastStart
 
-    await TimeRepository.update({lastDiscount: now})
-
-    if (!timeInfo.lastDiscount)
+    if (!lastDiscount)
         return
 
-    const differenceForThis = now - Number(timeInfo.lastDiscount)
+    const differenceForThis = now - Number(lastDiscount)
 
-    await TimeRepository.update({usageThisAccount: Number(timeInfo.usageThisAccount) + differenceForThis})
-    Cons.Log("[DISCOUNTS] Consumo desde última iteração para THIS: " + differenceForThis.toLocaleString("pt-BR"))
+    await TimeRepository.update(        {
+        usageThisAccount: Number(timeInfo.usageThisAccount) + differenceForThis,
+        lastDiscount: now
+    })
+    Cons.Log(`[DISCOUNTS] Consumo desde última iteração para THIS: ${fromMsToMinutes(differenceForThis)} min`)
 
     // MAIN
     if (activeCount == 0)
         return
 
-    let differenceForMain = now - Number(timeInfo.lastDiscount)
+    let differenceForMain = now - Number(lastDiscount)
 
     differenceForMain *= activeCount
 
     await TimeRepository.update({usageMainAccount: Number(timeInfo.usageMainAccount) + differenceForMain})
-    Cons.Log("[DISCOUNTS] Consumo desde última iteração para MAIN: " + differenceForMain.toLocaleString("pt-BR"))
+    Cons.Log(`[DISCOUNTS] Consumo desde última iteração para MAIN: " + ${fromMsToMinutes(differenceForMain)} min`)
 }
 
-
-/*
- * Essa que realmente diminui os dados
- */
-export const discountFromApis = async () => {
-    const timeInfo = await getTimeDataAndValidateIfExists()
-    const config = await getApiDataAndValidateIfExists()
-
-
-    //nada ocorrendo para ter que descontar
-    if (!timeInfo.keepThisApiOn && config?.off)
-        return
-
-    const now = Date.now()
-
-    await TimeRepository.update({lastDiscount: now})
-
-    if (!timeInfo.lastDiscount)
-        return
-
-
-    const differenceForThis = now - Number(timeInfo.lastDiscount)
-
-    await TimeRepository.update({usageThisAccount: Number(timeInfo.usageThisAccount) + differenceForThis})
-
-    if (config?.currentMaintainedId == ApiOperationsIds.nothing)
-        return
-
-
-    let differenceForMain = now - Number(timeInfo.lastDiscount)
-
-    if (config?.currentMaintainedId ==  ApiOperationsIds.all)
-        differenceForMain *= onlyAllowedToCallApiUrls.length
-
-    await TimeRepository.update({usageMainAccount: Number(timeInfo.usageMainAccount) + differenceForMain})
-}
+//
+// /*
+//  * Essa que realmente diminui os dados
+//  */
+// export const discountFromApis = async () => {
+//     const timeInfo = await getTimeDataAndValidateIfExists()
+//     const config = await getApiDataAndValidateIfExists()
+//
+//
+//     //nada ocorrendo para ter que descontar
+//     if (!timeInfo.keepThisApiOn && config?.off)
+//         return
+//
+//     const now = Date.now()
+//
+//     await TimeRepository.update({lastDiscount: now})
+//
+//     if (!timeInfo.lastDiscount)
+//         return
+//
+//
+//     const differenceForThis = now - Number(timeInfo.lastDiscount)
+//
+//     await TimeRepository.update({usageThisAccount: Number(timeInfo.usageThisAccount) + differenceForThis})
+//
+//     if (config?.currentMaintainedId == ApiOperationsIds.nothing)
+//         return
+//
+//
+//     let differenceForMain = now - Number(timeInfo.lastDiscount)
+//
+//     if (config?.currentMaintainedId ==  ApiOperationsIds.all)
+//         differenceForMain *= onlyAllowedToCallApiUrls.length
+//
+//     await TimeRepository.update({usageMainAccount: Number(timeInfo.usageMainAccount) + differenceForMain})
+// }
 
 
 
