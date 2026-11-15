@@ -36,10 +36,15 @@ SeedServerEntity()
 app.use("/v2", routesV2)
 app.use(routes)
 
+
+// shutdown por opção:
+process.on("SIGTERM", async () => await onShutdown("Servidor matou"))
+process.on("SIGTERM", async () => await onShutdown("Ctrl+C"))
+process.on("SIGHUP", async () => await onShutdown("Terminal Fechado"))
+process.on("SIGUSR2", async () => await onShutdown("Nodemon Fechado"))
+
+
 app.listen(process.env.PORT ?? 2009, () => {
     Alert.sendUsages(true).then()
     Cons.Log('Rodando na porta 2009')
 })
-
-// shutdown por opção:
-process.on("SIGTERM", onShutdown)
