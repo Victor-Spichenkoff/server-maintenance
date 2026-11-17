@@ -1,3 +1,9 @@
+# BUG SÉRIO:
+- Está com defeito
+  - 16/11 às 21:30 última discount -> 241,3h
+  - 17/11 às 19:26 -> Desligou e ligou de novo só o this -> Não mudou nada
+  - Iniciou e perdeu totalmente o discount antigo (voltou null), 1 dia inteiro perdido
+
 
 # BUG FIX:
 - Acho que ele não está sabendo lidar com lastDiscount como null

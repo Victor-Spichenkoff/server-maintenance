@@ -5,12 +5,17 @@ import {cycleInADay, intervalInMinute} from "./interval";
 import {discountFromApisV2, getMonthAndUpdate} from "../services/times.service";
 import {Cons} from "../utils/console";
 
-
+/*
+* Enviar mensagem:
+* * Completou 1 ciclo inteiro
+* Altera a contagem:
+* *
+* */
 export const checkTimeAndSendAlert = async (count: number) => {
     if(count % cycleInADay == 0) {
-        Cons.Yellow("Enviado alerta - Ciclo zero", true)
-        await sendTelegramMessageFormatted("[ Time Alert - CYCLE ] 1 Cycle done. Running: " + count + " times")
-        await discountFromApisV2()// 1 vez por dia
+        Cons.Yellow("Atingido um ciclo completo", true)
+        await discountFromApisV2()// 1 vez por dia no momento ciclo zero
+        await sendTelegramMessageFormatted(`[ Time Alert - Cycle ] rodando há: ${count / cycleInADay}`)
     }
 
     const now = new Date(
@@ -22,8 +27,9 @@ export const checkTimeAndSendAlert = async (count: number) => {
     const hour = now.getHours()
     const rightHours = hour == 11 || hour == 15 || hour == 22
     if (rightHours && minute > 0 && minute < intervalInMinute + intervalInMinute / 2) {
+        await discountFromApisV2()// 3 vezes por dia no momento do alerta real enviado
         Cons.Yellow("Enviado alerta - Hora certa", true)
-        await sendTelegramMessageFormatted("[ Time Alert ] Running: " + hour + " : " + minute)
+        // await sendTelegramMessageFormatted(`[ Time Alert ] Running:  ${hour}:${minute}`)
     }
 }
 

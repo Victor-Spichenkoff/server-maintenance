@@ -114,7 +114,10 @@ export const discountFromApisV2 = async () => {
 
 
 
-
+/*
+* Retorna o mês atual
+* * Se está desatualizado, troca sozinho e reset o tempo
+* */
 export const getMonthAndUpdate = async () => {
     let storageMonth = (await getTimeDataAndValidateIfExists()).currentMonth
     const now = new Date()

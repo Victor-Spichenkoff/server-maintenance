@@ -24,7 +24,7 @@ const checkStatusAndMakeRequests = async (notRequestThis = false) => {
             await callThis()
 
         //  MAIN
-        const isSend = apiCurrentStatus?.highMessages || count % cycleInADay == 0
+        const isSend = apiCurrentStatus?.highMessages || count % cycleInADay == 0// ENVIA SE HIGH OU SE 1 CICLO COMPLETO
 
         await handleCurrentMaintainedCallV2(isSend, apiCurrentStatus?.highMessages)
 
