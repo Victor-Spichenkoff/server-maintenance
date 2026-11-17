@@ -34,7 +34,12 @@ const toggleAllMain = async (req: Request, res: any) => {
     res.send("Set all MAIN API's to: " + !isAllMarkedAsMainActive)
 }
 
+/*
+* Como desmarca todos os ativos, na próxima contagem de tempo gasto não iria contar o MAIN
+* Realiza contagem de tempo gasto
+* */
 const setToOff= async (req: Request, res: any) => {
+    await discountFromApisV2()
     await ServerRepository.setToOff()
 
     res.send("Set to: OFF")
@@ -49,9 +54,10 @@ const setSuccessfullyCalledOne = async (req: Request, res: any) => {
 }
 
 const setThisToOff = async (req: Request, res: any) => {
+    await discountFromApisV2() // antes de desligar, sempre garantir que está preciso
+    // discount vem primeiro, porque se apaga os dados, ele perde o rastreio do que estava ligado ou não
     await TimeRepository.turnOffThisApi()
     await ServerRepository.setToOff()
-    await discountFromApisV2() // antes de desligar, sempre garantir que está preciso
     res.send(false)
 }
 
